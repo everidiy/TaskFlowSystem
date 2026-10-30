@@ -3,10 +3,1020 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TaskFlowSystem"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="TaskFlowSystem"
+        Width="1440"
+        Height="900"
+        MinWidth="1180"
+        MinHeight="720"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="#0A0F0C"
+        FontFamily="Segoe UI"
+        Loaded="OnWindowLoaded">
+
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="64"
+                            ResizeBorderThickness="6"
+                            CornerRadius="12"
+                            GlassFrameThickness="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <!-- Палитра -->
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#3DDC97"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#EAF6EF"/>
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#7E9186"/>
+
+        <!-- Градиенты -->
+        <LinearGradientBrush x:Key="WindowGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#0D1712" Offset="0"/>
+            <GradientStop Color="#0A100D" Offset="0.55"/>
+            <GradientStop Color="#0C1410" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="TopBarGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#111C16" Offset="0"/>
+            <GradientStop Color="#0D1511" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="SidebarGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#0F1A14" Offset="0"/>
+            <GradientStop Color="#0C1410" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="CardGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#131E17" Offset="0"/>
+            <GradientStop Color="#0F1712" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PrimaryButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#4BE3A5" Offset="0"/>
+            <GradientStop Color="#17C29A" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PrimaryButtonHoverGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#63EDB4" Offset="0"/>
+            <GradientStop Color="#25D2A8" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="AccentTileGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#3DDC97" Offset="0"/>
+            <GradientStop Color="#0FA583" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GreenTileGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#1B4A38" Offset="0"/>
+            <GradientStop Color="#123226" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="AmberTileGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#4A3418" Offset="0"/>
+            <GradientStop Color="#33230F" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="RedTileGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#47232E" Offset="0"/>
+            <GradientStop Color="#331821" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ActiveNavGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#1E3A2D" Offset="0"/>
+            <GradientStop Color="#162B22" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ProCardGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#14301F" Offset="0"/>
+            <GradientStop Color="#0E1F18" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="TitleGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#EAF6EF" Offset="0"/>
+            <GradientStop Color="#9FE8C6" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="LineGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#003DDC97" Offset="0"/>
+            <GradientStop Color="#663DDC97" Offset="0.5"/>
+            <GradientStop Color="#003DDC97" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ScrollBarThumbGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#2C5A44" Offset="0"/>
+            <GradientStop Color="#1F4634" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Градиенты колонок доски -->
+        <LinearGradientBrush x:Key="TodoColumnGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#141D17" Offset="0"/>
+            <GradientStop Color="#101813" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="DoingColumnGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#12211B" Offset="0"/>
+            <GradientStop Color="#0E1A14" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ReviewColumnGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#211A11" Offset="0"/>
+            <GradientStop Color="#181309" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="DoneColumnGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#10231A" Offset="0"/>
+            <GradientStop Color="#0C1B13" Offset="1"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#06251A"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryButtonGradient}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="18,10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource PrimaryButtonHoverGradient}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                                <Setter TargetName="ButtonBorder" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="IconButton" TargetType="Button">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="#121C16"/>
+            <Setter Property="Foreground" Value="#8AA394"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                BorderBrush="#22332B"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#1B2E24"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#2E4A3B"/>
+                                <Setter Property="Foreground" Value="#6EE7B7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Margin" Value="0,3"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Foreground" Value="#8CA096"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="NavBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="11"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="NavBorder" Property="Background" Value="#17241D"/>
+                                <Setter Property="Foreground" Value="#DFF3E8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GhostButton" TargetType="Button">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#7E9186"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="GhostBorder"
+                                Background="Transparent"
+                                CornerRadius="9"
+                                Padding="10,7">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="GhostBorder" Property="Background" Value="#17251D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PlainButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#8AA394"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="PlainBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="9"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PlainBorder" Property="Background" Value="#18251E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MacButton" TargetType="Button">
+            <Setter Property="Width" Value="13"/>
+            <Setter Property="Height" Value="13"/>
+            <Setter Property="Margin" Value="0,0,9,0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="7"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Background="Transparent">
+                            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border Background="{StaticResource ScrollBarThumbGradient}"
+                                                        CornerRadius="4" Margin="1"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource WindowGradient}"
+            BorderBrush="#1E2B24"
+            BorderThickness="1"
+            CornerRadius="12">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="64"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Верхняя панель -->
+            <Border Grid.Row="0"
+                    Background="{StaticResource TopBarGradient}"
+                    CornerRadius="12,12,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="236"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                Margin="20,0,0,0"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Button Style="{StaticResource MacButton}"
+                                Background="#FF5F57"
+                                ToolTip="Закрыть"
+                                Click="OnCloseClick"/>
+                        <Button Style="{StaticResource MacButton}"
+                                Background="#FFBD2E"
+                                ToolTip="Свернуть"
+                                Click="OnMinimizeClick"/>
+                        <Button Style="{StaticResource MacButton}"
+                                Margin="0"
+                                Background="#28C840"
+                                ToolTip="Развернуть"
+                                Click="OnMaximizeClick"/>
+                    </StackPanel>
+
+                    <Border Grid.Column="1"
+                            Width="480"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Background="#121C16"
+                            BorderBrush="#22332B"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Grid Margin="14,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="⌕" FontSize="22" Foreground="#5F7A6C" VerticalAlignment="Center"/>
+                            <TextBox x:Name="SearchBox"
+                                     Grid.Column="1"
+                                     VerticalContentAlignment="Center"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     FontSize="13"
+                                     Foreground="#7E9186"
+                                     CaretBrush="#3DDC97"
+                                     GotFocus="OnSearchGotFocus"
+                                     LostFocus="OnSearchLostFocus"
+                                     KeyDown="OnSearchKeyDown"
+                                     Text="Поиск задач, проектов и участников..."/>
+                            <Button Grid.Column="2"
+                                    Padding="7,3"
+                                    Background="#1A2820"
+                                    BorderBrush="#2C4436"
+                                    BorderThickness="1"
+                                    Cursor="Hand"
+                                    Click="OnSearchShortcutClick"
+                                    ToolTip="Поиск">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="6"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <TextBlock Text="⌘ K" FontSize="11" Foreground="#7E9186"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                Margin="0,0,20,0"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Button Style="{StaticResource IconButton}"
+                                Content="◌"
+                                ToolTip="Уведомления"
+                                Click="OnNotificationsClick"/>
+                        <Button Style="{StaticResource IconButton}"
+                                Margin="8,0,12,0"
+                                Content="?"
+                                ToolTip="Помощь"
+                                Click="OnHelpClick"/>
+                        <Button Style="{StaticResource PlainButton}"
+                                Padding="4,3"
+                                Click="OnProfileClick"
+                                ToolTip="Профиль">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="40" Height="40" CornerRadius="20"
+                                        Background="{StaticResource AccentTileGradient}">
+                                    <TextBlock Text="?"
+                                               FontWeight="Bold"
+                                               Foreground="#06251A"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock x:Name="ProfileNameText"
+                                               Text="Пользователь"
+                                               FontSize="13"
+                                               FontWeight="SemiBold"
+                                               Foreground="#EAF6EF"/>
+                                    <TextBlock x:Name="ProfileRoleText"
+                                               Text="Гость"
+                                               FontSize="11"
+                                               Foreground="#7E9186"/>
+                                </StackPanel>
+                                <TextBlock Text="⌄"
+                                           Margin="8,0,0,0"
+                                           FontSize="16"
+                                           Foreground="#7E9186"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Светящаяся линия под шапкой -->
+                    <Rectangle Height="1"
+                               VerticalAlignment="Bottom"
+                               IsHitTestVisible="False"
+                               Fill="{StaticResource LineGradient}"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="236"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Боковое меню -->
+                <Border Grid.Column="0"
+                        Background="{StaticResource SidebarGradient}"
+                        BorderBrush="#1C2B23"
+                        BorderThickness="0,0,1,0"
+                        CornerRadius="0,0,0,12">
+                    <Grid Margin="18,22">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel>
+                            <Button Style="{StaticResource PlainButton}"
+                                    HorizontalContentAlignment="Left"
+                                    Click="OnLogoClick">
+                                <StackPanel Orientation="Horizontal" Margin="8,0,0,16">
+                                    <Border Width="38" Height="38"
+                                            Background="{StaticResource AccentTileGradient}"
+                                            CornerRadius="11">
+                                        <TextBlock Text="TF"
+                                                   Foreground="#06251A"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+                                    <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="TaskFlow" FontSize="18" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                        <TextBlock Text="SYSTEM" FontSize="8" FontWeight="Bold" Foreground="#5F7A6C"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button>
+
+                            <Button x:Name="NavOverviewButton"
+                                    Style="{StaticResource NavButton}"
+                                    Background="{StaticResource ActiveNavGradient}"
+                                    Foreground="#6EE7B7"
+                                    Click="OnOverviewClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="▦" FontSize="17"/>
+                                    <TextBlock Grid.Column="1" Text="Обзор" FontWeight="SemiBold"/>
+                                </Grid>
+                            </Button>
+
+                            <Button x:Name="NavTasksButton"
+                                    Style="{StaticResource NavButton}"
+                                    Click="OnMyTasksClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="✓" FontSize="16"/>
+                                    <TextBlock Grid.Column="1" Text="Мои задачи"/>
+                                </Grid>
+                            </Button>
+
+                            <Button x:Name="NavInboxButton"
+                                    Style="{StaticResource NavButton}"
+                                    Click="OnInboxClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="▣" FontSize="16"/>
+                                    <TextBlock Grid.Column="1" Text="Входящие"/>
+                                </Grid>
+                            </Button>
+
+                            <Button x:Name="NavCalendarButton"
+                                    Style="{StaticResource NavButton}"
+                                    Click="OnCalendarClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="□" FontSize="17"/>
+                                    <TextBlock Grid.Column="1" Text="Календарь"/>
+                                </Grid>
+                            </Button>
+
+                            <TextBlock Text="РАБОЧЕЕ ПРОСТРАНСТВО"
+                                       Margin="12,24,0,8"
+                                       FontSize="10"
+                                       FontWeight="SemiBold"
+                                       Foreground="#4E6157"/>
+
+                            <Button Style="{StaticResource NavButton}" Click="OnProjectsClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="◫" FontSize="16"/>
+                                    <TextBlock Grid.Column="1" Text="Проекты"/>
+                                    <Button Grid.Column="2"
+                                            Style="{StaticResource PlainButton}"
+                                            Width="24"
+                                            Height="24"
+                                            Foreground="#3DDC97"
+                                            FontSize="18"
+                                            Click="OnAddProjectClick"
+                                            Content="+"/>
+                                </Grid>
+                            </Button>
+
+                            <TextBlock x:Name="EmptyProjectsHint"
+                                       Margin="14,4,0,0"
+                                       Text="Проекты пока не созданы"
+                                       FontSize="12"
+                                       Foreground="#4E6157"/>
+
+                            <TextBlock Text="КОМАНДА"
+                                       Margin="12,24,0,8"
+                                       FontSize="10"
+                                       FontWeight="SemiBold"
+                                       Foreground="#4E6157"/>
+
+                            <Button Style="{StaticResource NavButton}" Click="OnTeamClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="♙" FontSize="17"/>
+                                    <TextBlock Grid.Column="1" Text="Участники"/>
+                                </Grid>
+                            </Button>
+
+                            <Button Style="{StaticResource NavButton}" Click="OnReportsClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="◈" FontSize="16"/>
+                                    <TextBlock Grid.Column="1" Text="Отчёты"/>
+                                </Grid>
+                            </Button>
+
+                            <Button Style="{StaticResource NavButton}" Click="OnSettingsClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="⚙" FontSize="16"/>
+                                    <TextBlock Grid.Column="1" Text="Настройки"/>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+
+                        <Border Grid.Row="2"
+                                Background="{StaticResource ProCardGradient}"
+                                BorderBrush="#2A4A3A"
+                                BorderThickness="1"
+                                CornerRadius="16"
+                                Padding="16">
+                            <StackPanel>
+                                <Border Width="34" Height="34" HorizontalAlignment="Left"
+                                        Background="{StaticResource AccentTileGradient}"
+                                        CornerRadius="10">
+                                    <TextBlock Text="✦" Foreground="#06251A" FontSize="17"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="Перейдите на Pro"
+                                           Margin="0,12,0,4"
+                                           Foreground="#EAF6EF"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Text="Больше проектов, аналитики и возможностей команды."
+                                           Foreground="#8AA394"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"/>
+                                <Button Margin="0,14,0,0"
+                                        Height="34"
+                                        Style="{StaticResource RoundedButton}"
+                                        Padding="10,5"
+                                        Content="Узнать больше"
+                                        Click="OnUpgradeClick"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Контент -->
+                <Grid Grid.Column="1" Margin="28,24,28,22">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock x:Name="PageTitleText"
+                                       Text="Обзор"
+                                       FontSize="27"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource TitleGradient}"/>
+                            <TextBlock x:Name="PageSubtitleText"
+                                       Margin="0,6,0,0"
+                                       Text="Добавьте первую задачу, чтобы начать работу"
+                                       FontSize="13"
+                                       Foreground="#7E9186"/>
+                        </StackPanel>
+
+                        <Button Grid.Column="1"
+                                Style="{StaticResource RoundedButton}"
+                                VerticalAlignment="Center"
+                                Click="OnCreateTaskClick">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="+" Margin="0,-2,8,0" FontSize="19"/>
+                                <TextBlock Text="Новая задача"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <!-- Карточки статистики -->
+                    <Grid Grid.Row="1" Margin="0,24,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Margin="0,0,10,0" Padding="16"
+                                Background="{StaticResource CardGradient}"
+                                CornerRadius="14" BorderBrush="#22302A" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="42" Height="42"
+                                        Background="{StaticResource AccentTileGradient}"
+                                        CornerRadius="12">
+                                    <TextBlock Text="▦" FontSize="20" Foreground="#06251A"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                    <TextBlock Text="Всего задач" Foreground="#7E9186" FontSize="11"/>
+                                    <TextBlock x:Name="TotalTasksText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="1" Margin="4,0,6,0" Padding="16"
+                                Background="{StaticResource CardGradient}"
+                                CornerRadius="14" BorderBrush="#22302A" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="42" Height="42"
+                                        Background="{StaticResource AmberTileGradient}"
+                                        CornerRadius="12">
+                                    <TextBlock Text="◔" FontSize="22" Foreground="#FFB467"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                    <TextBlock Text="В работе" Foreground="#7E9186" FontSize="11"/>
+                                    <TextBlock x:Name="InProgressTasksText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="2" Margin="6,0,4,0" Padding="16"
+                                Background="{StaticResource CardGradient}"
+                                CornerRadius="14" BorderBrush="#22302A" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="42" Height="42"
+                                        Background="{StaticResource GreenTileGradient}"
+                                        CornerRadius="12">
+                                    <TextBlock Text="✓" FontSize="21" Foreground="#54DFAB"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                    <TextBlock Text="Выполнено" Foreground="#7E9186" FontSize="11"/>
+                                    <TextBlock x:Name="CompletedTasksText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="3" Margin="10,0,0,0" Padding="16"
+                                Background="{StaticResource CardGradient}"
+                                CornerRadius="14" BorderBrush="#22302A" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="42" Height="42"
+                                        Background="{StaticResource RedTileGradient}"
+                                        CornerRadius="12">
+                                    <TextBlock Text="!" FontSize="21" FontWeight="Bold" Foreground="#FF7187"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                                    <TextBlock Text="Просрочено" Foreground="#7E9186" FontSize="11"/>
+                                    <TextBlock x:Name="OverdueTasksText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <!-- Переключатель видов -->
+                    <Grid Grid.Row="2" Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="ViewBoardButton"
+                                    Style="{StaticResource NavButton}"
+                                    Width="92" Height="38"
+                                    Background="{StaticResource ActiveNavGradient}" Foreground="#6EE7B7"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnBoardViewClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="▦" Margin="0,0,7,0"/>
+                                    <TextBlock Text="Доска" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="ViewListButton"
+                                    Style="{StaticResource NavButton}"
+                                    Width="92" Height="38"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnListViewClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="☷" Margin="0,0,7,0"/>
+                                    <TextBlock Text="Список"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="ViewCalendarButton"
+                                    Style="{StaticResource NavButton}"
+                                    Width="110" Height="38"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnCalendarViewClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="□" Margin="0,0,7,0"/>
+                                    <TextBlock Text="Календарь"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="ViewTimelineButton"
+                                    Style="{StaticResource NavButton}"
+                                    Width="100" Height="38"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnTimelineViewClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="◫" Margin="0,0,7,0"/>
+                                    <TextBlock Text="График"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Button Style="{StaticResource IconButton}" Width="92" Margin="0,0,8,0" Click="OnFilterClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="≡" Margin="0,0,7,0"/>
+                                    <TextBlock Text="Фильтр" FontSize="12"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource IconButton}" Width="108" Click="OnSortClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="↕" Margin="0,0,7,0"/>
+                                    <TextBlock Text="Сортировка" FontSize="12"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Доска: колонки фиксированной ширины, компактные -->
+                    <ScrollViewer Grid.Row="3"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,2,0,2">
+
+                            <!-- К выполнению -->
+                            <Border Width="300" MinHeight="230"
+                                    Margin="0,0,14,0" Padding="12"
+                                    Background="{StaticResource TodoColumnGradient}"
+                                    BorderBrush="#24322A" BorderThickness="1"
+                                    CornerRadius="16">
+                                <StackPanel>
+                                    <Grid Margin="4,0,4,10">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="9" Height="9" Fill="#8FA79B" Margin="0,0,8,0"/>
+                                            <TextBlock Text="К выполнению" FontWeight="SemiBold" Foreground="#E4EFE8"/>
+                                            <Border Margin="8,-2,0,0" Padding="7,2" Background="#1C2A22" CornerRadius="8">
+                                                <TextBlock x:Name="TodoCountText" Text="0" FontSize="10" Foreground="#A9BDB1"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <Button HorizontalAlignment="Right"
+                                                Style="{StaticResource PlainButton}"
+                                                Width="28" Height="28"
+                                                FontSize="18" Content="+"
+                                                Foreground="#8AA394"
+                                                Click="OnAddTodoTaskClick"/>
+                                    </Grid>
+                                    <StackPanel x:Name="TodoTasksPanel" VerticalAlignment="Top">
+                                        <TextBlock Margin="8,22,8,10"
+                                                   Text="Нет задач"
+                                                   FontSize="13"
+                                                   Foreground="#5F7A6C"
+                                                   HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource GhostButton}"
+                                            Content="+  Добавить задачу"
+                                            Click="OnAddTodoTaskClick"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- В работе -->
+                            <Border Width="300" MinHeight="230"
+                                    Margin="0,0,14,0" Padding="12"
+                                    Background="{StaticResource DoingColumnGradient}"
+                                    BorderBrush="#25493A" BorderThickness="1"
+                                    CornerRadius="16">
+                                <StackPanel>
+                                    <Grid Margin="4,0,4,10">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="9" Height="9" Fill="#3DDC97" Margin="0,0,8,0"/>
+                                            <TextBlock Text="В работе" FontWeight="SemiBold" Foreground="#E4EFE8"/>
+                                            <Border Margin="8,-2,0,0" Padding="7,2" Background="#1D3A2C" CornerRadius="8">
+                                                <TextBlock x:Name="DoingCountText" Text="0" FontSize="10" Foreground="#7DE8BC"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <Button HorizontalAlignment="Right"
+                                                Style="{StaticResource PlainButton}"
+                                                Width="28" Height="28"
+                                                FontSize="18" Content="+"
+                                                Foreground="#3DDC97"
+                                                Click="OnAddInProgressTaskClick"/>
+                                    </Grid>
+                                    <StackPanel x:Name="InProgressTasksPanel" VerticalAlignment="Top">
+                                        <TextBlock Margin="8,22,8,10"
+                                                   Text="Нет задач"
+                                                   FontSize="13"
+                                                   Foreground="#5F7A6C"
+                                                   HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource GhostButton}"
+                                            Foreground="#5FE0AC"
+                                            Content="+  Добавить задачу"
+                                            Click="OnAddInProgressTaskClick"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- На проверке -->
+                            <Border Width="300" MinHeight="230"
+                                    Margin="0,0,14,0" Padding="12"
+                                    Background="{StaticResource ReviewColumnGradient}"
+                                    BorderBrush="#3E3220" BorderThickness="1"
+                                    CornerRadius="16">
+                                <StackPanel>
+                                    <Grid Margin="4,0,4,10">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="9" Height="9" Fill="#FFAB5C" Margin="0,0,8,0"/>
+                                            <TextBlock Text="На проверке" FontWeight="SemiBold" Foreground="#E4EFE8"/>
+                                            <Border Margin="8,-2,0,0" Padding="7,2" Background="#3A2C1C" CornerRadius="8">
+                                                <TextBlock x:Name="ReviewCountText" Text="0" FontSize="10" Foreground="#FFBE7C"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <Button HorizontalAlignment="Right"
+                                                Style="{StaticResource PlainButton}"
+                                                Width="28" Height="28"
+                                                FontSize="18" Content="+"
+                                                Foreground="#FFBB78"
+                                                Click="OnAddReviewTaskClick"/>
+                                    </Grid>
+                                    <StackPanel x:Name="ReviewTasksPanel" VerticalAlignment="Top">
+                                        <TextBlock Margin="8,22,8,10"
+                                                   Text="Нет задач"
+                                                   FontSize="13"
+                                                   Foreground="#5F7A6C"
+                                                   HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource GhostButton}"
+                                            Foreground="#F0A868"
+                                            Content="+  Добавить задачу"
+                                            Click="OnAddReviewTaskClick"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Готово -->
+                            <Border Width="300" MinHeight="230"
+                                    Margin="0,0,14,0" Padding="12"
+                                    Background="{StaticResource DoneColumnGradient}"
+                                    BorderBrush="#234A37" BorderThickness="1"
+                                    CornerRadius="16">
+                                <StackPanel>
+                                    <Grid Margin="4,0,4,10">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Ellipse Width="9" Height="9" Fill="#37D49A" Margin="0,0,8,0"/>
+                                            <TextBlock Text="Готово" FontWeight="SemiBold" Foreground="#E4EFE8"/>
+                                            <Border Margin="8,-2,0,0" Padding="7,2" Background="#1A3A2B" CornerRadius="8">
+                                                <TextBlock x:Name="DoneCountText" Text="0" FontSize="10" Foreground="#61E0B0"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <Button HorizontalAlignment="Right"
+                                                Style="{StaticResource PlainButton}"
+                                                Width="28" Height="28"
+                                                FontSize="18" Content="+"
+                                                Foreground="#61E0B0"
+                                                Click="OnAddDoneTaskClick"/>
+                                    </Grid>
+                                    <StackPanel x:Name="DoneTasksPanel" VerticalAlignment="Top">
+                                        <TextBlock Margin="8,22,8,10"
+                                                   Text="Нет задач"
+                                                   FontSize="13"
+                                                   Foreground="#5F7A6C"
+                                                   HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource GhostButton}"
+                                            Foreground="#56D9A4"
+                                            Content="+  Добавить задачу"
+                                            Click="OnAddDoneTaskClick"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>
