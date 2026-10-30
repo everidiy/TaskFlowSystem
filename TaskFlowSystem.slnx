@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="IdentityServiceAPI/IdentityServiceAPI.csproj" />
   <Project Path="TaskFlowSystem/TaskFlowSystem.csproj" />
+  <Project Path="TaskServiceAPI/TaskServiceAPI.csproj" />
 </Solution>
