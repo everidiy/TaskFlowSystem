@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="TaskFlowSystem"
         Width="1440"
-        Height="900"
+        Height="1100"
         MinWidth="1180"
         MinHeight="720"
         WindowStartupLocation="CenterScreen"
@@ -128,12 +128,13 @@
             <GradientStop Color="#0C1B13" Offset="1"/>
         </LinearGradientBrush>
 
+        <!-- Основные стили кнопок -->
         <Style x:Key="RoundedButton" TargetType="Button">
             <Setter Property="Foreground" Value="#06251A"/>
             <Setter Property="Background" Value="{StaticResource PrimaryButtonGradient}"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="18,10"/>
-            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="22,14"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -141,7 +142,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="ButtonBorder"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="10"
+                                CornerRadius="12"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -164,19 +165,19 @@
         </Style>
 
         <Style x:Key="IconButton" TargetType="Button">
-            <Setter Property="Width" Value="40"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="44"/>
+            <Setter Property="Height" Value="44"/>
             <Setter Property="Background" Value="#121C16"/>
             <Setter Property="Foreground" Value="#8AA394"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="10"
+                                CornerRadius="12"
                                 BorderBrush="#22332B"
                                 BorderThickness="1">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -194,21 +195,21 @@
         </Style>
 
         <Style x:Key="NavButton" TargetType="Button">
-            <Setter Property="Height" Value="46"/>
-            <Setter Property="Margin" Value="0,3"/>
-            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Height" Value="54"/>
+            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Padding" Value="16,0"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Foreground" Value="#8CA096"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="NavBorder"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="11"
+                                CornerRadius="12"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter VerticalAlignment="Center"/>
                         </Border>
@@ -224,20 +225,20 @@
         </Style>
 
         <Style x:Key="GhostButton" TargetType="Button">
-            <Setter Property="Height" Value="38"/>
+            <Setter Property="Height" Value="44"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Foreground" Value="#7E9186"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="GhostBorder"
                                 Background="Transparent"
-                                CornerRadius="9"
-                                Padding="10,7">
+                                CornerRadius="10"
+                                Padding="12,8">
                             <ContentPresenter VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -260,7 +261,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="PlainBorder"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="9"
+                                CornerRadius="10"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -274,17 +275,29 @@
             </Setter>
         </Style>
 
-        <Style x:Key="MacButton" TargetType="Button">
-            <Setter Property="Width" Value="13"/>
-            <Setter Property="Height" Value="13"/>
-            <Setter Property="Margin" Value="0,0,9,0"/>
-            <Setter Property="Padding" Value="0"/>
+        <!-- Кнопки управления окном (виндовские) -->
+        <Style x:Key="WindowControlButton" TargetType="Button">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#8AA394"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="7"/>
+                        <Border x:Name="WinBorder"
+                                Background="Transparent"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="WinBorder" Property="Background" Value="#1B2E24"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -292,7 +305,7 @@
 
         <Style TargetType="ScrollBar">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Width" Value="8"/>
+            <Setter Property="Width" Value="10"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ScrollBar">
@@ -303,7 +316,7 @@
                                         <Thumb.Template>
                                             <ControlTemplate TargetType="Thumb">
                                                 <Border Background="{StaticResource ScrollBarThumbGradient}"
-                                                        CornerRadius="4" Margin="1"/>
+                                                        CornerRadius="5" Margin="1"/>
                                             </ControlTemplate>
                                         </Thumb.Template>
                                     </Thumb>
@@ -337,49 +350,58 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
+                    <!-- Логотип (убраны мак-кнопки) -->
                     <StackPanel Grid.Column="0"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
-                                Margin="20,0,0,0"
+                                Margin="24,0,0,0"
                                 shell:WindowChrome.IsHitTestVisibleInChrome="True">
-                        <Button Style="{StaticResource MacButton}"
-                                Background="#FF5F57"
-                                ToolTip="Закрыть"
-                                Click="OnCloseClick"/>
-                        <Button Style="{StaticResource MacButton}"
-                                Background="#FFBD2E"
-                                ToolTip="Свернуть"
-                                Click="OnMinimizeClick"/>
-                        <Button Style="{StaticResource MacButton}"
-                                Margin="0"
-                                Background="#28C840"
-                                ToolTip="Развернуть"
-                                Click="OnMaximizeClick"/>
+                        <Button Style="{StaticResource PlainButton}"
+                                HorizontalContentAlignment="Left"
+                                Click="OnLogoClick">
+                            <StackPanel Orientation="Horizontal" Margin="8,0,0,16">
+                                <Border Width="44" Height="44"
+                                        Background="{StaticResource AccentTileGradient}"
+                                        CornerRadius="12">
+                                    <TextBlock Text="TF"
+                                               Foreground="#06251A"
+                                               FontWeight="Bold"
+                                               FontSize="18"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="TaskFlow" FontSize="22" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                    <TextBlock Text="SYSTEM" FontSize="10" FontWeight="Bold" Foreground="#5F7A6C"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
 
+                    <!-- Поиск -->
                     <Border Grid.Column="1"
-                            Width="480"
-                            Height="40"
+                            Width="560"
+                            Height="48"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Background="#121C16"
                             BorderBrush="#22332B"
                             BorderThickness="1"
-                            CornerRadius="12"
+                            CornerRadius="14"
                             shell:WindowChrome.IsHitTestVisibleInChrome="True">
-                        <Grid Margin="14,0">
+                        <Grid Margin="18,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition Width="32"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="⌕" FontSize="22" Foreground="#5F7A6C" VerticalAlignment="Center"/>
+                            <TextBlock Text="⌕" FontSize="24" Foreground="#5F7A6C" VerticalAlignment="Center"/>
                             <TextBox x:Name="SearchBox"
                                      Grid.Column="1"
                                      VerticalContentAlignment="Center"
                                      Background="Transparent"
                                      BorderThickness="0"
-                                     FontSize="13"
+                                     FontSize="14"
                                      Foreground="#7E9186"
                                      CaretBrush="#3DDC97"
                                      GotFocus="OnSearchGotFocus"
@@ -387,7 +409,7 @@
                                      KeyDown="OnSearchKeyDown"
                                      Text="Поиск задач, проектов и участников..."/>
                             <Button Grid.Column="2"
-                                    Padding="7,3"
+                                    Padding="10,4"
                                     Background="#1A2820"
                                     BorderBrush="#2C4436"
                                     BorderThickness="1"
@@ -399,61 +421,87 @@
                                         <Border Background="{TemplateBinding Background}"
                                                 BorderBrush="{TemplateBinding BorderBrush}"
                                                 BorderThickness="1"
-                                                CornerRadius="6"
+                                                CornerRadius="8"
                                                 Padding="{TemplateBinding Padding}">
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </ControlTemplate>
                                 </Button.Template>
-                                <TextBlock Text="⌘ K" FontSize="11" Foreground="#7E9186"/>
+                                <TextBlock Text="⌘ K" FontSize="12" Foreground="#7E9186"/>
                             </Button>
                         </Grid>
                     </Border>
 
+                    <!-- Профиль + кнопки окон справа -->
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
-                                Margin="0,0,20,0"
+                                Margin="0,0,24,0"
                                 shell:WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button Style="{StaticResource IconButton}"
                                 Content="◌"
                                 ToolTip="Уведомления"
                                 Click="OnNotificationsClick"/>
                         <Button Style="{StaticResource IconButton}"
-                                Margin="8,0,12,0"
+                                Margin="10,0,16,0"
                                 Content="?"
                                 ToolTip="Помощь"
                                 Click="OnHelpClick"/>
                         <Button Style="{StaticResource PlainButton}"
-                                Padding="4,3"
+                                Padding="6,4"
                                 Click="OnProfileClick"
                                 ToolTip="Профиль">
                             <StackPanel Orientation="Horizontal">
-                                <Border Width="40" Height="40" CornerRadius="20"
+                                <Border Width="44" Height="44" CornerRadius="22"
                                         Background="{StaticResource AccentTileGradient}">
                                     <TextBlock Text="?"
                                                FontWeight="Bold"
                                                Foreground="#06251A"
+                                               FontSize="16"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
                                 </Border>
-                                <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
                                     <TextBlock x:Name="ProfileNameText"
                                                Text="Пользователь"
-                                               FontSize="13"
+                                               FontSize="14"
                                                FontWeight="SemiBold"
                                                Foreground="#EAF6EF"/>
                                     <TextBlock x:Name="ProfileRoleText"
                                                Text="Гость"
-                                               FontSize="11"
+                                               FontSize="12"
                                                Foreground="#7E9186"/>
                                 </StackPanel>
                                 <TextBlock Text="⌄"
-                                           Margin="8,0,0,0"
-                                           FontSize="16"
+                                           Margin="10,0,0,0"
+                                           FontSize="18"
                                            Foreground="#7E9186"
                                            VerticalAlignment="Center"/>
                             </StackPanel>
+                        </Button>
+
+                        <!-- Виндовские кнопки управления окном -->
+                        <Button x:Name="BtnMinimize"
+                                Style="{StaticResource WindowControlButton}"
+                                Margin="12,0,0,0"
+                                Content="─"
+                                Foreground="#8AA394"
+                                Click="OnMinimizeClick"
+                                ToolTip="Свернуть"/>
+                        <Button x:Name="BtnMaximize"
+                                Style="{StaticResource WindowControlButton}"
+                                Margin="8,0,0,0"
+                                Content="□"
+                                Foreground="#8AA394"
+                                Click="OnMaximizeClick"
+                                ToolTip="Развернуть"/>
+                        <Button x:Name="BtnClose"
+                                Style="{StaticResource WindowControlButton}"
+                                Margin="8,0,0,0"
+                                Content="×"
+                                Foreground="#8AA394"
+                                Click="OnCloseClick"
+                                ToolTip="Закрыть">
                         </Button>
                     </StackPanel>
 
@@ -477,7 +525,7 @@
                         BorderBrush="#1C2B23"
                         BorderThickness="0,0,1,0"
                         CornerRadius="0,0,0,12">
-                    <Grid Margin="18,22">
+                    <Grid Margin="22,26">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
@@ -485,26 +533,6 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel>
-                            <Button Style="{StaticResource PlainButton}"
-                                    HorizontalContentAlignment="Left"
-                                    Click="OnLogoClick">
-                                <StackPanel Orientation="Horizontal" Margin="8,0,0,16">
-                                    <Border Width="38" Height="38"
-                                            Background="{StaticResource AccentTileGradient}"
-                                            CornerRadius="11">
-                                        <TextBlock Text="TF"
-                                                   Foreground="#06251A"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
-                                    </Border>
-                                    <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                                        <TextBlock Text="TaskFlow" FontSize="18" FontWeight="Bold" Foreground="#EAF6EF"/>
-                                        <TextBlock Text="SYSTEM" FontSize="8" FontWeight="Bold" Foreground="#5F7A6C"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Button>
-
                             <Button x:Name="NavOverviewButton"
                                     Style="{StaticResource NavButton}"
                                     Background="{StaticResource ActiveNavGradient}"
@@ -512,10 +540,10 @@
                                     Click="OnOverviewClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="▦" FontSize="17"/>
+                                    <TextBlock Text="▦" FontSize="20"/>
                                     <TextBlock Grid.Column="1" Text="Обзор" FontWeight="SemiBold"/>
                                 </Grid>
                             </Button>
@@ -525,10 +553,10 @@
                                     Click="OnMyTasksClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="✓" FontSize="16"/>
+                                    <TextBlock Text="✓" FontSize="18"/>
                                     <TextBlock Grid.Column="1" Text="Мои задачи"/>
                                 </Grid>
                             </Button>
@@ -538,10 +566,10 @@
                                     Click="OnInboxClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="▣" FontSize="16"/>
+                                    <TextBlock Text="▣" FontSize="18"/>
                                     <TextBlock Grid.Column="1" Text="Входящие"/>
                                 </Grid>
                             </Button>
@@ -551,59 +579,59 @@
                                     Click="OnCalendarClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="□" FontSize="17"/>
+                                    <TextBlock Text="□" FontSize="20"/>
                                     <TextBlock Grid.Column="1" Text="Календарь"/>
                                 </Grid>
                             </Button>
 
                             <TextBlock Text="РАБОЧЕЕ ПРОСТРАНСТВО"
-                                       Margin="12,24,0,8"
-                                       FontSize="10"
+                                       Margin="14,28,0,10"
+                                       FontSize="11"
                                        FontWeight="SemiBold"
                                        Foreground="#4E6157"/>
 
                             <Button Style="{StaticResource NavButton}" Click="OnProjectsClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="◫" FontSize="16"/>
+                                    <TextBlock Text="◫" FontSize="18"/>
                                     <TextBlock Grid.Column="1" Text="Проекты"/>
                                     <Button Grid.Column="2"
                                             Style="{StaticResource PlainButton}"
-                                            Width="24"
-                                            Height="24"
+                                            Width="28"
+                                            Height="28"
                                             Foreground="#3DDC97"
-                                            FontSize="18"
+                                            FontSize="20"
                                             Click="OnAddProjectClick"
                                             Content="+"/>
                                 </Grid>
                             </Button>
 
                             <TextBlock x:Name="EmptyProjectsHint"
-                                       Margin="14,4,0,0"
+                                       Margin="16,6,0,0"
                                        Text="Проекты пока не созданы"
-                                       FontSize="12"
+                                       FontSize="13"
                                        Foreground="#4E6157"/>
 
                             <TextBlock Text="КОМАНДА"
-                                       Margin="12,24,0,8"
-                                       FontSize="10"
+                                       Margin="14,28,0,10"
+                                       FontSize="11"
                                        FontWeight="SemiBold"
                                        Foreground="#4E6157"/>
 
                             <Button Style="{StaticResource NavButton}" Click="OnTeamClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="♙" FontSize="17"/>
+                                    <TextBlock Text="♙" FontSize="20"/>
                                     <TextBlock Grid.Column="1" Text="Участники"/>
                                 </Grid>
                             </Button>
@@ -611,10 +639,10 @@
                             <Button Style="{StaticResource NavButton}" Click="OnReportsClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="◈" FontSize="16"/>
+                                    <TextBlock Text="◈" FontSize="18"/>
                                     <TextBlock Grid.Column="1" Text="Отчёты"/>
                                 </Grid>
                             </Button>
@@ -622,10 +650,10 @@
                             <Button Style="{StaticResource NavButton}" Click="OnSettingsClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="⚙" FontSize="16"/>
+                                    <TextBlock Text="⚙" FontSize="18"/>
                                     <TextBlock Grid.Column="1" Text="Настройки"/>
                                 </Grid>
                             </Button>
@@ -635,28 +663,28 @@
                                 Background="{StaticResource ProCardGradient}"
                                 BorderBrush="#2A4A3A"
                                 BorderThickness="1"
-                                CornerRadius="16"
-                                Padding="16">
+                                CornerRadius="18"
+                                Padding="18">
                             <StackPanel>
-                                <Border Width="34" Height="34" HorizontalAlignment="Left"
+                                <Border Width="40" Height="40" HorizontalAlignment="Left"
                                         Background="{StaticResource AccentTileGradient}"
-                                        CornerRadius="10">
-                                    <TextBlock Text="✦" Foreground="#06251A" FontSize="17"
+                                        CornerRadius="12">
+                                    <TextBlock Text="✦" Foreground="#06251A" FontSize="20"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <TextBlock Text="Перейдите на Pro"
-                                           Margin="0,12,0,4"
+                                           Margin="0,14,0,6"
                                            Foreground="#EAF6EF"
-                                           FontSize="14"
+                                           FontSize="16"
                                            FontWeight="SemiBold"/>
                                 <TextBlock Text="Больше проектов, аналитики и возможностей команды."
                                            Foreground="#8AA394"
-                                           FontSize="11"
+                                           FontSize="13"
                                            TextWrapping="Wrap"/>
-                                <Button Margin="0,14,0,0"
-                                        Height="34"
+                                <Button Margin="0,16,0,0"
+                                        Height="42"
                                         Style="{StaticResource RoundedButton}"
-                                        Padding="10,5"
+                                        Padding="12,6"
                                         Content="Узнать больше"
                                         Click="OnUpgradeClick"/>
                             </StackPanel>
@@ -665,7 +693,7 @@
                 </Border>
 
                 <!-- Контент -->
-                <Grid Grid.Column="1" Margin="28,24,28,22">
+                <Grid Grid.Column="1" Margin="34,28,34,26">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -682,13 +710,13 @@
                         <StackPanel>
                             <TextBlock x:Name="PageTitleText"
                                        Text="Обзор"
-                                       FontSize="27"
+                                       FontSize="36"
                                        FontWeight="Bold"
                                        Foreground="{StaticResource TitleGradient}"/>
                             <TextBlock x:Name="PageSubtitleText"
-                                       Margin="0,6,0,0"
+                                       Margin="0,8,0,0"
                                        Text="Добавьте первую задачу, чтобы начать работу"
-                                       FontSize="13"
+                                       FontSize="16"
                                        Foreground="#7E9186"/>
                         </StackPanel>
 
@@ -697,14 +725,14 @@
                                 VerticalAlignment="Center"
                                 Click="OnCreateTaskClick">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="+" Margin="0,-2,8,0" FontSize="19"/>
+                                <TextBlock Text="+" Margin="0,-2,10,0" FontSize="22"/>
                                 <TextBlock Text="Новая задача"/>
                             </StackPanel>
                         </Button>
                     </Grid>
 
                     <!-- Карточки статистики -->
-                    <Grid Grid.Row="1" Margin="0,24,0,20">
+                    <Grid Grid.Row="1" Margin="0,28,0,24">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -712,93 +740,93 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="0" Margin="0,0,10,0" Padding="16"
+                        <Border Grid.Column="0" Margin="0,0,12,0" Padding="20"
                                 Background="{StaticResource CardGradient}"
-                                CornerRadius="14" BorderBrush="#22302A" BorderThickness="1">
+                                CornerRadius="16" BorderBrush="#22302A" BorderThickness="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="56"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Width="42" Height="42"
+                                <Border Width="50" Height="50"
                                         Background="{StaticResource AccentTileGradient}"
-                                        CornerRadius="12">
-                                    <TextBlock Text="▦" FontSize="20" Foreground="#06251A"
+                                        CornerRadius="14">
+                                    <TextBlock Text="▦" FontSize="24" Foreground="#06251A"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
-                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                    <TextBlock Text="Всего задач" Foreground="#7E9186" FontSize="11"/>
-                                    <TextBlock x:Name="TotalTasksText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                                    <TextBlock Text="Всего задач" Foreground="#7E9186" FontSize="13"/>
+                                    <TextBlock x:Name="TotalTasksText" Text="0" FontSize="32" FontWeight="Bold" Foreground="#EAF6EF"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
 
-                        <Border Grid.Column="1" Margin="4,0,6,0" Padding="16"
+                        <Border Grid.Column="1" Margin="6,0,8,0" Padding="20"
                                 Background="{StaticResource CardGradient}"
-                                CornerRadius="14" BorderBrush="#22302A" BorderThickness="1">
+                                CornerRadius="16" BorderBrush="#22302A" BorderThickness="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="56"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Width="42" Height="42"
+                                <Border Width="50" Height="50"
                                         Background="{StaticResource AmberTileGradient}"
-                                        CornerRadius="12">
-                                    <TextBlock Text="◔" FontSize="22" Foreground="#FFB467"
+                                        CornerRadius="14">
+                                    <TextBlock Text="◔" FontSize="26" Foreground="#FFB467"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
-                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                    <TextBlock Text="В работе" Foreground="#7E9186" FontSize="11"/>
-                                    <TextBlock x:Name="InProgressTasksText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                                    <TextBlock Text="В работе" Foreground="#7E9186" FontSize="13"/>
+                                    <TextBlock x:Name="InProgressTasksText" Text="0" FontSize="32" FontWeight="Bold" Foreground="#EAF6EF"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
 
-                        <Border Grid.Column="2" Margin="6,0,4,0" Padding="16"
+                        <Border Grid.Column="2" Margin="8,0,6,0" Padding="20"
                                 Background="{StaticResource CardGradient}"
-                                CornerRadius="14" BorderBrush="#22302A" BorderThickness="1">
+                                CornerRadius="16" BorderBrush="#22302A" BorderThickness="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="56"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Width="42" Height="42"
+                                <Border Width="50" Height="50"
                                         Background="{StaticResource GreenTileGradient}"
-                                        CornerRadius="12">
-                                    <TextBlock Text="✓" FontSize="21" Foreground="#54DFAB"
+                                        CornerRadius="14">
+                                    <TextBlock Text="✓" FontSize="25" Foreground="#54DFAB"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
-                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                    <TextBlock Text="Выполнено" Foreground="#7E9186" FontSize="11"/>
-                                    <TextBlock x:Name="CompletedTasksText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                                    <TextBlock Text="Выполнено" Foreground="#7E9186" FontSize="13"/>
+                                    <TextBlock x:Name="CompletedTasksText" Text="0" FontSize="32" FontWeight="Bold" Foreground="#EAF6EF"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
 
-                        <Border Grid.Column="3" Margin="10,0,0,0" Padding="16"
+                        <Border Grid.Column="3" Margin="12,0,0,0" Padding="20"
                                 Background="{StaticResource CardGradient}"
-                                CornerRadius="14" BorderBrush="#22302A" BorderThickness="1">
+                                CornerRadius="16" BorderBrush="#22302A" BorderThickness="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="56"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Width="42" Height="42"
+                                <Border Width="50" Height="50"
                                         Background="{StaticResource RedTileGradient}"
-                                        CornerRadius="12">
-                                    <TextBlock Text="!" FontSize="21" FontWeight="Bold" Foreground="#FF7187"
+                                        CornerRadius="14">
+                                    <TextBlock Text="!" FontSize="25" FontWeight="Bold" Foreground="#FF7187"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
-                                <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                                    <TextBlock Text="Просрочено" Foreground="#7E9186" FontSize="11"/>
-                                    <TextBlock x:Name="OverdueTasksText" Text="0" FontSize="24" FontWeight="Bold" Foreground="#EAF6EF"/>
+                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                                    <TextBlock Text="Просрочено" Foreground="#7E9186" FontSize="13"/>
+                                    <TextBlock x:Name="OverdueTasksText" Text="0" FontSize="32" FontWeight="Bold" Foreground="#EAF6EF"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
                     </Grid>
 
                     <!-- Переключатель видов -->
-                    <Grid Grid.Row="2" Margin="0,0,0,16">
+                    <Grid Grid.Row="2" Margin="0,0,0,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -807,58 +835,58 @@
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="ViewBoardButton"
                                     Style="{StaticResource NavButton}"
-                                    Width="92" Height="38"
+                                    Width="110" Height="46"
                                     Background="{StaticResource ActiveNavGradient}" Foreground="#6EE7B7"
                                     HorizontalContentAlignment="Center"
                                     Click="OnBoardViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="▦" Margin="0,0,7,0"/>
+                                    <TextBlock Text="▦" Margin="0,0,10,0"/>
                                     <TextBlock Text="Доска" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </Button>
                             <Button x:Name="ViewListButton"
                                     Style="{StaticResource NavButton}"
-                                    Width="92" Height="38"
+                                    Width="110" Height="46"
                                     HorizontalContentAlignment="Center"
                                     Click="OnListViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="☷" Margin="0,0,7,0"/>
+                                    <TextBlock Text="☷" Margin="0,0,10,0"/>
                                     <TextBlock Text="Список"/>
                                 </StackPanel>
                             </Button>
                             <Button x:Name="ViewCalendarButton"
                                     Style="{StaticResource NavButton}"
-                                    Width="110" Height="38"
+                                    Width="130" Height="46"
                                     HorizontalContentAlignment="Center"
                                     Click="OnCalendarViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="□" Margin="0,0,7,0"/>
+                                    <TextBlock Text="□" Margin="0,0,10,0"/>
                                     <TextBlock Text="Календарь"/>
                                 </StackPanel>
                             </Button>
                             <Button x:Name="ViewTimelineButton"
                                     Style="{StaticResource NavButton}"
-                                    Width="100" Height="38"
+                                    Width="120" Height="46"
                                     HorizontalContentAlignment="Center"
                                     Click="OnTimelineViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="◫" Margin="0,0,7,0"/>
+                                    <TextBlock Text="◫" Margin="0,0,10,0"/>
                                     <TextBlock Text="График"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <Button Style="{StaticResource IconButton}" Width="92" Margin="0,0,8,0" Click="OnFilterClick">
+                            <Button Style="{StaticResource IconButton}" Width="110" Margin="0,0,10,0" Click="OnFilterClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="≡" Margin="0,0,7,0"/>
-                                    <TextBlock Text="Фильтр" FontSize="12"/>
+                                    <TextBlock Text="≡" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Фильтр" FontSize="14"/>
                                 </StackPanel>
                             </Button>
-                            <Button Style="{StaticResource IconButton}" Width="108" Click="OnSortClick">
+                            <Button Style="{StaticResource IconButton}" Width="128" Click="OnSortClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="↕" Margin="0,0,7,0"/>
-                                    <TextBlock Text="Сортировка" FontSize="12"/>
+                                    <TextBlock Text="↕" Margin="0,0,10,0"/>
+                                    <TextBlock Text="Сортировка" FontSize="14"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -868,34 +896,34 @@
                     <ScrollViewer Grid.Row="3"
                                   HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Disabled">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,2,0,2">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,4,0,4">
 
                             <!-- К выполнению -->
-                            <Border Width="300" MinHeight="230"
-                                    Margin="0,0,14,0" Padding="12"
+                            <Border Width="340" MinHeight="260"
+                                    Margin="0,0,16,0" Padding="16"
                                     Background="{StaticResource TodoColumnGradient}"
                                     BorderBrush="#24322A" BorderThickness="1"
-                                    CornerRadius="16">
+                                    CornerRadius="18">
                                 <StackPanel>
-                                    <Grid Margin="4,0,4,10">
+                                    <Grid Margin="6,0,6,12">
                                         <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="9" Height="9" Fill="#8FA79B" Margin="0,0,8,0"/>
-                                            <TextBlock Text="К выполнению" FontWeight="SemiBold" Foreground="#E4EFE8"/>
-                                            <Border Margin="8,-2,0,0" Padding="7,2" Background="#1C2A22" CornerRadius="8">
-                                                <TextBlock x:Name="TodoCountText" Text="0" FontSize="10" Foreground="#A9BDB1"/>
+                                            <Ellipse Width="11" Height="11" Fill="#8FA79B" Margin="0,0,10,0"/>
+                                            <TextBlock Text="К выполнению" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
+                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#1C2A22" CornerRadius="9">
+                                                <TextBlock x:Name="TodoCountText" Text="0" FontSize="11" Foreground="#A9BDB1"/>
                                             </Border>
                                         </StackPanel>
                                         <Button HorizontalAlignment="Right"
                                                 Style="{StaticResource PlainButton}"
-                                                Width="28" Height="28"
-                                                FontSize="18" Content="+"
+                                                Width="34" Height="34"
+                                                FontSize="20" Content="+"
                                                 Foreground="#8AA394"
                                                 Click="OnAddTodoTaskClick"/>
                                     </Grid>
                                     <StackPanel x:Name="TodoTasksPanel" VerticalAlignment="Top">
-                                        <TextBlock Margin="8,22,8,10"
+                                        <TextBlock Margin="10,24,10,12"
                                                    Text="Нет задач"
-                                                   FontSize="13"
+                                                   FontSize="15"
                                                    Foreground="#5F7A6C"
                                                    HorizontalAlignment="Center"/>
                                     </StackPanel>
@@ -906,31 +934,31 @@
                             </Border>
 
                             <!-- В работе -->
-                            <Border Width="300" MinHeight="230"
-                                    Margin="0,0,14,0" Padding="12"
+                            <Border Width="340" MinHeight="260"
+                                    Margin="0,0,16,0" Padding="16"
                                     Background="{StaticResource DoingColumnGradient}"
                                     BorderBrush="#25493A" BorderThickness="1"
-                                    CornerRadius="16">
+                                    CornerRadius="18">
                                 <StackPanel>
-                                    <Grid Margin="4,0,4,10">
+                                    <Grid Margin="6,0,6,12">
                                         <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="9" Height="9" Fill="#3DDC97" Margin="0,0,8,0"/>
-                                            <TextBlock Text="В работе" FontWeight="SemiBold" Foreground="#E4EFE8"/>
-                                            <Border Margin="8,-2,0,0" Padding="7,2" Background="#1D3A2C" CornerRadius="8">
-                                                <TextBlock x:Name="DoingCountText" Text="0" FontSize="10" Foreground="#7DE8BC"/>
+                                            <Ellipse Width="11" Height="11" Fill="#3DDC97" Margin="0,0,10,0"/>
+                                            <TextBlock Text="В работе" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
+                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#1D3A2C" CornerRadius="9">
+                                                <TextBlock x:Name="DoingCountText" Text="0" FontSize="11" Foreground="#7DE8BC"/>
                                             </Border>
                                         </StackPanel>
                                         <Button HorizontalAlignment="Right"
                                                 Style="{StaticResource PlainButton}"
-                                                Width="28" Height="28"
-                                                FontSize="18" Content="+"
+                                                Width="34" Height="34"
+                                                FontSize="20" Content="+"
                                                 Foreground="#3DDC97"
                                                 Click="OnAddInProgressTaskClick"/>
                                     </Grid>
                                     <StackPanel x:Name="InProgressTasksPanel" VerticalAlignment="Top">
-                                        <TextBlock Margin="8,22,8,10"
+                                        <TextBlock Margin="10,24,10,12"
                                                    Text="Нет задач"
-                                                   FontSize="13"
+                                                   FontSize="15"
                                                    Foreground="#5F7A6C"
                                                    HorizontalAlignment="Center"/>
                                     </StackPanel>
@@ -942,31 +970,31 @@
                             </Border>
 
                             <!-- На проверке -->
-                            <Border Width="300" MinHeight="230"
-                                    Margin="0,0,14,0" Padding="12"
+                            <Border Width="340" MinHeight="260"
+                                    Margin="0,0,16,0" Padding="16"
                                     Background="{StaticResource ReviewColumnGradient}"
                                     BorderBrush="#3E3220" BorderThickness="1"
-                                    CornerRadius="16">
+                                    CornerRadius="18">
                                 <StackPanel>
-                                    <Grid Margin="4,0,4,10">
+                                    <Grid Margin="6,0,6,12">
                                         <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="9" Height="9" Fill="#FFAB5C" Margin="0,0,8,0"/>
-                                            <TextBlock Text="На проверке" FontWeight="SemiBold" Foreground="#E4EFE8"/>
-                                            <Border Margin="8,-2,0,0" Padding="7,2" Background="#3A2C1C" CornerRadius="8">
-                                                <TextBlock x:Name="ReviewCountText" Text="0" FontSize="10" Foreground="#FFBE7C"/>
+                                            <Ellipse Width="11" Height="11" Fill="#FFAB5C" Margin="0,0,10,0"/>
+                                            <TextBlock Text="На проверке" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
+                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#3A2C1C" CornerRadius="9">
+                                                <TextBlock x:Name="ReviewCountText" Text="0" FontSize="11" Foreground="#FFBE7C"/>
                                             </Border>
                                         </StackPanel>
                                         <Button HorizontalAlignment="Right"
                                                 Style="{StaticResource PlainButton}"
-                                                Width="28" Height="28"
-                                                FontSize="18" Content="+"
+                                                Width="34" Height="34"
+                                                FontSize="20" Content="+"
                                                 Foreground="#FFBB78"
                                                 Click="OnAddReviewTaskClick"/>
                                     </Grid>
                                     <StackPanel x:Name="ReviewTasksPanel" VerticalAlignment="Top">
-                                        <TextBlock Margin="8,22,8,10"
+                                        <TextBlock Margin="10,24,10,12"
                                                    Text="Нет задач"
-                                                   FontSize="13"
+                                                   FontSize="15"
                                                    Foreground="#5F7A6C"
                                                    HorizontalAlignment="Center"/>
                                     </StackPanel>
@@ -978,31 +1006,31 @@
                             </Border>
 
                             <!-- Готово -->
-                            <Border Width="300" MinHeight="230"
-                                    Margin="0,0,14,0" Padding="12"
+                            <Border Width="340" MinHeight="260"
+                                    Margin="0,0,16,0" Padding="16"
                                     Background="{StaticResource DoneColumnGradient}"
                                     BorderBrush="#234A37" BorderThickness="1"
-                                    CornerRadius="16">
+                                    CornerRadius="18">
                                 <StackPanel>
-                                    <Grid Margin="4,0,4,10">
+                                    <Grid Margin="6,0,6,12">
                                         <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="9" Height="9" Fill="#37D49A" Margin="0,0,8,0"/>
-                                            <TextBlock Text="Готово" FontWeight="SemiBold" Foreground="#E4EFE8"/>
-                                            <Border Margin="8,-2,0,0" Padding="7,2" Background="#1A3A2B" CornerRadius="8">
-                                                <TextBlock x:Name="DoneCountText" Text="0" FontSize="10" Foreground="#61E0B0"/>
+                                            <Ellipse Width="11" Height="11" Fill="#37D49A" Margin="0,0,10,0"/>
+                                            <TextBlock Text="Готово" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
+                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#1A3A2B" CornerRadius="9">
+                                                <TextBlock x:Name="DoneCountText" Text="0" FontSize="11" Foreground="#61E0B0"/>
                                             </Border>
                                         </StackPanel>
                                         <Button HorizontalAlignment="Right"
                                                 Style="{StaticResource PlainButton}"
-                                                Width="28" Height="28"
-                                                FontSize="18" Content="+"
+                                                Width="34" Height="34"
+                                                FontSize="20" Content="+"
                                                 Foreground="#61E0B0"
                                                 Click="OnAddDoneTaskClick"/>
                                     </Grid>
                                     <StackPanel x:Name="DoneTasksPanel" VerticalAlignment="Top">
-                                        <TextBlock Margin="8,22,8,10"
+                                        <TextBlock Margin="10,24,10,12"
                                                    Text="Нет задач"
-                                                   FontSize="13"
+                                                   FontSize="15"
                                                    Foreground="#5F7A6C"
                                                    HorizontalAlignment="Center"/>
                                     </StackPanel>
