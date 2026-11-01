@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="IdentityServiceAPI/IdentityServiceAPI.csproj" />
-  <Project Path="TaskFlowSystem/TaskFlowSystem.csproj" />
+  <Project Path="TaskFlowSystem/TaskFlowSystem.csproj" Id="e191847d-c941-40ce-8c65-73020715108d" />
   <Project Path="TaskServiceAPI/TaskServiceAPI.csproj" />
 </Solution>
