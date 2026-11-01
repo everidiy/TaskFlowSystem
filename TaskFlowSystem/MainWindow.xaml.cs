@@ -1,17 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Shell;
+﻿using System;
+using System.Windows;
 
 namespace TaskFlowSystem
 {
     public partial class MainWindow : Window
     {
-        private const string SearchPlaceholder = "Поиск задач, проектов и участников...";
-        private Button _activeNavButton;
-        private Button _activeViewButton;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -19,266 +12,167 @@ namespace TaskFlowSystem
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            _activeNavButton = NavOverviewButton;
-            _activeViewButton = ViewBoardButton;
-            SetSearchPlaceholder();
-        }
 
-        private void OnCloseClick(object sender, RoutedEventArgs e)
-        {
-            SystemCommands.CloseWindow(this);
-        }
-
-        private void OnMinimizeClick(object sender, RoutedEventArgs e)
-        {
-            SystemCommands.MinimizeWindow(this);
-        }
-
-        private void OnMaximizeClick(object sender, RoutedEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
-            {
-                SystemCommands.RestoreWindow(this);
-            }
-            else
-            {
-                SystemCommands.MaximizeWindow(this);
-            }
         }
 
         private void OnLogoClick(object sender, RoutedEventArgs e)
         {
-            OnOverviewClick(NavOverviewButton, e);
-        }
 
-        private void OnOverviewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveNav(NavOverviewButton);
-            PageTitleText.Text = "Обзор";
-            PageSubtitleText.Text = "Добавьте первую задачу, чтобы начать работу";
-        }
-
-        private void OnMyTasksClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveNav(NavTasksButton);
-            PageTitleText.Text = "Мои задачи";
-            PageSubtitleText.Text = "Здесь будут отображаться назначенные вам задачи";
-        }
-
-        private void OnInboxClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveNav(NavInboxButton);
-            PageTitleText.Text = "Входящие";
-            PageSubtitleText.Text = "Новых уведомлений нет";
-        }
-
-        private void OnCalendarClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveNav(NavCalendarButton);
-            PageTitleText.Text = "Календарь";
-            PageSubtitleText.Text = "Сроки появятся после создания задач";
-        }
-
-        private void OnProjectsClick(object sender, RoutedEventArgs e)
-        {
-            PageTitleText.Text = "Проекты";
-            PageSubtitleText.Text = "Создайте первый проект для команды";
-        }
-
-        private void OnAddProjectClick(object sender, RoutedEventArgs e)
-        {
-            e.Handled = true;
-            MessageBox.Show("Открыть диалог создания проекта.", "Новый проект",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void OnTeamClick(object sender, RoutedEventArgs e)
-        {
-            PageTitleText.Text = "Участники";
-            PageSubtitleText.Text = "Команда пока не добавлена";
-        }
-
-        private void OnReportsClick(object sender, RoutedEventArgs e)
-        {
-            PageTitleText.Text = "Отчёты";
-            PageSubtitleText.Text = "Статистика появится после появления задач";
-        }
-
-        private void OnSettingsClick(object sender, RoutedEventArgs e)
-        {
-            PageTitleText.Text = "Настройки";
-            PageSubtitleText.Text = "Параметры рабочего пространства";
-        }
-
-        private void OnUpgradeClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Переход на тариф Pro.", "TaskFlow Pro",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void OnCreateTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("К выполнению");
-        }
-
-        private void OnAddTodoTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("К выполнению");
-        }
-
-        private void OnAddInProgressTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("В работе");
-        }
-
-        private void OnAddReviewTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("На проверке");
-        }
-
-        private void OnAddDoneTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("Готово");
-        }
-
-        private void OnBoardViewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveView(ViewBoardButton);
-        }
-
-        private void OnListViewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveView(ViewListButton);
-        }
-
-        private void OnCalendarViewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveView(ViewCalendarButton);
-        }
-
-        private void OnTimelineViewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveView(ViewTimelineButton);
-        }
-
-        private void OnFilterClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Открыть панель фильтров.", "Фильтр",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void OnSortClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Открыть параметры сортировки.", "Сортировка",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void OnNotificationsClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Уведомлений пока нет.", "Уведомления",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void OnHelpClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Справка TaskFlowSystem.", "Помощь",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void OnProfileClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Открыть меню профиля.", "Профиль",
-                MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnSearchGotFocus(object sender, RoutedEventArgs e)
         {
-            if (SearchBox.Text == SearchPlaceholder)
-            {
-                SearchBox.Text = string.Empty;
-                SearchBox.Foreground = new SolidColorBrush(Color.FromRgb(0x25, 0x29, 0x3B));
-            }
+
         }
 
         private void OnSearchLostFocus(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(SearchBox.Text))
-            {
-                SetSearchPlaceholder();
-            }
+
         }
 
-        private void OnSearchKeyDown(object sender, KeyEventArgs e)
+        private void OnSearchKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
-                RunSearch();
-            }
+
         }
 
         private void OnSearchShortcutClick(object sender, RoutedEventArgs e)
         {
-            SearchBox.Focus();
+
         }
 
-        private void CreateTask(string columnName)
+        private void OnNotificationsClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"Создать задачу в колонке «{columnName}».", "Новая задача",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+
         }
 
-        private void RunSearch()
+        private void OnHelpClick(object sender, RoutedEventArgs e)
         {
-            var query = SearchBox.Text;
-            if (string.IsNullOrWhiteSpace(query) || query == SearchPlaceholder)
-            {
-                return;
-            }
 
-            MessageBox.Show($"Поиск: {query}", "Поиск",
-                MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void SetSearchPlaceholder()
+        private void OnProfileClick(object sender, RoutedEventArgs e)
         {
-            SearchBox.Text = SearchPlaceholder;
-            SearchBox.Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x8F, 0xA3));
+
         }
 
-        private void SetActiveNav(Button button)
+        private void OnMinimizeClick(object sender, RoutedEventArgs e)
         {
-            ResetNav(NavOverviewButton);
-            ResetNav(NavTasksButton);
-            ResetNav(NavInboxButton);
-            ResetNav(NavCalendarButton);
 
-            button.Background = new SolidColorBrush(Color.FromRgb(0xEF, 0xEE, 0xFF));
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x62, 0x5B, 0xF6));
-            _activeNavButton = button;
         }
 
-        private void ResetNav(Button button)
+        private void OnMaximizeClick(object sender, RoutedEventArgs e)
         {
-            button.Background = Brushes.Transparent;
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x6D, 0x72, 0x87));
+
         }
 
-        private void SetActiveView(Button button)
+        private void OnCloseClick(object sender, RoutedEventArgs e)
         {
-            ResetView(ViewBoardButton);
-            ResetView(ViewListButton);
-            ResetView(ViewCalendarButton);
-            ResetView(ViewTimelineButton);
-
-            button.Background = new SolidColorBrush(Color.FromRgb(0xEF, 0xEE, 0xFF));
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x62, 0x5B, 0xF6));
-            _activeViewButton = button;
+            Environment.Exit(0);    
         }
 
-        private void ResetView(Button button)
+        private void OnOverviewClick(object sender, RoutedEventArgs e)
         {
-            button.Background = Brushes.Transparent;
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x6D, 0x72, 0x87));
+
+        }
+
+        private void OnMyTasksClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnInboxClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnCalendarClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnAddProjectClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnTeamClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnReportsClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnSettingsClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnUpgradeClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnProjectsClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnCreateTaskClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnBoardViewClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnListViewClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnCalendarViewClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnTimelineViewClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnFilterClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnSortClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnAddTodoTaskClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnAddInProgressTaskClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnAddReviewTaskClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnAddDoneTaskClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

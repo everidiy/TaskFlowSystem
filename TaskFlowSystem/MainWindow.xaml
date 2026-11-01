@@ -111,22 +111,66 @@
         </LinearGradientBrush>
 
         <!-- Градиенты колонок доски -->
+
+        <!-- К выполнению -->
         <LinearGradientBrush x:Key="TodoColumnGradient" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#141D17" Offset="0"/>
             <GradientStop Color="#101813" Offset="1"/>
         </LinearGradientBrush>
+
+        <!-- В работе: старый янтарный цвет проверки -->
         <LinearGradientBrush x:Key="DoingColumnGradient" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#12211B" Offset="0"/>
-            <GradientStop Color="#0E1A14" Offset="1"/>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="ReviewColumnGradient" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#211A11" Offset="0"/>
             <GradientStop Color="#181309" Offset="1"/>
         </LinearGradientBrush>
+
+        <!-- На проверке: новый синий цвет -->
+        <LinearGradientBrush x:Key="ReviewColumnGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#14202D" Offset="0"/>
+            <GradientStop Color="#0E1823" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Готово -->
         <LinearGradientBrush x:Key="DoneColumnGradient" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#10231A" Offset="0"/>
             <GradientStop Color="#0C1B13" Offset="1"/>
         </LinearGradientBrush>
+
+        <!-- Стиль по умолчанию: не допускаем стандартный фиолетовый акцент WPF -->
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="#06251A"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryButtonGradient}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="DefaultButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="DefaultButtonBorder" Property="Background"
+                                        Value="{StaticResource PrimaryButtonHoverGradient}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="DefaultButtonBorder" Property="Background" Value="#12A879"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="DefaultButtonBorder" Property="Opacity" Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <!-- Основные стили кнопок -->
         <Style x:Key="RoundedButton" TargetType="Button">
@@ -151,6 +195,7 @@
                                 <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource PrimaryButtonHoverGradient}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#12A879"/>
                                 <Setter TargetName="ButtonBorder" Property="RenderTransformOrigin" Value="0.5,0.5"/>
                                 <Setter TargetName="ButtonBorder" Property="RenderTransform">
                                     <Setter.Value>
@@ -184,9 +229,14 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#1B2E24"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#2E4A3B"/>
+                                <Setter TargetName="Border" Property="Background" Value="#193D2D"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#3DDC97"/>
                                 <Setter Property="Foreground" Value="#6EE7B7"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#245A40"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#63EDB4"/>
+                                <Setter Property="Foreground" Value="#A7F3D0"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -214,9 +264,27 @@
                             <ContentPresenter VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
+                            <!-- Наведение -->
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="NavBorder" Property="Background" Value="#17241D"/>
-                                <Setter Property="Foreground" Value="#DFF3E8"/>
+                                <Setter TargetName="NavBorder"
+                                        Property="Background"
+                                        Value="#173A2B"/>
+                                <Setter Property="Foreground" Value="#6EE7B7"/>
+                            </Trigger>
+
+                            <!-- Нажатие -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="NavBorder"
+                                        Property="Background"
+                                        Value="#245A40"/>
+                                <Setter Property="Foreground" Value="#A7F3D0"/>
+                            </Trigger>
+
+                            <!-- Отключённая кнопка -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="NavBorder"
+                                        Property="Opacity"
+                                        Value="0.45"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -243,7 +311,12 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="GhostBorder" Property="Background" Value="#17251D"/>
+                                <Setter TargetName="GhostBorder" Property="Background" Value="#173A2B"/>
+                                <Setter Property="Foreground" Value="#6EE7B7"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="GhostBorder" Property="Background" Value="#245A40"/>
+                                <Setter Property="Foreground" Value="#A7F3D0"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -267,7 +340,12 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="PlainBorder" Property="Background" Value="#18251E"/>
+                                <Setter TargetName="PlainBorder" Property="Background" Value="#173A2B"/>
+                                <Setter Property="Foreground" Value="#6EE7B7"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="PlainBorder" Property="Background" Value="#245A40"/>
+                                <Setter Property="Foreground" Value="#A7F3D0"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -295,7 +373,12 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="WinBorder" Property="Background" Value="#1B2E24"/>
+                                <Setter TargetName="WinBorder" Property="Background" Value="#173A2B"/>
+                                <Setter Property="Foreground" Value="#6EE7B7"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="WinBorder" Property="Background" Value="#245A40"/>
+                                <Setter Property="Foreground" Value="#A7F3D0"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -323,6 +406,206 @@
                                 </Track.Thumb>
                             </Track>
                         </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- К выполнению: Поле -->
+        <Style x:Key="TodoColumnStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource TodoColumnGradient}"/>
+            <Setter Property="BorderBrush" Value="#24322A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="18"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#19271F"/>
+                    <Setter Property="BorderBrush" Value="#8FA79B"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- В работе: Поле -->
+        <Style x:Key="DoingColumnStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource DoingColumnGradient}"/>
+            <Setter Property="BorderBrush" Value="#3E3220"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="18"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#302416"/>
+                    <Setter Property="BorderBrush" Value="#FFAB5C"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <!-- На проверке: Поле -->
+        <Style x:Key="ReviewColumnStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource ReviewColumnGradient}"/>
+            <Setter Property="BorderBrush" Value="#263B50"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="18"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1C3044"/>
+                    <Setter Property="BorderBrush" Value="#60A5FA"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Готово: Поле -->
+        <Style x:Key="DoneColumnStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource DoneColumnGradient}"/>
+            <Setter Property="BorderBrush" Value="#234A37"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="18"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#163526"/>
+                    <Setter Property="BorderBrush" Value="#37D49A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- К выполнению: Кнопка -->
+        <Style x:Key="TodoGhostButton" TargetType="Button">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#8FA79B"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="10"
+                        Padding="12,8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background" Value="#24372D"/>
+                                <Setter Property="Foreground" Value="#B5CBBE"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background" Value="#354D40"/>
+                                <Setter Property="Foreground" Value="#E0F0E6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- В работе: Кнопка -->
+        <Style x:Key="DoingGhostButton" TargetType="Button">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#F0A868"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="10"
+                        Padding="12,8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background" Value="#49321B"/>
+                                <Setter Property="Foreground" Value="#FFC184"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background" Value="#624323"/>
+                                <Setter Property="Foreground" Value="#FFE0B8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- На проверке: Кнопка -->
+        <Style x:Key="ReviewGhostButton" TargetType="Button">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#5F7A96"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="10"
+                        Padding="12,8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background" Value="#263B50"/>
+                                <Setter Property="Foreground" Value="#8FAFCB"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background" Value="#354F68"/>
+                                <Setter Property="Foreground" Value="#C1D5E8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Готово: Кнопка -->
+        <Style x:Key="DoneGhostButton" TargetType="Button">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#56D9A4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="10"
+                        Padding="12,8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background" Value="#1A4933"/>
+                                <Setter Property="Foreground" Value="#61E0B0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background" Value="#246044"/>
+                                <Setter Property="Foreground" Value="#A7F3D0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -425,6 +708,16 @@
                                                 Padding="{TemplateBinding Padding}">
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#173A2B"/>
+                                                <Setter Property="BorderBrush" Value="#3DDC97"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="Background" Value="#245A40"/>
+                                                <Setter Property="BorderBrush" Value="#63EDB4"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Button.Template>
                                 <TextBlock Text="⌘ K" FontSize="12" Foreground="#7E9186"/>
@@ -537,6 +830,7 @@
                                     Style="{StaticResource NavButton}"
                                     Background="{StaticResource ActiveNavGradient}"
                                     Foreground="#6EE7B7"
+                                    ToolTip="Просмотреть все задачи"
                                     Click="OnOverviewClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -550,6 +844,7 @@
 
                             <Button x:Name="NavTasksButton"
                                     Style="{StaticResource NavButton}"
+                                    ToolTip="Просмотреть все ваши задачи"
                                     Click="OnMyTasksClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -563,6 +858,7 @@
 
                             <Button x:Name="NavInboxButton"
                                     Style="{StaticResource NavButton}"
+                                    ToolTip="Прочитать входящие сообщения"
                                     Click="OnInboxClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -576,6 +872,7 @@
 
                             <Button x:Name="NavCalendarButton"
                                     Style="{StaticResource NavButton}"
+                                    ToolTip="Просмотреть календарь с задачами"
                                     Click="OnCalendarClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -593,7 +890,9 @@
                                        FontWeight="SemiBold"
                                        Foreground="#4E6157"/>
 
-                            <Button Style="{StaticResource NavButton}" Click="OnProjectsClick">
+                            <Button Style="{StaticResource NavButton}" 
+                                    ToolTip="Просмотреть все проекты"
+                                    Click="OnProjectsClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="32"/>
@@ -608,6 +907,7 @@
                                             Height="28"
                                             Foreground="#3DDC97"
                                             FontSize="20"
+                                            ToolTip="Создать проект"
                                             Click="OnAddProjectClick"
                                             Content="+"/>
                                 </Grid>
@@ -625,7 +925,9 @@
                                        FontWeight="SemiBold"
                                        Foreground="#4E6157"/>
 
-                            <Button Style="{StaticResource NavButton}" Click="OnTeamClick">
+                            <Button Style="{StaticResource NavButton}"
+                                    ToolTip="Просмотреть всех участников"
+                                    Click="OnTeamClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="32"/>
@@ -636,7 +938,9 @@
                                 </Grid>
                             </Button>
 
-                            <Button Style="{StaticResource NavButton}" Click="OnReportsClick">
+                            <Button Style="{StaticResource NavButton}" 
+                                    ToolTip="Просмотреть отчёты"
+                                    Click="OnReportsClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="32"/>
@@ -647,7 +951,9 @@
                                 </Grid>
                             </Button>
 
-                            <Button Style="{StaticResource NavButton}" Click="OnSettingsClick">
+                            <Button Style="{StaticResource NavButton}" 
+                                    ToolTip="Открыть настройки"
+                                    Click="OnSettingsClick">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="32"/>
@@ -686,6 +992,7 @@
                                         Style="{StaticResource RoundedButton}"
                                         Padding="12,6"
                                         Content="Узнать больше"
+                                        ToolTip="Узнать больше о Pro подписке"
                                         Click="OnUpgradeClick"/>
                             </StackPanel>
                         </Border>
@@ -723,6 +1030,7 @@
                         <Button Grid.Column="1"
                                 Style="{StaticResource RoundedButton}"
                                 VerticalAlignment="Center"
+                                ToolTip="Добавить новую задачу"
                                 Click="OnCreateTaskClick">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="+" Margin="0,-2,10,0" FontSize="22"/>
@@ -877,13 +1185,20 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <Button Style="{StaticResource IconButton}" Width="110" Margin="0,0,10,0" Click="OnFilterClick">
+                            <Button Style="{StaticResource IconButton}" 
+                                    Width="110" 
+                                    Margin="0,0,10,0" 
+                                    ToolTip="Фильтровать (убрать) задачи по.."
+                                    Click="OnFilterClick">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="≡" Margin="0,0,10,0"/>
                                     <TextBlock Text="Фильтр" FontSize="14"/>
                                 </StackPanel>
                             </Button>
-                            <Button Style="{StaticResource IconButton}" Width="128" Click="OnSortClick">
+                            <Button Style="{StaticResource IconButton}" 
+                                    Width="128" 
+                                    ToolTip="Сортировать (выровнять) задачи по.."
+                                    Click="OnSortClick">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="↕" Margin="0,0,10,0"/>
                                     <TextBlock Text="Сортировка" FontSize="14"/>
@@ -893,156 +1208,325 @@
                     </Grid>
 
                     <!-- Доска: колонки фиксированной ширины, компактные -->
-                    <ScrollViewer Grid.Row="3"
-                                  HorizontalScrollBarVisibility="Auto"
-                                  VerticalScrollBarVisibility="Disabled">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,4,0,4">
+                    <Grid Grid.Row="3" Margin="0,4,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!-- К выполнению -->
+                            <Border Grid.Column="0"
+                                    MinHeight="300"
+                                    Margin="0,0,12,0"
+                                    Padding="18"
+                                    Style="{StaticResource TodoColumnStyle}">
 
-                            <!-- К выполнению -->
-                            <Border Width="340" MinHeight="260"
-                                    Margin="0,0,16,0" Padding="16"
-                                    Background="{StaticResource TodoColumnGradient}"
-                                    BorderBrush="#24322A" BorderThickness="1"
-                                    CornerRadius="18">
-                                <StackPanel>
-                                    <Grid Margin="6,0,6,12">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="11" Height="11" Fill="#8FA79B" Margin="0,0,10,0"/>
-                                            <TextBlock Text="К выполнению" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
-                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#1C2A22" CornerRadius="9">
-                                                <TextBlock x:Name="TodoCountText" Text="0" FontSize="11" Foreground="#A9BDB1"/>
-                                            </Border>
-                                        </StackPanel>
-                                        <Button HorizontalAlignment="Right"
-                                                Style="{StaticResource PlainButton}"
-                                                Width="34" Height="34"
-                                                FontSize="20" Content="+"
-                                                Foreground="#8AA394"
-                                                Click="OnAddTodoTaskClick"/>
-                                    </Grid>
-                                    <StackPanel x:Name="TodoTasksPanel" VerticalAlignment="Top">
-                                        <TextBlock Margin="10,24,10,12"
-                                                   Text="Нет задач"
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <!-- Заголовок -->
+                                        <RowDefinition Height="Auto"/>
+
+                                        <!-- Список задач -->
+                                        <RowDefinition Height="*"/>
+
+                                        <!-- Добавление задачи -->
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Заголовок колонки -->
+                                    <Grid Grid.Row="0" Margin="2,0,2,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Ellipse Width="10"
+                                                 Height="10"
+                                                 Fill="#8FA79B"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,10,0"/>
+
+                                        <TextBlock Grid.Column="1"
+                                                   Text="К выполнению"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E4EFE8"
                                                    FontSize="15"
-                                                   Foreground="#5F7A6C"
-                                                   HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <Button Style="{StaticResource GhostButton}"
+                                                   VerticalAlignment="Center"/>
+
+                                        <Border Grid.Column="2"
+                                                Padding="9,3"
+                                                Background="#1C2A22"
+                                                CornerRadius="9">
+                                            <TextBlock x:Name="TodoCountText"
+                                                       Text="0"
+                                                       FontSize="11"
+                                                       Foreground="#A9BDB1"/>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Список задач -->
+                                    <Grid Grid.Row="1" MinHeight="160">
+                                        <StackPanel x:Name="TodoTasksPanel"
+                                                    VerticalAlignment="Top">
+
+                                            <TextBlock Text="Нет задач"
+                                                       Margin="0,45,0,8"
+                                                       FontSize="15"
+                                                       Foreground="#5F7A6C"
+                                                       HorizontalAlignment="Center"/>
+
+                                            <TextBlock Text="Создайте первую задачу"
+                                                       FontSize="12"
+                                                       Foreground="#435D4F"
+                                                       HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- Добавление задачи -->
+                                    <Button Grid.Row="2"
+                                            Style="{StaticResource TodoGhostButton}"
+                                            Height="42"
+                                            Margin="0,12,0,0"
+                                            HorizontalContentAlignment="Center"
                                             Content="+  Добавить задачу"
+                                            ToolTip="Создать новую задачу"
                                             Click="OnAddTodoTaskClick"/>
-                                </StackPanel>
+
+                                </Grid>
                             </Border>
 
                             <!-- В работе -->
-                            <Border Width="340" MinHeight="260"
-                                    Margin="0,0,16,0" Padding="16"
-                                    Background="{StaticResource DoingColumnGradient}"
-                                    BorderBrush="#25493A" BorderThickness="1"
-                                    CornerRadius="18">
-                                <StackPanel>
-                                    <Grid Margin="6,0,6,12">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="11" Height="11" Fill="#3DDC97" Margin="0,0,10,0"/>
-                                            <TextBlock Text="В работе" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
-                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#1D3A2C" CornerRadius="9">
-                                                <TextBlock x:Name="DoingCountText" Text="0" FontSize="11" Foreground="#7DE8BC"/>
-                                            </Border>
-                                        </StackPanel>
-                                        <Button HorizontalAlignment="Right"
-                                                Style="{StaticResource PlainButton}"
-                                                Width="34" Height="34"
-                                                FontSize="20" Content="+"
-                                                Foreground="#3DDC97"
-                                                Click="OnAddInProgressTaskClick"/>
-                                    </Grid>
-                                    <StackPanel x:Name="InProgressTasksPanel" VerticalAlignment="Top">
-                                        <TextBlock Margin="10,24,10,12"
-                                                   Text="Нет задач"
+                            <Border Grid.Column="1"
+                                    MinHeight="300"
+                                    Margin="0,0,12,0"
+                                    Padding="18"
+                                    Style="{StaticResource DoingColumnStyle}">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Заголовок -->
+                                    <Grid Grid.Row="0" Margin="2,0,2,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                    <Ellipse Width="10" 
+                                             Height="10"
+                                             Fill="#FFAB5C"
+                                             VerticalAlignment="Center"
+                                             Margin="0,0,10,0"/>
+
+                                    <TextBlock Grid.Column="1"
+                                                   Text="В работе"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E4EFE8"
                                                    FontSize="15"
-                                                   Foreground="#5F7A6C"
-                                                   HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <Button Style="{StaticResource GhostButton}"
-                                            Foreground="#5FE0AC"
+                                                   VerticalAlignment="Center"/>
+
+                                    <Border Grid.Column="2"
+                                            Padding="9,3"
+                                            Background="#3A2C1C"
+                                            CornerRadius="9">
+                                        <TextBlock x:Name="DoingCountText"
+                                                   Text="0"
+                                                   FontSize="11"
+                                                   Foreground="#FFBE7C"/>
+                                    </Border>
+                                </Grid>
+
+                                    <!-- Задачи -->
+                                    <Grid Grid.Row="1" MinHeight="160">
+                                        <StackPanel x:Name="InProgressTasksPanel"
+                                                    VerticalAlignment="Top">
+
+                                            <TextBlock Text="Нет задач"
+                                                       Margin="0,45,0,8"
+                                                       FontSize="15"
+                                                       Foreground="#7A6C5F"
+                                                       HorizontalAlignment="Center"/>
+
+                                            <TextBlock Text="Задачи появятся здесь"
+                                                       FontSize="12"
+                                                       Foreground="#75634B"
+                                                       HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- Добавление -->
+                                    <Button Grid.Row="2"
+                                            Style="{StaticResource DoingGhostButton}"
+                                            Foreground="#F0A868"
+                                            Height="42"
+                                            Margin="0,12,0,0"
+                                            HorizontalContentAlignment="Center"
                                             Content="+  Добавить задачу"
+                                            ToolTip="Добавить задачу в работу"
                                             Click="OnAddInProgressTaskClick"/>
-                                </StackPanel>
+                                </Grid>
                             </Border>
 
                             <!-- На проверке -->
-                            <Border Width="340" MinHeight="260"
-                                    Margin="0,0,16,0" Padding="16"
-                                    Background="{StaticResource ReviewColumnGradient}"
-                                    BorderBrush="#3E3220" BorderThickness="1"
-                                    CornerRadius="18">
-                                <StackPanel>
-                                    <Grid Margin="6,0,6,12">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="11" Height="11" Fill="#FFAB5C" Margin="0,0,10,0"/>
-                                            <TextBlock Text="На проверке" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
-                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#3A2C1C" CornerRadius="9">
-                                                <TextBlock x:Name="ReviewCountText" Text="0" FontSize="11" Foreground="#FFBE7C"/>
-                                            </Border>
-                                        </StackPanel>
-                                        <Button HorizontalAlignment="Right"
-                                                Style="{StaticResource PlainButton}"
-                                                Width="34" Height="34"
-                                                FontSize="20" Content="+"
-                                                Foreground="#FFBB78"
-                                                Click="OnAddReviewTaskClick"/>
-                                    </Grid>
-                                    <StackPanel x:Name="ReviewTasksPanel" VerticalAlignment="Top">
-                                        <TextBlock Margin="10,24,10,12"
-                                                   Text="Нет задач"
+                            <Border Grid.Column="2"
+                                    MinHeight="300"
+                                    Margin="0,0,12,0"
+                                    Padding="18"
+                                    Style="{StaticResource ReviewColumnStyle}">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Заголовок -->
+                                    <Grid Grid.Row="0" Margin="2,0,2,16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                    <Ellipse Width="10" Height="10"
+                                             Fill="#60A5FA"
+                                             VerticalAlignment="Center"
+                                             Margin="0,0,10,0"/>
+
+                                    <TextBlock Grid.Column="1"
+                                                   Text="На проверке"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E4EFE8"
                                                    FontSize="15"
-                                                   Foreground="#5F7A6C"
-                                                   HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <Button Style="{StaticResource GhostButton}"
-                                            Foreground="#F0A868"
+                                                   VerticalAlignment="Center"/>
+
+                                    <Border Grid.Column="2"
+                                            Padding="9,3"
+                                            Background="#1D3045"
+                                            CornerRadius="9">
+                                        <TextBlock x:Name="ReviewCountText"
+                                                   Text="0"
+                                                   FontSize="11"
+                                                   Foreground="#93C5FD"/>
+                                    </Border>
+                                </Grid>
+
+                                    <!-- Задачи -->
+                                    <Grid Grid.Row="1" MinHeight="160">
+                                        <StackPanel x:Name="ReviewTasksPanel"
+                                                    VerticalAlignment="Top">
+
+                                            <TextBlock Text="Нет задач"
+                                                       Margin="0,45,0,8"
+                                                       FontSize="15"
+                                                       Foreground="#5F6C7A"
+                                                       HorizontalAlignment="Center"/>
+
+                                            <TextBlock Text="Ожидание проверки"
+                                                       FontSize="12"
+                                                       Foreground="#5F6C7A"
+                                                       HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- Добавление -->
+                                    <Button Grid.Row="2"
+                                            Style="{StaticResource ReviewGhostButton}"
+                                            Foreground="#68A8F0"
+                                            Height="42"
+                                            Margin="0,12,0,0"
+                                            HorizontalContentAlignment="Center"
                                             Content="+  Добавить задачу"
+                                            ToolTip="Добавить задачу на проверку"
                                             Click="OnAddReviewTaskClick"/>
-                                </StackPanel>
+                                </Grid>
                             </Border>
 
                             <!-- Готово -->
-                            <Border Width="340" MinHeight="260"
-                                    Margin="0,0,16,0" Padding="16"
-                                    Background="{StaticResource DoneColumnGradient}"
-                                    BorderBrush="#234A37" BorderThickness="1"
-                                    CornerRadius="18">
-                                <StackPanel>
-                                    <Grid Margin="6,0,6,12">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="11" Height="11" Fill="#37D49A" Margin="0,0,10,0"/>
-                                            <TextBlock Text="Готово" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
-                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#1A3A2B" CornerRadius="9">
-                                                <TextBlock x:Name="DoneCountText" Text="0" FontSize="11" Foreground="#61E0B0"/>
-                                            </Border>
-                                        </StackPanel>
-                                        <Button HorizontalAlignment="Right"
-                                                Style="{StaticResource PlainButton}"
-                                                Width="34" Height="34"
-                                                FontSize="20" Content="+"
-                                                Foreground="#61E0B0"
-                                                Click="OnAddDoneTaskClick"/>
-                                    </Grid>
-                                    <StackPanel x:Name="DoneTasksPanel" VerticalAlignment="Top">
-                                        <TextBlock Margin="10,24,10,12"
-                                                   Text="Нет задач"
-                                                   FontSize="15"
-                                                   Foreground="#5F7A6C"
-                                                   HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <Button Style="{StaticResource GhostButton}"
-                                            Foreground="#56D9A4"
-                                            Content="+  Добавить задачу"
-                                            Click="OnAddDoneTaskClick"/>
-                                </StackPanel>
-                            </Border>
+                            <Border Grid.Column="3"
+                                    MinHeight="300"
+                                    Margin="0,0,12,0"
+                                    Padding="18"
+                                    Style="{StaticResource DoneColumnStyle}">
 
-                        </StackPanel>
-                    </ScrollViewer>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Заголовок -->
+                                <Grid Grid.Row="0" Margin="2,0,2,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Ellipse Width="10"
+                                                 Height="10"
+                                                 Fill="#37D49A"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,10,0"/>
+
+                                    <TextBlock Grid.Column="1"
+                                                   Text="Готово"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#E4EFE8"
+                                                   FontSize="15"
+                                                   VerticalAlignment="Center"/>
+
+                                    <Border Grid.Column="2"
+                                                Padding="9,3"
+                                                Background="#1A3A2B"
+                                                CornerRadius="9">
+                                        <TextBlock x:Name="DoneCountText"
+                                                       Text="0"
+                                                       FontSize="11"
+                                                       Foreground="#61E0B0"/>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Задачи -->
+                                <Grid Grid.Row="1" MinHeight="160">
+                                    <StackPanel x:Name="DoneTasksPanel"
+                                                    VerticalAlignment="Top">
+
+                                        <TextBlock Text="Нет задач"
+                                                       Margin="0,45,0,8"
+                                                       FontSize="15"
+                                                       Foreground="#5F7A6C"
+                                                       HorizontalAlignment="Center"/>
+
+                                        <TextBlock Text="Выполненные задачи появятся здесь"
+                                                       FontSize="12"
+                                                       Foreground="#435D4F"
+                                                       HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Добавление -->
+                                <Button Grid.Row="2"
+                                            Style="{StaticResource DoneGhostButton}"
+                                            Foreground="#56D9A4"
+                                            Height="42"
+                                            Margin="0,12,0,0"
+                                            HorizontalContentAlignment="Center"
+                                            Content="+  Добавить задачу"
+                                            ToolTip="Добавить выполненную задачу"
+                                            Click="OnAddDoneTaskClick"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
