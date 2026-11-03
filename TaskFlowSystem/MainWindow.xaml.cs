@@ -13,15 +13,42 @@ namespace TaskFlowSystem
         private Button _activeViewButton;
 
         public MainWindow()
+            : this(null)
+        {
+        }
+
+        public MainWindow(LocalProfile profile)
         {
             InitializeComponent();
+            CurrentProfile = profile;
         }
+
+        /// <summary>
+        /// Профиль, с которым открыто приложение.
+        /// </summary>
+        public LocalProfile CurrentProfile { get; private set; }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             _activeNavButton = NavOverviewButton;
             _activeViewButton = ViewBoardButton;
             SetSearchPlaceholder();
+            ApplyProfile(CurrentProfile);
+        }
+
+        private void ApplyProfile(LocalProfile profile)
+        {
+            if (profile == null)
+            {
+                return;
+            }
+
+            ProfileNameText.Text = profile.Name;
+            ProfileRoleText.Text = string.IsNullOrWhiteSpace(profile.Role) ? "Гость" : profile.Role;
+            ProfileAvatarText.Text = profile.Initial;
+            ProfileAvatarBorder.Background = ProfileColors.CreateBrush(profile.Color);
+            System.Windows.Automation.AutomationProperties.SetName(ProfileButton, "Профиль " + profile.Name);
+            Title = "TaskFlow — " + profile.Name;
         }
 
         private void OnCloseClick(object sender, RoutedEventArgs e)
@@ -187,8 +214,18 @@ namespace TaskFlowSystem
 
         private void OnProfileClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Открыть меню профиля.", "Профиль",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+            var login = new Login { Owner = this };
+            var result = login.ShowDialog();
+
+            if (result != true || login.SelectedProfile == null)
+            {
+                return;
+            }
+
+            CurrentProfile = login.SelectedProfile;
+            ApplyProfile(CurrentProfile);
+            PageTitleText.Text = "Обзор";
+            PageSubtitleText.Text = string.Format("Профиль «{0}» активен", CurrentProfile.Name);
         }
 
         private void OnSearchGotFocus(object sender, RoutedEventArgs e)

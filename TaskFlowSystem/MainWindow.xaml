@@ -21,7 +21,6 @@
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="64"
                             ResizeBorderThickness="6"
-                            CornerRadius="12"
                             GlassFrameThickness="0"
                             UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
@@ -332,7 +331,7 @@
     <Border Background="{StaticResource WindowGradient}"
             BorderBrush="#1E2B24"
             BorderThickness="1"
-            CornerRadius="12">
+            CornerRadius="0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="64"/>
@@ -342,7 +341,7 @@
             <!-- Верхняя панель -->
             <Border Grid.Row="0"
                     Background="{StaticResource TopBarGradient}"
-                    CornerRadius="12,12,0,0">
+                    CornerRadius="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="236"/>
@@ -350,16 +349,15 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Логотип (убраны мак-кнопки) -->
+                    <!-- Логотип -->
                     <StackPanel Grid.Column="0"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
-                                Margin="24,0,0,0"
-                                shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                                Margin="24,0,0,0">
                         <Button Style="{StaticResource PlainButton}"
                                 HorizontalContentAlignment="Left"
                                 Click="OnLogoClick">
-                            <StackPanel Orientation="Horizontal" Margin="8,0,0,16">
+                            <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
                                 <Border Width="44" Height="44"
                                         Background="{StaticResource AccentTileGradient}"
                                         CornerRadius="12">
@@ -387,8 +385,7 @@
                             Background="#121C16"
                             BorderBrush="#22332B"
                             BorderThickness="1"
-                            CornerRadius="14"
-                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                            CornerRadius="14">
                         <Grid Margin="18,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="32"/>
@@ -436,8 +433,7 @@
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
-                                Margin="0,0,24,0"
-                                shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                                Margin="0,0,24,0">
                         <Button Style="{StaticResource IconButton}"
                                 Content="◌"
                                 ToolTip="Уведомления"
@@ -447,14 +443,18 @@
                                 Content="?"
                                 ToolTip="Помощь"
                                 Click="OnHelpClick"/>
-                        <Button Style="{StaticResource PlainButton}"
+                        <Button x:Name="ProfileButton"
+                                Style="{StaticResource PlainButton}"
                                 Padding="6,4"
+                                AutomationProperties.Name="Профиль"
                                 Click="OnProfileClick"
-                                ToolTip="Профиль">
+                                ToolTip="Профиль (нажмите, чтобы сменить)">
                             <StackPanel Orientation="Horizontal">
-                                <Border Width="44" Height="44" CornerRadius="22"
+                                <Border x:Name="ProfileAvatarBorder"
+                                        Width="44" Height="44" CornerRadius="22"
                                         Background="{StaticResource AccentTileGradient}">
-                                    <TextBlock Text="?"
+                                    <TextBlock x:Name="ProfileAvatarText"
+                                               Text="?"
                                                FontWeight="Bold"
                                                Foreground="#06251A"
                                                FontSize="16"
