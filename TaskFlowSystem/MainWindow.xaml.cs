@@ -35,6 +35,7 @@ namespace TaskFlowSystem
             _activeViewButton = ViewBoardButton;
             SetSearchPlaceholder();
             ApplyProfile(CurrentProfile);
+            UpdateMaximizeButtonState();
         }
 
         private void ApplyProfile(LocalProfile profile)
@@ -80,6 +81,30 @@ namespace TaskFlowSystem
             {
                 SystemCommands.MaximizeWindow(this);
             }
+        }
+
+        private void OnWindowStateChanged(object sender, EventArgs e)
+        {
+            UpdateMaximizeButtonState();
+        }
+
+        /// <summary>
+        /// Кнопка развернуть/восстановить должна отражать текущее состояние окна.
+        /// </summary>
+        private void UpdateMaximizeButtonState()
+        {
+            if (BtnMaximize == null)
+            {
+                // StateChanged может сработать во время разбора XAML, до создания кнопки.
+                return;
+            }
+
+            var isMaximized = WindowState == WindowState.Maximized;
+            BtnMaximize.Content = isMaximized ? "❐" : "□";
+            BtnMaximize.ToolTip = isMaximized ? "Восстановить" : "Развернуть";
+            System.Windows.Automation.AutomationProperties.SetName(
+                BtnMaximize,
+                isMaximized ? "Восстановить окно" : "Развернуть окно");
         }
 
         private void OnLogoClick(object sender, RoutedEventArgs e)

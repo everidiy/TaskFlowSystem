@@ -16,7 +16,8 @@
         ResizeMode="CanResize"
         Background="#0A0F0C"
         FontFamily="Segoe UI"
-        Loaded="OnWindowLoaded">
+        Loaded="OnWindowLoaded"
+        StateChanged="OnWindowStateChanged">
 
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="64"
@@ -446,7 +447,8 @@
                         <Button x:Name="ProfileButton"
                                 Style="{StaticResource PlainButton}"
                                 Padding="6,4"
-                                AutomationProperties.Name="Профиль"
+                                AutomationProperties.Name="Выбор пользователя"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Click="OnProfileClick"
                                 ToolTip="Профиль (нажмите, чтобы сменить)">
                             <StackPanel Orientation="Horizontal">
@@ -490,6 +492,8 @@
                                 Margin="12,0,0,0"
                                 Content="─"
                                 Foreground="#8AA394"
+                                AutomationProperties.Name="Свернуть окно"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Click="OnMinimizeClick"
                                 ToolTip="Свернуть"/>
                         <Button x:Name="BtnMaximize"
@@ -497,6 +501,8 @@
                                 Margin="8,0,0,0"
                                 Content="□"
                                 Foreground="#8AA394"
+                                AutomationProperties.Name="Развернуть окно"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Click="OnMaximizeClick"
                                 ToolTip="Развернуть"/>
                         <Button x:Name="BtnClose"
@@ -504,6 +510,8 @@
                                 Margin="8,0,0,0"
                                 Content="×"
                                 Foreground="#8AA394"
+                                AutomationProperties.Name="Закрыть окно"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Click="OnCloseClick"
                                 ToolTip="Закрыть">
                         </Button>
