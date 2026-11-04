@@ -13,6 +13,7 @@
         UseLayoutRounding="True"
         TextOptions.TextFormattingMode="Display"
         Loaded="OnWindowLoaded"
+        KeyDown="OnWindowKeyDown"
         Opacity="0">
 
     <Window.Resources>
@@ -95,6 +96,14 @@
 
             <!-- Действия -->
             <StackPanel Grid.Row="3" Margin="44,22,44,30">
+                <TextBlock x:Name="ErrorText"
+                           Margin="0,0,0,12"
+                           FontSize="13"
+                           LineHeight="18"
+                           TextWrapping="Wrap"
+                           Foreground="#FF9AA8"
+                           AutomationProperties.LiveSetting="Assertive"
+                           Visibility="Collapsed"/>
                 <Button x:Name="CreateProfileButton"
                         Style="{StaticResource TfPrimaryButton}"
                         Height="50"

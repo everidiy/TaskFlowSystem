@@ -15,8 +15,9 @@ namespace TaskFlowSystem
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Role { get; set; }
+        public string Description { get; set; }
         public string Color { get; set; }
+        public string AvatarFile { get; set; }
         public DateTime CreatedUtc { get; set; }
 
         [ScriptIgnore]
@@ -56,6 +57,19 @@ namespace TaskFlowSystem
             }
         }
 
+        /// <summary>
+        /// Папка для локальных копий фотографий профилей.
+        /// </summary>
+        public static string AvatarsDirectory
+        {
+            get
+            {
+                var path = Path.Combine(StorageDirectory, "avatars");
+                Directory.CreateDirectory(path);
+                return path;
+            }
+        }
+
         private static string ProfilesPath
         {
             get { return Path.Combine(StorageDirectory, FileName); }
@@ -66,37 +80,83 @@ namespace TaskFlowSystem
             get { return Path.Combine(StorageDirectory, ActiveFileName); }
         }
 
+        /// <summary>
+        /// Загружает профили. Ошибку чтения не скрываем: вызывающий код должен
+        /// показать её пользователю и не перезаписывать повреждённый файл.
+        /// </summary>
         public static List<LocalProfile> Load()
         {
-            try
+            if (!File.Exists(ProfilesPath))
             {
-                if (!File.Exists(ProfilesPath))
-                {
-                    return new List<LocalProfile>();
-                }
-
-                var json = File.ReadAllText(ProfilesPath, Encoding.UTF8);
-                if (string.IsNullOrWhiteSpace(json))
-                {
-                    return new List<LocalProfile>();
-                }
-
-                var serializer = new JavaScriptSerializer();
-                var profiles = serializer.Deserialize<List<LocalProfile>>(json) ?? new List<LocalProfile>();
-                return profiles.Where(p => p != null && !string.IsNullOrEmpty(p.Id)).ToList();
-            }
-            catch
-            {
-                // Повреждённый файл не должен ломать запуск приложения.
                 return new List<LocalProfile>();
             }
+
+            var json = File.ReadAllText(ProfilesPath, Encoding.UTF8);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return new List<LocalProfile>();
+            }
+
+            List<StoredProfile> storedProfiles;
+            try
+            {
+                var serializer = new JavaScriptSerializer();
+                storedProfiles = serializer.Deserialize<List<StoredProfile>>(json);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException("Файл профилей повреждён и не может быть прочитан.", ex);
+            }
+
+            var profiles = new List<LocalProfile>();
+            if (storedProfiles == null)
+            {
+                return profiles;
+            }
+
+            foreach (var stored in storedProfiles)
+            {
+                var profile = ToProfile(stored);
+                if (profile != null)
+                {
+                    profiles.Add(profile);
+                }
+            }
+
+            return profiles;
         }
 
+        /// <summary>
+        /// Сохраняет профили через временный файл, чтобы сбой записи не оставил
+        /// частично записанный JSON.
+        /// </summary>
         public static void Save(IEnumerable<LocalProfile> profiles)
         {
             var serializer = new JavaScriptSerializer();
             var json = serializer.Serialize(profiles.ToList());
-            File.WriteAllText(ProfilesPath, json, Encoding.UTF8);
+
+            var targetPath = ProfilesPath;
+            var tempPath = targetPath + ".tmp";
+
+            try
+            {
+                File.WriteAllText(tempPath, json, new UTF8Encoding(false));
+
+                if (File.Exists(targetPath))
+                {
+                    var backupPath = targetPath + ".bak";
+                    File.Replace(tempPath, targetPath, backupPath, true);
+                    TryDeleteFile(backupPath);
+                }
+                else
+                {
+                    File.Move(tempPath, targetPath);
+                }
+            }
+            finally
+            {
+                TryDeleteFile(tempPath);
+            }
         }
 
         public static void Add(LocalProfile profile)
@@ -110,8 +170,19 @@ namespace TaskFlowSystem
         public static void Remove(string profileId)
         {
             var profiles = Load();
-            profiles.RemoveAll(p => string.Equals(p.Id, profileId, StringComparison.OrdinalIgnoreCase));
+            var profile = profiles.FirstOrDefault(
+                p => string.Equals(p.Id, profileId, StringComparison.OrdinalIgnoreCase));
+
+            if (profile == null)
+            {
+                return;
+            }
+
+            profiles.Remove(profile);
             Save(profiles);
+
+            // Осиротевший файл аватара не должен мешать удалению профиля.
+            ProfileAvatar.TryDelete(profile.AvatarFile);
 
             if (string.Equals(GetActiveId(), profileId, StringComparison.OrdinalIgnoreCase))
             {
@@ -155,6 +226,69 @@ namespace TaskFlowSystem
             {
                 // Игнорируем ошибки очистки — они не критичны.
             }
+        }
+
+        private static LocalProfile ToProfile(StoredProfile stored)
+        {
+            if (stored == null || string.IsNullOrWhiteSpace(stored.Id))
+            {
+                return null;
+            }
+
+            var description = stored.Description;
+            if (string.IsNullOrWhiteSpace(description) && !string.IsNullOrWhiteSpace(stored.Role))
+            {
+                // Совместимость с профилями, сохранёнными до замены роли описанием.
+                var legacyRole = stored.Role.Trim();
+                if (!string.Equals(legacyRole, "Гость", StringComparison.OrdinalIgnoreCase))
+                {
+                    description = legacyRole;
+                }
+            }
+
+            return new LocalProfile
+            {
+                Id = stored.Id,
+                Name = stored.Name,
+                Description = description,
+                Color = stored.Color,
+                AvatarFile = stored.AvatarFile,
+                CreatedUtc = stored.CreatedUtc
+            };
+        }
+
+        private static void TryDeleteFile(string path)
+        {
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+            catch
+            {
+                // Временный или резервный файл не критичен для работы профиля.
+            }
+        }
+
+        /// <summary>
+        /// Формат файла на диске. Поле Role оставлено только для чтения старых
+        /// профилей, в новом формате используется Description.
+        /// </summary>
+        public sealed class StoredProfile
+        {
+            public StoredProfile()
+            {
+            }
+
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string Role { get; set; }
+            public string Color { get; set; }
+            public string AvatarFile { get; set; }
+            public DateTime CreatedUtc { get; set; }
         }
     }
 }

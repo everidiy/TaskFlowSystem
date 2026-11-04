@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,7 +16,7 @@ namespace TaskFlowSystem
     /// </summary>
     public partial class Login : Window
     {
-        private const int PreviewNameLength = 26;
+        private bool _storageAvailable = true;
 
         public Login()
         {
@@ -43,10 +45,31 @@ namespace TaskFlowSystem
         private void Refresh()
         {
             ProfileList.Children.Clear();
+            _storageAvailable = true;
+            CreateProfileButton.IsEnabled = true;
 
-            var profiles = ProfileStore.Load()
-                .OrderByDescending(p => p.CreatedUtc)
-                .ToList();
+            List<LocalProfile> profiles;
+            try
+            {
+                profiles = ProfileStore.Load()
+                    .OrderByDescending(p => p.CreatedUtc)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _storageAvailable = false;
+                profiles = new List<LocalProfile>();
+                CreateProfileButton.IsEnabled = false;
+                ShowError(string.Format(
+                    "Не удалось прочитать профили: {0} Файл не будет перезаписан. Проверьте папку {1}.",
+                    ex.Message,
+                    ProfileStore.StorageDirectory));
+            }
+
+            if (_storageAvailable)
+            {
+                HideError();
+            }
 
             foreach (var profile in profiles)
             {
@@ -55,27 +78,72 @@ namespace TaskFlowSystem
                 ProfileList.Children.Add(row);
             }
 
-            var isEmpty = profiles.Count == 0;
-            CreateProfileButton.Content = BuildCreateButtonContent(isEmpty ? "Создать первый профиль" : "Новый профиль");
-            HeaderSubtitle.Text = isEmpty
-                ? "Профилей пока нет — создайте первый за пару секунд"
-                : "Выберите профиль, чтобы продолжить";
-            FooterHint.Text = isEmpty
-                ? "Профили хранятся локально на этом компьютере. Пароли не нужны."
-                : "Профили хранятся локально на этом компьютере. Пароли не нужны.";
+            var isEmpty = profiles.Count == 0 && _storageAvailable;
+            if (isEmpty)
+            {
+                ProfileList.Children.Add(BuildEmptyState());
+            }
+
+            CreateProfileButton.Content = BuildCreateButtonContent(
+                isEmpty ? "Создать первый профиль" : "Новый профиль");
+
+            HeaderSubtitle.Text = _storageAvailable
+                ? (isEmpty
+                    ? "Профилей пока нет — создайте первый за пару секунд"
+                    : "Выберите профиль, чтобы продолжить")
+                : "Профили сейчас недоступны";
+
+            FooterHint.Text = _storageAvailable
+                ? "Профили и фотографии хранятся только на этом компьютере. Пароли не нужны."
+                : string.Empty;
+        }
+
+        private FrameworkElement BuildEmptyState()
+        {
+            var text = new StackPanel();
+
+            text.Children.Add(new TextBlock
+            {
+                Text = "Здесь появятся профили",
+                FontSize = 15,
+                FontWeight = FontWeights.SemiBold,
+                Foreground = new SolidColorBrush(Color.FromRgb(0xEA, 0xF6, 0xEF))
+            });
+
+            text.Children.Add(new TextBlock
+            {
+                Text = "Создайте первый профиль — имя, описание и фотография сохранятся локально.",
+                Margin = new Thickness(0, 6, 0, 0),
+                FontSize = 13,
+                LineHeight = 19,
+                TextWrapping = TextWrapping.Wrap,
+                Foreground = new SolidColorBrush(Color.FromRgb(0x7E, 0x91, 0x86))
+            });
+
+            return new Border
+            {
+                Background = new SolidColorBrush(Color.FromRgb(0x11, 0x1C, 0x16)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(0x22, 0x33, 0x2B)),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(16),
+                Padding = new Thickness(18, 16, 18, 16),
+                Child = text
+            };
         }
 
         private FrameworkElement BuildProfileCard(LocalProfile profile)
         {
-            var roleText = string.IsNullOrWhiteSpace(profile.Role) ? "Гость" : profile.Role;
+            var description = string.IsNullOrWhiteSpace(profile.Description)
+                ? "Локальный профиль"
+                : profile.Description.Trim();
 
-            var nameAndRole = new StackPanel
+            var nameAndDescription = new StackPanel
             {
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(14, 0, 0, 0)
             };
 
-            nameAndRole.Children.Add(new TextBlock
+            nameAndDescription.Children.Add(new TextBlock
             {
                 Text = profile.Name,
                 FontSize = 15,
@@ -84,9 +152,9 @@ namespace TaskFlowSystem
                 TextTrimming = TextTrimming.CharacterEllipsis
             });
 
-            nameAndRole.Children.Add(new TextBlock
+            nameAndDescription.Children.Add(new TextBlock
             {
-                Text = roleText,
+                Text = description,
                 Margin = new Thickness(0, 3, 0, 0),
                 FontSize = 12,
                 Foreground = new SolidColorBrush(Color.FromRgb(0x7E, 0x91, 0x86)),
@@ -98,13 +166,20 @@ namespace TaskFlowSystem
             content.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             content.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
+            var avatarBrush = ProfileAvatar.TryCreateBrush(profile.AvatarFile, 96);
             var avatar = new Border
             {
                 Width = 42,
                 Height = 42,
                 CornerRadius = new CornerRadius(21),
-                Background = ProfileColors.CreateBrush(profile.Color),
-                Child = new TextBlock
+                Background = avatarBrush != null
+                    ? (Brush)avatarBrush
+                    : ProfileColors.CreateBrush(profile.Color)
+            };
+
+            if (avatarBrush == null)
+            {
+                avatar.Child = new TextBlock
                 {
                     Text = profile.Initial,
                     FontSize = 16,
@@ -112,12 +187,13 @@ namespace TaskFlowSystem
                     Foreground = new SolidColorBrush(Color.FromRgb(0x06, 0x25, 0x1A)),
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center
-                }
-            };
+                };
+            }
+
             content.Children.Add(avatar);
 
-            Grid.SetColumn(nameAndRole, 1);
-            content.Children.Add(nameAndRole);
+            Grid.SetColumn(nameAndDescription, 1);
+            content.Children.Add(nameAndDescription);
 
             var arrow = new TextBlock
             {
@@ -137,7 +213,11 @@ namespace TaskFlowSystem
                 Margin = new Thickness(0, 0, 6, 0),
                 ToolTip = "Войти в профиль"
             };
-            System.Windows.Automation.AutomationProperties.SetName(card, profile.Name);
+            AutomationProperties.SetName(
+                card,
+                string.IsNullOrWhiteSpace(profile.Description)
+                    ? profile.Name
+                    : profile.Name + ", " + profile.Description);
             card.Click += OnProfileSelected;
 
             var deleteButton = new Button
@@ -154,7 +234,7 @@ namespace TaskFlowSystem
                 ToolTip = "Удалить профиль",
                 VerticalAlignment = VerticalAlignment.Center
             };
-            System.Windows.Automation.AutomationProperties.SetName(deleteButton, "Удалить профиль " + profile.Name);
+            AutomationProperties.SetName(deleteButton, "Удалить профиль " + profile.Name);
             deleteButton.Template = BuildFlatButtonTemplate();
             deleteButton.Click += OnDeleteProfile;
 
@@ -211,7 +291,17 @@ namespace TaskFlowSystem
             }
 
             SelectedProfile = profile;
-            ProfileStore.SetActiveId(profile.Id);
+
+            try
+            {
+                ProfileStore.SetActiveId(profile.Id);
+            }
+            catch
+            {
+                // Активный профиль — вспомогательное состояние; выбранный профиль
+                // уже передан в MainWindow и приложение может продолжить работу.
+            }
+
             DialogResult = true;
         }
 
@@ -236,20 +326,60 @@ namespace TaskFlowSystem
                 return;
             }
 
-            ProfileStore.Remove(profile.Id);
+            try
+            {
+                ProfileStore.Remove(profile.Id);
+            }
+            catch (Exception ex)
+            {
+                ShowError("Не удалось удалить профиль: " + ex.Message);
+                return;
+            }
+
             Refresh();
         }
 
         private void OnCreateProfileClick(object sender, RoutedEventArgs e)
         {
-            var register = new Register { Owner = this };
-            var result = register.ShowDialog();
+            Register register;
+            bool? result;
+
+            try
+            {
+                register = new Register { Owner = this };
+                result = register.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                ShowError("Не удалось открыть окно создания профиля: " + ex.Message);
+                return;
+            }
 
             if (result == true && register.CreatedProfile != null)
             {
-                ProfileStore.Add(register.CreatedProfile);
-                ProfileStore.SetActiveId(register.CreatedProfile.Id);
-                SelectedProfile = register.CreatedProfile;
+                var profile = register.CreatedProfile;
+
+                try
+                {
+                    ProfileStore.Add(profile);
+                }
+                catch (Exception ex)
+                {
+                    ProfileAvatar.TryDelete(profile.AvatarFile);
+                    ShowError("Не удалось сохранить профиль: " + ex.Message);
+                    return;
+                }
+
+                try
+                {
+                    ProfileStore.SetActiveId(profile.Id);
+                }
+                catch
+                {
+                    // Профиль уже сохранён; не теряем результат из-за вспомогательного файла.
+                }
+
+                SelectedProfile = profile;
                 DialogResult = true;
                 return;
             }
@@ -260,6 +390,26 @@ namespace TaskFlowSystem
         private void OnCloseClick(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        private void OnWindowKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                DialogResult = false;
+            }
+        }
+
+        private void ShowError(string message)
+        {
+            ErrorText.Text = message;
+            ErrorText.Visibility = Visibility.Visible;
+        }
+
+        private void HideError()
+        {
+            ErrorText.Text = string.Empty;
+            ErrorText.Visibility = Visibility.Collapsed;
         }
     }
 }

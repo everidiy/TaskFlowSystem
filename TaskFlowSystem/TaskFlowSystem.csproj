@@ -60,6 +60,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="ProfileAvatar.cs" />
     <Compile Include="ProfileColors.cs" />
     <Compile Include="ProfileStore.cs" />
     <Compile Include="Views\Register.xaml.cs">

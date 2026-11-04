@@ -44,9 +44,17 @@ namespace TaskFlowSystem
             }
 
             ProfileNameText.Text = profile.Name;
-            ProfileRoleText.Text = string.IsNullOrWhiteSpace(profile.Role) ? "Гость" : profile.Role;
+            ProfileDescriptionText.Text = string.IsNullOrWhiteSpace(profile.Description)
+                ? "Локальный профиль"
+                : profile.Description.Trim();
+
+            var avatarBrush = ProfileAvatar.TryCreateBrush(profile.AvatarFile, 96);
+            ProfileAvatarBorder.Background = avatarBrush != null
+                ? (Brush)avatarBrush
+                : ProfileColors.CreateBrush(profile.Color);
             ProfileAvatarText.Text = profile.Initial;
-            ProfileAvatarBorder.Background = ProfileColors.CreateBrush(profile.Color);
+            ProfileAvatarText.Visibility = avatarBrush == null ? Visibility.Visible : Visibility.Collapsed;
+
             System.Windows.Automation.AutomationProperties.SetName(ProfileButton, "Профиль " + profile.Name);
             Title = "TaskFlow — " + profile.Name;
         }

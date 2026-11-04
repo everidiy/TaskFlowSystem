@@ -466,11 +466,15 @@
                                                Text="Пользователь"
                                                FontSize="14"
                                                FontWeight="SemiBold"
-                                               Foreground="#EAF6EF"/>
-                                    <TextBlock x:Name="ProfileRoleText"
-                                               Text="Гость"
+                                               Foreground="#EAF6EF"
+                                               MaxWidth="180"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock x:Name="ProfileDescriptionText"
+                                               Text="Локальный профиль"
                                                FontSize="12"
-                                               Foreground="#7E9186"/>
+                                               Foreground="#7E9186"
+                                               MaxWidth="180"
+                                               TextTrimming="CharacterEllipsis"/>
                                 </StackPanel>
                                 <TextBlock Text="⌄"
                                            Margin="10,0,0,0"

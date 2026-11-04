@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Microsoft.Win32;
 
 namespace TaskFlowSystem
 {
@@ -15,9 +16,12 @@ namespace TaskFlowSystem
     {
         private const int MaxNameLength = 40;
         private const int MinNameLength = 2;
+        private const int MaxDescriptionLength = 80;
 
         private static readonly Color PlaceholderNameColor = Color.FromRgb(0x4E, 0x61, 0x57);
         private static readonly Color ActiveNameColor = Color.FromRgb(0xEA, 0xF6, 0xEF);
+
+        private string _pendingAvatarPath;
 
         public Register()
         {
@@ -43,6 +47,7 @@ namespace TaskFlowSystem
         {
             NameBox.Focus();
             OnNameChanged(NameBox, null);
+            OnDescriptionChanged(DescriptionBox, null);
             ApplyAccent(GetCheckedSwatch());
         }
 
@@ -63,8 +68,12 @@ namespace TaskFlowSystem
                 return;
             }
 
-            AvatarPreview.Background = brush;
-            PreviewRole.Foreground = CreateReadableAccent(brush);
+            if (string.IsNullOrEmpty(_pendingAvatarPath))
+            {
+                AvatarPreview.Background = brush;
+            }
+
+            PreviewDescription.Foreground = CreateReadableAccent(brush);
         }
 
         private void OnNameChanged(object sender, TextChangedEventArgs e)
@@ -82,6 +91,17 @@ namespace TaskFlowSystem
             }
         }
 
+        private void OnDescriptionChanged(object sender, TextChangedEventArgs e)
+        {
+            var description = (DescriptionBox.Text ?? string.Empty).Trim();
+            var isEmpty = description.Length == 0;
+
+            PreviewDescription.Text = isEmpty ? "Без описания" : Truncate(description, MaxDescriptionLength);
+            PreviewDescription.Foreground = isEmpty
+                ? new SolidColorBrush(PlaceholderNameColor)
+                : CreateReadableAccent(GetCheckedSwatch().Background);
+        }
+
         private void OnAccentChecked(object sender, RoutedEventArgs e)
         {
             if (!IsLoaded)
@@ -90,6 +110,62 @@ namespace TaskFlowSystem
             }
 
             ApplyAccent(sender as RadioButton);
+        }
+
+        private void OnPickAvatarClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Title = "Фотография профиля",
+                Filter = "Изображения (*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff)|*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.tif;*.tiff|Все файлы (*.*)|*.*",
+                CheckFileExists = true,
+                Multiselect = false
+            };
+
+            if (dialog.ShowDialog(this) != true)
+            {
+                return;
+            }
+
+            try
+            {
+                var brush = ProfileAvatar.CreatePreviewBrush(dialog.FileName);
+                _pendingAvatarPath = dialog.FileName;
+                ApplyAvatarPreview(brush);
+                ErrorText.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                ShowError("Не удалось использовать фотографию: " + ex.Message, false);
+            }
+        }
+
+        private void OnRemoveAvatarClick(object sender, RoutedEventArgs e)
+        {
+            ResetAvatarPreview();
+        }
+
+        private void ApplyAvatarPreview(ImageBrush brush)
+        {
+            AvatarPreview.Background = brush;
+            AvatarInitial.Visibility = Visibility.Collapsed;
+            RemoveAvatarButton.Visibility = Visibility.Visible;
+            AvatarButton.ToolTip = "Изменить фотографию";
+            System.Windows.Automation.AutomationProperties.SetName(
+                AvatarButton,
+                "Изменить фотографию профиля");
+        }
+
+        private void ResetAvatarPreview()
+        {
+            _pendingAvatarPath = null;
+            AvatarPreview.Background = GetCheckedSwatch().Background;
+            AvatarInitial.Visibility = Visibility.Visible;
+            RemoveAvatarButton.Visibility = Visibility.Collapsed;
+            AvatarButton.ToolTip = "Добавить фотографию";
+            System.Windows.Automation.AutomationProperties.SetName(
+                AvatarButton,
+                "Добавить фотографию профиля");
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -119,22 +195,36 @@ namespace TaskFlowSystem
             var name = (NameBox.Text ?? string.Empty).Trim();
             if (name.Length < MinNameLength)
             {
-                ShowError("Введите имя — не меньше двух символов.");
+                ShowError("Введите имя — не меньше двух символов.", true);
                 NameBox.Focus();
                 return;
             }
 
-            var role = (RoleBox.Text ?? string.Empty).Trim();
+            var description = (DescriptionBox.Text ?? string.Empty).Trim();
 
-            CreatedProfile = new LocalProfile
+            var profile = new LocalProfile
             {
                 Id = Guid.NewGuid().ToString("N"),
                 Name = Truncate(name, MaxNameLength),
-                Role = string.IsNullOrEmpty(role) ? "Гость" : Truncate(role, MaxNameLength),
+                Description = description.Length == 0 ? null : Truncate(description, MaxDescriptionLength),
                 Color = GetSelectedAccentKey(),
                 CreatedUtc = DateTime.UtcNow
             };
 
+            if (!string.IsNullOrEmpty(_pendingAvatarPath))
+            {
+                try
+                {
+                    profile.AvatarFile = ProfileAvatar.Save(profile.Id, _pendingAvatarPath);
+                }
+                catch (Exception ex)
+                {
+                    ShowError("Не удалось сохранить фотографию профиля: " + ex.Message, false);
+                    return;
+                }
+            }
+
+            CreatedProfile = profile;
             DialogResult = true;
         }
 
@@ -143,10 +233,15 @@ namespace TaskFlowSystem
             DialogResult = false;
         }
 
-        private void ShowError(string message)
+        private void ShowError(string message, bool shakeName)
         {
             ErrorText.Text = message;
             ErrorText.Visibility = Visibility.Visible;
+
+            if (!shakeName)
+            {
+                return;
+            }
 
             var shake = new DoubleAnimationUsingKeyFrames();
             shake.KeyFrames.Add(new EasingDoubleKeyFrame(0, KeyTime.FromTimeSpan(TimeSpan.Zero)));

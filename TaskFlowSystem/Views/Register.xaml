@@ -99,43 +99,82 @@
                                TextWrapping="Wrap"
                                Foreground="{StaticResource TfMutedBrush}"/>
 
-                    <!-- Предпросмотр: аватар + имя -->
+                    <!-- Предпросмотр: аватар + имя + описание -->
                     <Grid Margin="0,28,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border x:Name="AvatarPreview"
-                                Width="72" Height="72"
-                                Background="{StaticResource TfAccentGradient}"
-                                CornerRadius="36">
-                            <TextBlock x:Name="AvatarInitial"
-                                       Text="?"
-                                       Foreground="#06251A"
-                                       FontWeight="Bold"
-                                       FontSize="28"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
+                        <Button x:Name="AvatarButton"
+                                Style="{StaticResource TfAvatarPicker}"
+                                AutomationProperties.Name="Добавить фотографию профиля"
+                                ToolTip="Добавить фотографию"
+                                Click="OnPickAvatarClick">
+                            <Grid Width="84" Height="84">
+                                <Border x:Name="AvatarPreview"
+                                        Width="84" Height="84"
+                                        Background="{StaticResource TfAccentGradient}"
+                                        CornerRadius="42">
+                                    <TextBlock x:Name="AvatarInitial"
+                                               Text="?"
+                                               Foreground="#06251A"
+                                               FontWeight="Bold"
+                                               FontSize="32"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Width="26" Height="26"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Background="{StaticResource TfAccentGradient}"
+                                        BorderBrush="#0D1712"
+                                        BorderThickness="2"
+                                        CornerRadius="13">
+                                    <TextBlock Text="+"
+                                               Foreground="#06251A"
+                                               FontSize="15"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Margin="0,-1,0,0"/>
+                                </Border>
+                            </Grid>
+                        </Button>
 
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="18,0,0,0">
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0,0,0">
                             <TextBlock x:Name="PreviewName"
                                        Text="Имя не указано"
                                        FontSize="19"
                                        FontWeight="SemiBold"
                                        Foreground="{StaticResource TfFaintBrush}"
                                        TextTrimming="CharacterEllipsis"/>
-                            <TextBlock x:Name="PreviewRole"
-                                       Text="Гость"
+                            <TextBlock x:Name="PreviewDescription"
+                                       Text="Без описания"
                                        Margin="0,4,0,0"
                                        FontSize="13"
-                                       Foreground="{StaticResource TfMutedBrush}"/>
+                                       Foreground="{StaticResource TfMutedBrush}"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <Button x:Name="PickAvatarButton"
+                                        Style="{StaticResource TfLinkButton}"
+                                        Content="Загрузить фото"
+                                        FontSize="13"
+                                        Click="OnPickAvatarClick"
+                                        AutomationProperties.Name="Загрузить фотографию профиля"/>
+                                <Button x:Name="RemoveAvatarButton"
+                                        Style="{StaticResource TfDangerLinkButton}"
+                                        Content="Удалить"
+                                        Margin="16,0,0,0"
+                                        Visibility="Collapsed"
+                                        Click="OnRemoveAvatarClick"
+                                        AutomationProperties.Name="Удалить фотографию профиля"/>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
 
                     <!-- Имя -->
-                    <TextBlock Text="ИМЯ" Style="{StaticResource TfFieldLabel}" Margin="4,30,0,8"/>
+                    <TextBlock Text="ИМЯ" Style="{StaticResource TfFieldLabel}" Margin="4,26,0,8"/>
                     <TextBox x:Name="NameBox"
                              Style="{StaticResource TfInput}"
                              AutomationProperties.Name="Имя"
@@ -143,13 +182,19 @@
                              TextChanged="OnNameChanged"
                              KeyDown="OnKeyDown"/>
 
-                    <!-- Должность -->
-                    <TextBlock Text="РОЛЬ (НЕОБЯЗАТЕЛЬНО)" Style="{StaticResource TfFieldLabel}" Margin="4,20,0,8"/>
-                    <TextBox x:Name="RoleBox"
+                    <!-- Описание -->
+                    <TextBlock Text="ОПИСАНИЕ (НЕОБЯЗАТЕЛЬНО)" Style="{StaticResource TfFieldLabel}" Margin="4,20,0,8"/>
+                    <TextBox x:Name="DescriptionBox"
                              Style="{StaticResource TfInput}"
-                             AutomationProperties.Name="Роль"
-                             MaxLength="40"
+                             AutomationProperties.Name="Описание"
+                             MaxLength="80"
+                             TextChanged="OnDescriptionChanged"
                              KeyDown="OnKeyDown"/>
+                    <TextBlock Text="Коротко о себе — это увидят при выборе профиля."
+                               Margin="4,8,0,0"
+                               FontSize="12"
+                               TextWrapping="Wrap"
+                               Foreground="{StaticResource TfFaintBrush}"/>
 
                     <!-- Цвет аватара -->
                     <TextBlock Text="АКЦЕНТНЫЙ ЦВЕТ" Style="{StaticResource TfFieldLabel}" Margin="4,22,0,10"/>
