@@ -478,11 +478,11 @@
                                                MaxWidth="180"
                                                TextTrimming="CharacterEllipsis"/>
                                 </StackPanel>
-                                <TextBlock Text="⌄"
+                                <TextBlock Text="☰"
                                            Margin="10,0,0,0"
-                                           FontSize="18"
+                                           FontSize="14"
                                            Foreground="#7E9186"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center" Height="21"/>
                             </StackPanel>
                         </Button>
 
@@ -555,8 +555,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="▦" FontSize="20"/>
-                                    <TextBlock Grid.Column="1" Text="Обзор" FontWeight="SemiBold"/>
+                                    <TextBlock Text="⌂" TextAlignment="Center" FontSize="20"/>
+                                    <TextBlock Grid.Column="1" Text="Обзор" FontWeight="SemiBold" Margin="0,3,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -568,8 +568,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="✓" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Мои задачи"/>
+                                    <TextBlock Text="✓" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Мои задачи" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -581,8 +581,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="▣" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Входящие"/>
+                                    <TextBlock Text="✉️" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Входящие" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -594,8 +594,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="□" FontSize="20"/>
-                                    <TextBlock Grid.Column="1" Text="Календарь"/>
+                                    <TextBlock Text="📆" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Календарь" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -612,8 +612,8 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="◫" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Проекты"/>
+                                    <TextBlock Text="🗎" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Проекты" Margin="0,2,0,0"/>
                                     <Button Grid.Column="2"
                                             Style="{StaticResource PlainButton}"
                                             Width="28"
@@ -621,7 +621,7 @@
                                             Foreground="#3DDC97"
                                             FontSize="20"
                                             Click="OnAddProjectClick"
-                                            Content="+"/>
+                                            Content="+" HorizontalAlignment="Center" Margin="0,-3,0,3"/>
                                 </Grid>
                             </Button>
 
@@ -643,8 +643,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="♙" FontSize="20"/>
-                                    <TextBlock Grid.Column="1" Text="Участники"/>
+                                    <TextBlock Text="👤" TextAlignment="Center" FontSize="20"/>
+                                    <TextBlock Grid.Column="1" Text="Участники" Margin="0,3,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -654,8 +654,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="◈" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Отчёты"/>
+                                    <TextBlock Text="📄" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Отчёты" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -665,8 +665,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="⚙" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Настройки"/>
+                                    <TextBlock Text="⚙" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Настройки" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
                         </StackPanel>
@@ -737,7 +737,7 @@
                                 VerticalAlignment="Center"
                                 Click="OnCreateTaskClick">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="+" Margin="0,-2,10,0" FontSize="22"/>
+                                <TextBlock Text="+" TextAlignment="Center" Margin="0, -6, 10,0" FontSize="22"/>
                                 <TextBlock Text="Новая задача"/>
                             </StackPanel>
                         </Button>
@@ -852,7 +852,7 @@
                                     HorizontalContentAlignment="Center"
                                     Click="OnBoardViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="▦" Margin="0,0,10,0"/>
+                                    <TextBlock Text="🖥️" Margin="0,0,10,0"/>
                                     <TextBlock Text="Доска" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </Button>
@@ -872,7 +872,7 @@
                                     HorizontalContentAlignment="Center"
                                     Click="OnCalendarViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="□" Margin="0,0,10,0"/>
+                                    <TextBlock Text="📅" Margin="0,0,10,0"/>
                                     <TextBlock Text="Календарь"/>
                                 </StackPanel>
                             </Button>
@@ -882,7 +882,7 @@
                                     HorizontalContentAlignment="Center"
                                     Click="OnTimelineViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="◫" Margin="0,0,10,0"/>
+                                    <TextBlock Text="📈" Margin="0,0,10,0"/>
                                     <TextBlock Text="График"/>
                                 </StackPanel>
                             </Button>
@@ -891,13 +891,13 @@
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
                             <Button Style="{StaticResource IconButton}" Width="110" Margin="0,0,10,0" Click="OnFilterClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="≡" Margin="0,0,10,0"/>
+                                    <TextBlock Text="≡" Margin="0,-2,10,0"/>
                                     <TextBlock Text="Фильтр" FontSize="14"/>
                                 </StackPanel>
                             </Button>
                             <Button Style="{StaticResource IconButton}" Width="128" Click="OnSortClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="↕" Margin="0,0,10,0"/>
+                                    <TextBlock Text="↕" Margin="0,-2,10,0"/>
                                     <TextBlock Text="Сортировка" FontSize="14"/>
                                 </StackPanel>
                             </Button>
