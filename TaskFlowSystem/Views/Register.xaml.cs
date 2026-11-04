@@ -9,8 +9,8 @@ using Microsoft.Win32;
 namespace TaskFlowSystem
 {
     /// <summary>
-    /// Локальная регистрация: создание нового профиля без пароля и проверок.
-    /// Окно возвращает созданный профиль через свойство CreatedProfile.
+    /// Локальная регистрация и редактирование профиля без пароля и проверок.
+    /// Окно возвращает созданный или изменённый профиль через свойство CreatedProfile.
     /// </summary>
     public partial class Register : Window
     {
@@ -21,17 +21,34 @@ namespace TaskFlowSystem
         private static readonly Color PlaceholderNameColor = Color.FromRgb(0x4E, 0x61, 0x57);
         private static readonly Color ActiveNameColor = Color.FromRgb(0xEA, 0xF6, 0xEF);
 
+        private readonly LocalProfile _profile;
         private string _pendingAvatarPath;
+        private string _avatarFile;
 
         public Register()
+            : this(null)
+        {
+        }
+
+        public Register(LocalProfile profile)
         {
             InitializeComponent();
-            AccentGreen.IsChecked = true;
+
+            _profile = profile;
+            if (profile == null)
+            {
+                AccentGreen.IsChecked = true;
+            }
+            else
+            {
+                ApplyEditMode(profile);
+            }
+
             PlayEntrance();
         }
 
         /// <summary>
-        /// Созданный профиль или null, если окно закрыли без сохранения.
+        /// Созданный или изменённый профиль или null, если окно закрыли без сохранения.
         /// </summary>
         public LocalProfile CreatedProfile { get; private set; }
 
@@ -41,6 +58,63 @@ namespace TaskFlowSystem
             {
                 EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
             });
+        }
+
+        private bool HasAvatar
+        {
+            get { return !string.IsNullOrEmpty(_pendingAvatarPath) || !string.IsNullOrEmpty(_avatarFile); }
+        }
+
+        private void ApplyEditMode(LocalProfile profile)
+        {
+            Title = "TaskFlow — Редактировать профиль";
+            HeaderModeText.Text = "ПРОФИЛЬ";
+            HeadingText.Text = "Настройки профиля";
+            SubtitleText.Text = "Измените имя, описание, цвет или фотографию. Данные останутся на этом компьютере.";
+            CreateButton.Content = "Сохранить изменения";
+
+            NameBox.Text = profile.Name;
+            DescriptionBox.Text = profile.Description;
+            _avatarFile = profile.AvatarFile;
+
+            SelectAccent(profile.Color);
+            ShowExistingAvatar();
+        }
+
+        private void SelectAccent(string colorKey)
+        {
+            switch (ProfileColors.Normalize(colorKey))
+            {
+                case "Blue":
+                    AccentBlue.IsChecked = true;
+                    break;
+                case "Violet":
+                    AccentViolet.IsChecked = true;
+                    break;
+                case "Amber":
+                    AccentAmber.IsChecked = true;
+                    break;
+                case "Rose":
+                    AccentRose.IsChecked = true;
+                    break;
+                default:
+                    AccentGreen.IsChecked = true;
+                    break;
+            }
+        }
+
+        private void ShowExistingAvatar()
+        {
+            if (string.IsNullOrWhiteSpace(_avatarFile))
+            {
+                return;
+            }
+
+            var brush = ProfileAvatar.TryCreateBrush(_avatarFile, 168);
+            if (brush != null)
+            {
+                ApplyAvatarPreview(brush);
+            }
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
@@ -68,7 +142,7 @@ namespace TaskFlowSystem
                 return;
             }
 
-            if (string.IsNullOrEmpty(_pendingAvatarPath))
+            if (!HasAvatar)
             {
                 AvatarPreview.Background = brush;
             }
@@ -159,6 +233,7 @@ namespace TaskFlowSystem
         private void ResetAvatarPreview()
         {
             _pendingAvatarPath = null;
+            _avatarFile = null;
             AvatarPreview.Background = GetCheckedSwatch().Background;
             AvatarInitial.Visibility = Visibility.Visible;
             RemoveAvatarButton.Visibility = Visibility.Collapsed;
@@ -201,14 +276,16 @@ namespace TaskFlowSystem
             }
 
             var description = (DescriptionBox.Text ?? string.Empty).Trim();
+            var isEdit = _profile != null;
 
             var profile = new LocalProfile
             {
-                Id = Guid.NewGuid().ToString("N"),
+                Id = isEdit ? _profile.Id : Guid.NewGuid().ToString("N"),
                 Name = Truncate(name, MaxNameLength),
                 Description = description.Length == 0 ? null : Truncate(description, MaxDescriptionLength),
                 Color = GetSelectedAccentKey(),
-                CreatedUtc = DateTime.UtcNow
+                AvatarFile = _avatarFile,
+                CreatedUtc = isEdit ? _profile.CreatedUtc : DateTime.UtcNow
             };
 
             if (!string.IsNullOrEmpty(_pendingAvatarPath))

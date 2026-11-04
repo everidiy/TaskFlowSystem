@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
@@ -224,6 +225,15 @@ namespace TaskFlowSystem
         {
             var login = new Login { Owner = this };
             var result = login.ShowDialog();
+
+            if (login.EditedProfile != null &&
+                CurrentProfile != null &&
+                string.Equals(login.EditedProfile.Id, CurrentProfile.Id, StringComparison.OrdinalIgnoreCase))
+            {
+                CurrentProfile = login.EditedProfile;
+                ApplyProfile(CurrentProfile);
+                PageSubtitleText.Text = string.Format("Профиль «{0}» активен", CurrentProfile.Name);
+            }
 
             if (result != true || login.SelectedProfile == null)
             {

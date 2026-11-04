@@ -48,7 +48,8 @@
                                Margin="8,0"
                                FontSize="13"
                                Foreground="#2E4A3B"/>
-                    <TextBlock Text="НОВЫЙ ПРОФИЛЬ"
+                    <TextBlock x:Name="HeaderModeText"
+                               Text="НОВЫЙ ПРОФИЛЬ"
                                FontSize="11"
                                FontWeight="SemiBold"
                                Foreground="#3E5A4A"
@@ -87,12 +88,14 @@
                                    VerticalAlignment="Center"/>
                     </Border>
 
-                    <TextBlock Text="Создайте профиль"
+                    <TextBlock x:Name="HeadingText"
+                               Text="Создайте профиль"
                                Margin="0,26,0,0"
                                FontSize="30"
                                FontWeight="Bold"
                                Foreground="{StaticResource TfTitleGradient}"/>
-                    <TextBlock Text="Профиль хранится только на этом компьютере. Без пароля — просто выберите его при следующем входе."
+                    <TextBlock x:Name="SubtitleText"
+                               Text="Профиль хранится только на этом компьютере. Без пароля — просто выберите его при следующем входе."
                                Margin="0,10,0,0"
                                FontSize="14"
                                LineHeight="21"

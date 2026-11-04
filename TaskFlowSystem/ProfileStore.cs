@@ -162,9 +162,20 @@ namespace TaskFlowSystem
         public static void Add(LocalProfile profile)
         {
             var profiles = Load();
+            var existing = profiles.FirstOrDefault(
+                p => string.Equals(p.Id, profile.Id, StringComparison.OrdinalIgnoreCase));
+
             profiles.RemoveAll(p => string.Equals(p.Id, profile.Id, StringComparison.OrdinalIgnoreCase));
             profiles.Add(profile);
             Save(profiles);
+
+            if (existing != null &&
+                !string.IsNullOrWhiteSpace(existing.AvatarFile) &&
+                !string.Equals(existing.AvatarFile, profile.AvatarFile, StringComparison.OrdinalIgnoreCase))
+            {
+                // Новый JSON уже сохранён — старую фотографию можно удалить.
+                ProfileAvatar.TryDelete(existing.AvatarFile);
+            }
         }
 
         public static void Remove(string profileId)

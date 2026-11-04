@@ -29,6 +29,12 @@ namespace TaskFlowSystem
         /// </summary>
         public LocalProfile SelectedProfile { get; private set; }
 
+        /// <summary>
+        /// Последний изменённый профиль — чтобы открытое главное окно
+        /// могло обновить шапку, не перечитывая всё хранилище.
+        /// </summary>
+        public LocalProfile EditedProfile { get; private set; }
+
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             Refresh();
@@ -235,24 +241,45 @@ namespace TaskFlowSystem
                 VerticalAlignment = VerticalAlignment.Center
             };
             AutomationProperties.SetName(deleteButton, "Удалить профиль " + profile.Name);
-            deleteButton.Template = BuildFlatButtonTemplate();
+            deleteButton.Template = BuildFlatButtonTemplate(Color.FromRgb(0x3A, 0x1F, 0x26));
             deleteButton.Click += OnDeleteProfile;
+
+            var editButton = new Button
+            {
+                Width = 32,
+                Height = 32,
+                Background = Brushes.Transparent,
+                BorderThickness = new Thickness(0),
+                Foreground = new SolidColorBrush(Color.FromRgb(0x4E, 0x61, 0x57)),
+                FontSize = 14,
+                Cursor = Cursors.Hand,
+                Content = "✎",
+                Tag = profile,
+                ToolTip = "Изменить профиль",
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            AutomationProperties.SetName(editButton, "Изменить профиль " + profile.Name);
+            editButton.Template = BuildFlatButtonTemplate(Color.FromRgb(0x1B, 0x2E, 0x24));
+            editButton.Click += OnEditProfile;
 
             var row = new Grid();
             row.Margin = new Thickness(0, 0, 0, 10);
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             row.Children.Add(card);
-            Grid.SetColumn(deleteButton, 1);
+            Grid.SetColumn(editButton, 1);
+            row.Children.Add(editButton);
+            Grid.SetColumn(deleteButton, 2);
             row.Children.Add(deleteButton);
 
             return row;
         }
 
         /// <summary>
-        /// Плоская кнопка без рамки — для удаления профиля.
+        /// Плоская кнопка без рамки — для действий с профилем.
         /// </summary>
-        private static ControlTemplate BuildFlatButtonTemplate()
+        private static ControlTemplate BuildFlatButtonTemplate(Color hoverBackground)
         {
             var template = new ControlTemplate(typeof(Button));
             var border = new FrameworkElementFactory(typeof(Border), "FlatBorder");
@@ -267,7 +294,7 @@ namespace TaskFlowSystem
             template.VisualTree = border;
 
             var hover = new Trigger { Property = UIElement.IsMouseOverProperty, Value = true };
-            hover.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromRgb(0x3A, 0x1F, 0x26)), "FlatBorder"));
+            hover.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(hoverBackground), "FlatBorder"));
             template.Triggers.Add(hover);
 
             return template;
@@ -339,6 +366,39 @@ namespace TaskFlowSystem
             Refresh();
         }
 
+        private void OnEditProfile(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var profile = button != null ? button.Tag as LocalProfile : null;
+            if (profile == null)
+            {
+                return;
+            }
+
+            Register register;
+            bool? result;
+
+            try
+            {
+                register = new Register(profile) { Owner = this };
+                result = register.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                ShowError("Не удалось открыть окно редактирования профиля: " + ex.Message);
+                return;
+            }
+
+            if (result == true && register.CreatedProfile != null)
+            {
+                if (TrySaveProfile(register.CreatedProfile, profile))
+                {
+                    EditedProfile = register.CreatedProfile;
+                    Refresh();
+                }
+            }
+        }
+
         private void OnCreateProfileClick(object sender, RoutedEventArgs e)
         {
             Register register;
@@ -358,15 +418,8 @@ namespace TaskFlowSystem
             if (result == true && register.CreatedProfile != null)
             {
                 var profile = register.CreatedProfile;
-
-                try
+                if (!TrySaveProfile(profile, null))
                 {
-                    ProfileStore.Add(profile);
-                }
-                catch (Exception ex)
-                {
-                    ProfileAvatar.TryDelete(profile.AvatarFile);
-                    ShowError("Не удалось сохранить профиль: " + ex.Message);
                     return;
                 }
 
@@ -385,6 +438,31 @@ namespace TaskFlowSystem
             }
 
             Refresh();
+        }
+
+        /// <summary>
+        /// Сохраняет профиль и убирает только что созданный файл аватара,
+        /// если запись профиля не удалась. Старый аватар при ошибке не трогаем.
+        /// </summary>
+        private bool TrySaveProfile(LocalProfile profile, LocalProfile original)
+        {
+            try
+            {
+                ProfileStore.Add(profile);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var avatarChanged = original == null ||
+                    !string.Equals(profile.AvatarFile, original.AvatarFile, StringComparison.OrdinalIgnoreCase);
+                if (avatarChanged)
+                {
+                    ProfileAvatar.TryDelete(profile.AvatarFile);
+                }
+
+                ShowError("Не удалось сохранить профиль: " + ex.Message);
+                return false;
+            }
         }
 
         private void OnCloseClick(object sender, RoutedEventArgs e)

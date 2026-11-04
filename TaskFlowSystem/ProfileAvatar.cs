@@ -46,7 +46,9 @@ namespace TaskFlowSystem
             var image = ScaleDown(converted, MaxStoredDimension);
 
             var directory = ProfileStore.AvatarsDirectory;
-            var fileName = profileId + ".png";
+            // Уникальное имя не перезаписывает старый аватар до успешного
+            // сохранения профиля. Старый файл удаляется в ProfileStore.Add.
+            var fileName = profileId + "-" + Guid.NewGuid().ToString("N") + ".png";
             var targetPath = Path.Combine(directory, fileName);
             var tempPath = targetPath + ".tmp";
 
