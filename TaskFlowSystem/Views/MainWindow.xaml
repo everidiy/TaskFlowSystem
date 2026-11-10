@@ -116,12 +116,12 @@
             <GradientStop Color="#101813" Offset="1"/>
         </LinearGradientBrush>
         <LinearGradientBrush x:Key="DoingColumnGradient" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#12211B" Offset="0"/>
-            <GradientStop Color="#0E1A14" Offset="1"/>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="ReviewColumnGradient" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#211A11" Offset="0"/>
             <GradientStop Color="#181309" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ReviewColumnGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#14202D" Offset="0"/>
+            <GradientStop Color="#0E1823" Offset="1"/>
         </LinearGradientBrush>
         <LinearGradientBrush x:Key="DoneColumnGradient" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#10231A" Offset="0"/>
@@ -889,13 +889,17 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <Button Style="{StaticResource IconButton}" Width="110" Margin="0,0,10,0" Click="OnFilterClick">
+                            <Button Style="{StaticResource IconButton}" Width="110" Margin="0,0,10,0"
+                                    ToolTip="Фильтровать задачи"
+                                    Click="OnFilterClick">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="≡" Margin="0,-2,10,0"/>
                                     <TextBlock Text="Фильтр" FontSize="14"/>
                                 </StackPanel>
                             </Button>
-                            <Button Style="{StaticResource IconButton}" Width="128" Click="OnSortClick">
+                            <Button Style="{StaticResource IconButton}" Width="128"
+                                    ToolTip="Сортировать задачи"
+                                    Click="OnSortClick">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="↕" Margin="0,-2,10,0"/>
                                     <TextBlock Text="Сортировка" FontSize="14"/>
@@ -929,6 +933,7 @@
                                                 Style="{StaticResource PlainButton}"
                                                 Width="34" Height="34"
                                                 FontSize="20" Content="+"
+                                                ToolTip="Добавить задачу"
                                                 Foreground="#8AA394"
                                                 Click="OnAddTodoTaskClick"/>
                                     </Grid>
@@ -941,6 +946,7 @@
                                     </StackPanel>
                                     <Button Style="{StaticResource GhostButton}"
                                             Content="+  Добавить задачу"
+                                            ToolTip="Добавить задачу"
                                             Click="OnAddTodoTaskClick"/>
                                 </StackPanel>
                             </Border>
@@ -949,34 +955,36 @@
                             <Border Width="340" MinHeight="260"
                                     Margin="0,0,16,0" Padding="16"
                                     Background="{StaticResource DoingColumnGradient}"
-                                    BorderBrush="#25493A" BorderThickness="1"
+                                    BorderBrush="#3E3220" BorderThickness="1"
                                     CornerRadius="18">
                                 <StackPanel>
                                     <Grid Margin="6,0,6,12">
                                         <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="11" Height="11" Fill="#3DDC97" Margin="0,0,10,0"/>
+                                            <Ellipse Width="11" Height="11" Fill="#FFAB5C" Margin="0,0,10,0"/>
                                             <TextBlock Text="В работе" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
-                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#1D3A2C" CornerRadius="9">
-                                                <TextBlock x:Name="DoingCountText" Text="0" FontSize="11" Foreground="#7DE8BC"/>
+                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#3A2C1C" CornerRadius="9">
+                                                <TextBlock x:Name="DoingCountText" Text="0" FontSize="11" Foreground="#FFBE7C"/>
                                             </Border>
                                         </StackPanel>
                                         <Button HorizontalAlignment="Right"
                                                 Style="{StaticResource PlainButton}"
                                                 Width="34" Height="34"
                                                 FontSize="20" Content="+"
-                                                Foreground="#3DDC97"
+                                                Foreground="#FFAB5C"
+                                                ToolTip="Добавить задачу в работу"
                                                 Click="OnAddInProgressTaskClick"/>
                                     </Grid>
                                     <StackPanel x:Name="InProgressTasksPanel" VerticalAlignment="Top">
                                         <TextBlock Margin="10,24,10,12"
                                                    Text="Нет задач"
                                                    FontSize="15"
-                                                   Foreground="#5F7A6C"
+                                                   Foreground="#7A6C5F"
                                                    HorizontalAlignment="Center"/>
                                     </StackPanel>
                                     <Button Style="{StaticResource GhostButton}"
-                                            Foreground="#5FE0AC"
+                                            Foreground="#F0A868"
                                             Content="+  Добавить задачу"
+                                            ToolTip="Добавить задачу в работу"
                                             Click="OnAddInProgressTaskClick"/>
                                 </StackPanel>
                             </Border>
@@ -985,34 +993,36 @@
                             <Border Width="340" MinHeight="260"
                                     Margin="0,0,16,0" Padding="16"
                                     Background="{StaticResource ReviewColumnGradient}"
-                                    BorderBrush="#3E3220" BorderThickness="1"
+                                    BorderBrush="#263B50" BorderThickness="1"
                                     CornerRadius="18">
                                 <StackPanel>
                                     <Grid Margin="6,0,6,12">
                                         <StackPanel Orientation="Horizontal">
-                                            <Ellipse Width="11" Height="11" Fill="#FFAB5C" Margin="0,0,10,0"/>
+                                            <Ellipse Width="11" Height="11" Fill="#60A5FA" Margin="0,0,10,0"/>
                                             <TextBlock Text="На проверке" FontWeight="SemiBold" Foreground="#E4EFE8" FontSize="15"/>
-                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#3A2C1C" CornerRadius="9">
-                                                <TextBlock x:Name="ReviewCountText" Text="0" FontSize="11" Foreground="#FFBE7C"/>
+                                            <Border Margin="10,-2,0,0" Padding="8,2" Background="#1D3045" CornerRadius="9">
+                                                <TextBlock x:Name="ReviewCountText" Text="0" FontSize="11" Foreground="#93C5FD"/>
                                             </Border>
                                         </StackPanel>
                                         <Button HorizontalAlignment="Right"
                                                 Style="{StaticResource PlainButton}"
                                                 Width="34" Height="34"
                                                 FontSize="20" Content="+"
-                                                Foreground="#FFBB78"
+                                                Foreground="#68A8F0"
+                                                ToolTip="Добавить задачу на проверку"
                                                 Click="OnAddReviewTaskClick"/>
                                     </Grid>
                                     <StackPanel x:Name="ReviewTasksPanel" VerticalAlignment="Top">
                                         <TextBlock Margin="10,24,10,12"
                                                    Text="Нет задач"
                                                    FontSize="15"
-                                                   Foreground="#5F7A6C"
+                                                   Foreground="#5F6C7A"
                                                    HorizontalAlignment="Center"/>
                                     </StackPanel>
                                     <Button Style="{StaticResource GhostButton}"
-                                            Foreground="#F0A868"
+                                            Foreground="#8FAFCB"
                                             Content="+  Добавить задачу"
+                                            ToolTip="Добавить задачу на проверку"
                                             Click="OnAddReviewTaskClick"/>
                                 </StackPanel>
                             </Border>
@@ -1037,6 +1047,7 @@
                                                 Width="34" Height="34"
                                                 FontSize="20" Content="+"
                                                 Foreground="#61E0B0"
+                                                ToolTip="Добавить выполненную задачу"
                                                 Click="OnAddDoneTaskClick"/>
                                     </Grid>
                                     <StackPanel x:Name="DoneTasksPanel" VerticalAlignment="Top">
@@ -1049,6 +1060,7 @@
                                     <Button Style="{StaticResource GhostButton}"
                                             Foreground="#56D9A4"
                                             Content="+  Добавить задачу"
+                                            ToolTip="Добавить выполненную задачу"
                                             Click="OnAddDoneTaskClick"/>
                                 </StackPanel>
                             </Border>
