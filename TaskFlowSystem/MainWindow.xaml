@@ -16,12 +16,12 @@
         ResizeMode="CanResize"
         Background="#0A0F0C"
         FontFamily="Segoe UI"
-        Loaded="OnWindowLoaded">
+        Loaded="OnWindowLoaded"
+        StateChanged="OnWindowStateChanged">
 
     <shell:WindowChrome.WindowChrome>
         <shell:WindowChrome CaptionHeight="64"
                             ResizeBorderThickness="6"
-                            CornerRadius="12"
                             GlassFrameThickness="0"
                             UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
@@ -615,7 +615,7 @@
     <Border Background="{StaticResource WindowGradient}"
             BorderBrush="#1E2B24"
             BorderThickness="1"
-            CornerRadius="12">
+            CornerRadius="0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="64"/>
@@ -625,7 +625,7 @@
             <!-- Верхняя панель -->
             <Border Grid.Row="0"
                     Background="{StaticResource TopBarGradient}"
-                    CornerRadius="12,12,0,0">
+                    CornerRadius="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="236"/>
@@ -633,16 +633,15 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Логотип (убраны мак-кнопки) -->
+                    <!-- Логотип -->
                     <StackPanel Grid.Column="0"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
-                                Margin="24,0,0,0"
-                                shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                                Margin="24,0,0,0">
                         <Button Style="{StaticResource PlainButton}"
                                 HorizontalContentAlignment="Left"
                                 Click="OnLogoClick">
-                            <StackPanel Orientation="Horizontal" Margin="8,0,0,16">
+                            <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
                                 <Border Width="44" Height="44"
                                         Background="{StaticResource AccentTileGradient}"
                                         CornerRadius="12">
@@ -670,8 +669,7 @@
                             Background="#121C16"
                             BorderBrush="#22332B"
                             BorderThickness="1"
-                            CornerRadius="14"
-                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                            CornerRadius="14">
                         <Grid Margin="18,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="32"/>
@@ -729,8 +727,7 @@
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
-                                Margin="0,0,24,0"
-                                shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                                Margin="0,0,24,0">
                         <Button Style="{StaticResource IconButton}"
                                 Content="◌"
                                 ToolTip="Уведомления"
@@ -740,14 +737,19 @@
                                 Content="?"
                                 ToolTip="Помощь"
                                 Click="OnHelpClick"/>
-                        <Button Style="{StaticResource PlainButton}"
+                        <Button x:Name="ProfileButton"
+                                Style="{StaticResource PlainButton}"
                                 Padding="6,4"
+                                AutomationProperties.Name="Выбор пользователя"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Click="OnProfileClick"
-                                ToolTip="Профиль">
+                                ToolTip="Профиль (нажмите, чтобы сменить)">
                             <StackPanel Orientation="Horizontal">
-                                <Border Width="44" Height="44" CornerRadius="22"
+                                <Border x:Name="ProfileAvatarBorder"
+                                        Width="44" Height="44" CornerRadius="22"
                                         Background="{StaticResource AccentTileGradient}">
-                                    <TextBlock Text="?"
+                                    <TextBlock x:Name="ProfileAvatarText"
+                                               Text="?"
                                                FontWeight="Bold"
                                                Foreground="#06251A"
                                                FontSize="16"
@@ -759,17 +761,21 @@
                                                Text="Пользователь"
                                                FontSize="14"
                                                FontWeight="SemiBold"
-                                               Foreground="#EAF6EF"/>
-                                    <TextBlock x:Name="ProfileRoleText"
-                                               Text="Гость"
+                                               Foreground="#EAF6EF"
+                                               MaxWidth="180"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock x:Name="ProfileDescriptionText"
+                                               Text="Локальный профиль"
                                                FontSize="12"
-                                               Foreground="#7E9186"/>
+                                               Foreground="#7E9186"
+                                               MaxWidth="180"
+                                               TextTrimming="CharacterEllipsis"/>
                                 </StackPanel>
-                                <TextBlock Text="⌄"
+                                <TextBlock Text="☰"
                                            Margin="10,0,0,0"
-                                           FontSize="18"
+                                           FontSize="14"
                                            Foreground="#7E9186"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center" Height="21"/>
                             </StackPanel>
                         </Button>
 
@@ -779,6 +785,8 @@
                                 Margin="12,0,0,0"
                                 Content="─"
                                 Foreground="#8AA394"
+                                AutomationProperties.Name="Свернуть окно"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Click="OnMinimizeClick"
                                 ToolTip="Свернуть"/>
                         <Button x:Name="BtnMaximize"
@@ -786,6 +794,8 @@
                                 Margin="8,0,0,0"
                                 Content="□"
                                 Foreground="#8AA394"
+                                AutomationProperties.Name="Развернуть окно"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Click="OnMaximizeClick"
                                 ToolTip="Развернуть"/>
                         <Button x:Name="BtnClose"
@@ -793,6 +803,8 @@
                                 Margin="8,0,0,0"
                                 Content="×"
                                 Foreground="#8AA394"
+                                AutomationProperties.Name="Закрыть окно"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Click="OnCloseClick"
                                 ToolTip="Закрыть">
                         </Button>
@@ -837,8 +849,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="▦" FontSize="20"/>
-                                    <TextBlock Grid.Column="1" Text="Обзор" FontWeight="SemiBold"/>
+                                    <TextBlock Text="⌂" TextAlignment="Center" FontSize="20"/>
+                                    <TextBlock Grid.Column="1" Text="Обзор" FontWeight="SemiBold" Margin="0,3,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -851,8 +863,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="✓" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Мои задачи"/>
+                                    <TextBlock Text="✓" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Мои задачи" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -865,8 +877,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="▣" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Входящие"/>
+                                    <TextBlock Text="✉️" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Входящие" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -879,8 +891,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="□" FontSize="20"/>
-                                    <TextBlock Grid.Column="1" Text="Календарь"/>
+                                    <TextBlock Text="📆" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Календарь" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -899,8 +911,8 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="◫" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Проекты"/>
+                                    <TextBlock Text="🗎" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Проекты" Margin="0,2,0,0"/>
                                     <Button Grid.Column="2"
                                             Style="{StaticResource PlainButton}"
                                             Width="28"
@@ -909,7 +921,7 @@
                                             FontSize="20"
                                             ToolTip="Создать проект"
                                             Click="OnAddProjectClick"
-                                            Content="+"/>
+                                            Content="+" HorizontalAlignment="Center" Margin="0,-3,0,3"/>
                                 </Grid>
                             </Button>
 
@@ -933,8 +945,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="♙" FontSize="20"/>
-                                    <TextBlock Grid.Column="1" Text="Участники"/>
+                                    <TextBlock Text="👤" TextAlignment="Center" FontSize="20"/>
+                                    <TextBlock Grid.Column="1" Text="Участники" Margin="0,3,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -946,8 +958,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="◈" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Отчёты"/>
+                                    <TextBlock Text="📄" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Отчёты" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
 
@@ -959,8 +971,8 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="⚙" FontSize="18"/>
-                                    <TextBlock Grid.Column="1" Text="Настройки"/>
+                                    <TextBlock Text="⚙" TextAlignment="Center" FontSize="18"/>
+                                    <TextBlock Grid.Column="1" Text="Настройки" Margin="0,2,0,0"/>
                                 </Grid>
                             </Button>
                         </StackPanel>
@@ -1033,7 +1045,7 @@
                                 ToolTip="Добавить новую задачу"
                                 Click="OnCreateTaskClick">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="+" Margin="0,-2,10,0" FontSize="22"/>
+                                <TextBlock Text="+" TextAlignment="Center" Margin="0, -6, 10,0" FontSize="22"/>
                                 <TextBlock Text="Новая задача"/>
                             </StackPanel>
                         </Button>
@@ -1148,7 +1160,7 @@
                                     HorizontalContentAlignment="Center"
                                     Click="OnBoardViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="▦" Margin="0,0,10,0"/>
+                                    <TextBlock Text="🖥️" Margin="0,0,10,0"/>
                                     <TextBlock Text="Доска" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </Button>
@@ -1168,7 +1180,7 @@
                                     HorizontalContentAlignment="Center"
                                     Click="OnCalendarViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="□" Margin="0,0,10,0"/>
+                                    <TextBlock Text="📅" Margin="0,0,10,0"/>
                                     <TextBlock Text="Календарь"/>
                                 </StackPanel>
                             </Button>
@@ -1178,7 +1190,7 @@
                                     HorizontalContentAlignment="Center"
                                     Click="OnTimelineViewClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="◫" Margin="0,0,10,0"/>
+                                    <TextBlock Text="📈" Margin="0,0,10,0"/>
                                     <TextBlock Text="График"/>
                                 </StackPanel>
                             </Button>
@@ -1191,7 +1203,7 @@
                                     ToolTip="Фильтровать (убрать) задачи по.."
                                     Click="OnFilterClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="≡" Margin="0,0,10,0"/>
+                                    <TextBlock Text="≡" Margin="0,-2,10,0"/>
                                     <TextBlock Text="Фильтр" FontSize="14"/>
                                 </StackPanel>
                             </Button>
@@ -1200,7 +1212,7 @@
                                     ToolTip="Сортировать (выровнять) задачи по.."
                                     Click="OnSortClick">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="↕" Margin="0,0,10,0"/>
+                                    <TextBlock Text="↕" Margin="0,-2,10,0"/>
                                     <TextBlock Text="Сортировка" FontSize="14"/>
                                 </StackPanel>
                             </Button>
