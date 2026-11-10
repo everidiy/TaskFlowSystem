@@ -61,8 +61,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="Models\LocalProfile.cs" />
+    <Compile Include="Models\TaskItem.cs" />
     <Compile Include="Storage\ProfileStore.cs" />
     <Compile Include="Services\ProfileAvatar.cs" />
+    <Compile Include="Services\TaskService.cs" />
     <Compile Include="Presentation\ProfileColors.cs" />
     <Compile Include="Views\Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
