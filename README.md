@@ -122,6 +122,6 @@ dotnet run --project TaskServiceAPI       # http://localhost:5070
 
 <div align="center">
 
-Сделано с 💚 для удобной командной работы
+Сделано с 💚 для удобной командной работы!
 
 </div>
