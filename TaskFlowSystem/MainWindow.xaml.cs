@@ -30,8 +30,8 @@ namespace TaskFlowSystem
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            _activeNavButton = NavOverviewButton;
-            _activeViewButton = ViewBoardButton;
+            SetActiveNav(NavOverviewButton);
+            SetActiveView(ViewBoardButton);
             SetSearchPlaceholder();
             ApplyProfile(CurrentProfile);
             UpdateMaximizeButtonState();
@@ -106,6 +106,52 @@ namespace TaskFlowSystem
                 isMaximized ? "Восстановить окно" : "Развернуть окно");
         }
 
+        private void SetActiveNav(Button button)
+        {
+            ResetNavButtons();
+
+            button.Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x3A, 0x2D));
+            button.Foreground = new SolidColorBrush(Color.FromRgb(0x6E, 0xE7, 0xB7));
+
+            _activeNavButton = button;
+        }
+
+        private void SetActiveView(Button button)
+        {
+            ResetViewButtons();
+
+            button.Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x3A, 0x2D));
+            button.Foreground = new SolidColorBrush(Color.FromRgb(0x6E, 0xE7, 0xB7));
+
+            _activeViewButton = button;
+        }
+
+        private void ResetNavButtons()
+        {
+            Reset(NavOverviewButton);
+            Reset(NavTasksButton);
+            Reset(NavInboxButton);
+            Reset(NavCalendarButton);
+            Reset(NavProjectsButton);
+            Reset(NavTeamButton);
+            Reset(NavReportsButton);
+            Reset(NavSettingsButton);
+        }
+
+        private void ResetViewButtons()
+        {
+            Reset(ViewBoardButton);
+            Reset(ViewCalendarButton);
+            Reset(ViewListButton);
+            Reset(ViewTimelineButton);
+        }
+
+        private void Reset(Button button)
+        {
+            button.ClearValue(Button.BackgroundProperty);
+            button.ClearValue(Button.ForegroundProperty);
+        }
+
         private void OnLogoClick(object sender, RoutedEventArgs e)
         {
             OnOverviewClick(NavOverviewButton, e);
@@ -114,6 +160,7 @@ namespace TaskFlowSystem
         private void OnOverviewClick(object sender, RoutedEventArgs e)
         {
             SetActiveNav(NavOverviewButton);
+
             PageTitleText.Text = "Обзор";
             PageSubtitleText.Text = "Добавьте первую задачу, чтобы начать работу";
         }
@@ -121,6 +168,7 @@ namespace TaskFlowSystem
         private void OnMyTasksClick(object sender, RoutedEventArgs e)
         {
             SetActiveNav(NavTasksButton);
+
             PageTitleText.Text = "Мои задачи";
             PageSubtitleText.Text = "Здесь будут отображаться назначенные вам задачи";
         }
@@ -128,6 +176,7 @@ namespace TaskFlowSystem
         private void OnInboxClick(object sender, RoutedEventArgs e)
         {
             SetActiveNav(NavInboxButton);
+
             PageTitleText.Text = "Входящие";
             PageSubtitleText.Text = "Новых уведомлений нет";
         }
@@ -135,12 +184,15 @@ namespace TaskFlowSystem
         private void OnCalendarClick(object sender, RoutedEventArgs e)
         {
             SetActiveNav(NavCalendarButton);
+
             PageTitleText.Text = "Календарь";
             PageSubtitleText.Text = "Сроки появятся после создания задач";
         }
 
         private void OnProjectsClick(object sender, RoutedEventArgs e)
         {
+            SetActiveNav((Button)sender);
+
             PageTitleText.Text = "Проекты";
             PageSubtitleText.Text = "Создайте первый проект для команды";
         }
@@ -154,18 +206,24 @@ namespace TaskFlowSystem
 
         private void OnTeamClick(object sender, RoutedEventArgs e)
         {
+            SetActiveNav((Button)sender);
+
             PageTitleText.Text = "Участники";
             PageSubtitleText.Text = "Команда пока не добавлена";
         }
 
         private void OnReportsClick(object sender, RoutedEventArgs e)
         {
+            SetActiveNav((Button)sender);
+
             PageTitleText.Text = "Отчёты";
             PageSubtitleText.Text = "Статистика появится после появления задач";
         }
 
         private void OnSettingsClick(object sender, RoutedEventArgs e)
         {
+            SetActiveNav((Button)sender);
+
             PageTitleText.Text = "Настройки";
             PageSubtitleText.Text = "Параметры рабочего пространства";
         }
@@ -322,42 +380,6 @@ namespace TaskFlowSystem
         {
             SearchBox.Text = SearchPlaceholder;
             SearchBox.Foreground = new SolidColorBrush(Color.FromRgb(0x8A, 0x8F, 0xA3));
-        }
-
-        private void SetActiveNav(Button button)
-        {
-            ResetNav(NavOverviewButton);
-            ResetNav(NavTasksButton);
-            ResetNav(NavInboxButton);
-            ResetNav(NavCalendarButton);
-
-            button.Background = new SolidColorBrush(Color.FromRgb(0xEF, 0xEE, 0xFF));
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x62, 0x5B, 0xF6));
-            _activeNavButton = button;
-        }
-
-        private void ResetNav(Button button)
-        {
-            button.Background = Brushes.Transparent;
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x6D, 0x72, 0x87));
-        }
-
-        private void SetActiveView(Button button)
-        {
-            ResetView(ViewBoardButton);
-            ResetView(ViewListButton);
-            ResetView(ViewCalendarButton);
-            ResetView(ViewTimelineButton);
-
-            button.Background = new SolidColorBrush(Color.FromRgb(0xEF, 0xEE, 0xFF));
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x62, 0x5B, 0xF6));
-            _activeViewButton = button;
-        }
-
-        private void ResetView(Button button)
-        {
-            button.Background = Brushes.Transparent;
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x6D, 0x72, 0x87));
         }
     }
 }

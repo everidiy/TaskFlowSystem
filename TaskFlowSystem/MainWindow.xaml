@@ -136,7 +136,6 @@
             <GradientStop Color="#0C1B13" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Стиль по умолчанию: не допускаем стандартный фиолетовый акцент WPF -->
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="#06251A"/>
             <Setter Property="Background" Value="{StaticResource PrimaryButtonGradient}"/>
@@ -209,6 +208,8 @@
             </Setter>
         </Style>
 
+
+
         <Style x:Key="IconButton" TargetType="Button">
             <Setter Property="Width" Value="44"/>
             <Setter Property="Height" Value="44"/>
@@ -217,32 +218,60 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="ToolTipService.InitialShowDelay" Value="300"/>
+            <Setter Property="ToolTipService.ShowDuration" Value="5000"/>
+            <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="12"
-                                BorderBrush="#22332B"
-                                BorderThickness="1">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="IconBorder"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="#22332B"
+                        BorderThickness="1"
+                        CornerRadius="12">
+
+                            <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        TextElement.Foreground="{TemplateBinding Foreground}"/>
                         </Border>
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#193D2D"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#3DDC97"/>
-                                <Setter Property="Foreground" Value="#6EE7B7"/>
+                                <Setter TargetName="IconBorder"
+                                Property="Background"
+                                Value="#193D2D"/>
+                                <Setter TargetName="IconBorder"
+                                Property="BorderBrush"
+                                Value="#3DDC97"/>
+                                <Setter Property="Foreground"
+                                Value="#6EE7B7"/>
                             </Trigger>
+
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#245A40"/>
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#63EDB4"/>
-                                <Setter Property="Foreground" Value="#A7F3D0"/>
+                                <Setter TargetName="IconBorder"
+                                Property="Background"
+                                Value="#245A40"/>
+                                <Setter TargetName="IconBorder"
+                                Property="BorderBrush"
+                                Value="#63EDB4"/>
+                                <Setter Property="Foreground"
+                                Value="#A7F3D0"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="IconBorder"
+                                Property="Opacity"
+                                Value="0.45"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
+
 
         <Style x:Key="NavButton" TargetType="Button">
             <Setter Property="Height" Value="54"/>
@@ -728,13 +757,13 @@
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 Margin="0,0,24,0">
-                        <Button Style="{StaticResource IconButton}"
-                                Content="◌"
-                                ToolTip="Уведомления"
-                                Click="OnNotificationsClick"/>
-                        <Button Style="{StaticResource IconButton}"
+                        <Button x:Name="HelpButton"
+                                Style="{StaticResource IconButton}"
                                 Margin="10,0,16,0"
+                                AutomationProperties.Name="Помощь"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                 Content="?"
+                                FontWeight="Bold"
                                 ToolTip="Помощь"
                                 Click="OnHelpClick"/>
                         <Button x:Name="ProfileButton"
@@ -902,7 +931,8 @@
                                        FontWeight="SemiBold"
                                        Foreground="#4E6157"/>
 
-                            <Button Style="{StaticResource NavButton}" 
+                            <Button x:Name="NavProjectsButton"
+                                    Style="{StaticResource NavButton}" 
                                     ToolTip="Просмотреть все проекты"
                                     Click="OnProjectsClick">
                                 <Grid>
@@ -937,7 +967,8 @@
                                        FontWeight="SemiBold"
                                        Foreground="#4E6157"/>
 
-                            <Button Style="{StaticResource NavButton}"
+                            <Button x:Name="NavTeamButton"
+                                    Style="{StaticResource NavButton}"
                                     ToolTip="Просмотреть всех участников"
                                     Click="OnTeamClick">
                                 <Grid>
@@ -950,7 +981,8 @@
                                 </Grid>
                             </Button>
 
-                            <Button Style="{StaticResource NavButton}" 
+                            <Button x:Name="NavReportsButton"
+                                    Style="{StaticResource NavButton}"
                                     ToolTip="Просмотреть отчёты"
                                     Click="OnReportsClick">
                                 <Grid>
@@ -963,7 +995,8 @@
                                 </Grid>
                             </Button>
 
-                            <Button Style="{StaticResource NavButton}" 
+                            <Button x:Name="NavSettingsButton"
+                                    Style="{StaticResource NavButton}"
                                     ToolTip="Открыть настройки"
                                     Click="OnSettingsClick">
                                 <Grid>
@@ -1154,6 +1187,7 @@
 
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="ViewBoardButton"
+                                    Margin="0, 0, 10, 0"
                                     Style="{StaticResource NavButton}"
                                     Width="110" Height="46"
                                     Background="{StaticResource ActiveNavGradient}" Foreground="#6EE7B7"
@@ -1165,6 +1199,7 @@
                                 </StackPanel>
                             </Button>
                             <Button x:Name="ViewListButton"
+                                    Margin="0, 0, 10, 0"
                                     Style="{StaticResource NavButton}"
                                     Width="110" Height="46"
                                     HorizontalContentAlignment="Center"
@@ -1175,8 +1210,9 @@
                                 </StackPanel>
                             </Button>
                             <Button x:Name="ViewCalendarButton"
+                                    Margin="0, 0, 10, 0"
                                     Style="{StaticResource NavButton}"
-                                    Width="130" Height="46"
+                                    Width="140" Height="46"
                                     HorizontalContentAlignment="Center"
                                     Click="OnCalendarViewClick">
                                 <StackPanel Orientation="Horizontal">
@@ -1185,6 +1221,7 @@
                                 </StackPanel>
                             </Button>
                             <Button x:Name="ViewTimelineButton"
+                                    Margin="0, 0, 10, 0"
                                     Style="{StaticResource NavButton}"
                                     Width="120" Height="46"
                                     HorizontalContentAlignment="Center"
@@ -1273,7 +1310,8 @@
                                                 CornerRadius="9">
                                             <TextBlock x:Name="TodoCountText"
                                                        Text="0"
-                                                       FontSize="11"
+                                                       FontSize="16"
+                                                       FontWeight="Bold"
                                                        Foreground="#A9BDB1"/>
                                         </Border>
                                     </Grid>
@@ -1350,7 +1388,8 @@
                                             CornerRadius="9">
                                         <TextBlock x:Name="DoingCountText"
                                                    Text="0"
-                                                   FontSize="11"
+                                                   FontSize="16"
+                                                    FontWeight="Bold"
                                                    Foreground="#FFBE7C"/>
                                     </Border>
                                 </Grid>
@@ -1426,7 +1465,8 @@
                                             CornerRadius="9">
                                         <TextBlock x:Name="ReviewCountText"
                                                    Text="0"
-                                                   FontSize="11"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
                                                    Foreground="#93C5FD"/>
                                     </Border>
                                 </Grid>
@@ -1503,7 +1543,8 @@
                                                 CornerRadius="9">
                                         <TextBlock x:Name="DoneCountText"
                                                        Text="0"
-                                                       FontSize="11"
+                                                       FontSize="16"
+                                                       FontWeight="Bold"
                                                        Foreground="#61E0B0"/>
                                     </Border>
                                 </Grid>
