@@ -10,7 +10,6 @@ namespace TaskFlowSystem
     {
         private const string SearchPlaceholder = "Поиск задач, проектов и участников...";
         private Button _activeNavButton;
-        private Button _activeViewButton;
 
         public MainWindow()
             : this(null)
@@ -31,7 +30,6 @@ namespace TaskFlowSystem
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             SetActiveNav(NavOverviewButton);
-            SetActiveView(ViewBoardButton);
             SetSearchPlaceholder();
             ApplyProfile(CurrentProfile);
             UpdateMaximizeButtonState();
@@ -116,16 +114,6 @@ namespace TaskFlowSystem
             _activeNavButton = button;
         }
 
-        private void SetActiveView(Button button)
-        {
-            ResetViewButtons();
-
-            button.Background = new SolidColorBrush(Color.FromRgb(0x1E, 0x3A, 0x2D));
-            button.Foreground = new SolidColorBrush(Color.FromRgb(0x6E, 0xE7, 0xB7));
-
-            _activeViewButton = button;
-        }
-
         private void ResetNavButtons()
         {
             Reset(NavOverviewButton);
@@ -138,18 +126,22 @@ namespace TaskFlowSystem
             Reset(NavSettingsButton);
         }
 
-        private void ResetViewButtons()
-        {
-            Reset(ViewBoardButton);
-            Reset(ViewCalendarButton);
-            Reset(ViewListButton);
-            Reset(ViewTimelineButton);
-        }
-
         private void Reset(Button button)
         {
             button.ClearValue(Button.BackgroundProperty);
             button.ClearValue(Button.ForegroundProperty);
+        }
+
+        private void DropAndCreateOneVisibility(UIElement pageView)
+        {
+            OverviewViewPage.Visibility = Visibility.Collapsed;
+            ChatViewPage.Visibility = Visibility.Collapsed;
+            MemberViewPage.Visibility = Visibility.Collapsed;
+            ReportViewPage.Visibility = Visibility.Collapsed;
+            SettingsViewPage.Visibility = Visibility.Collapsed;
+            UpgradeViewPage.Visibility = Visibility.Collapsed;
+
+            pageView.Visibility = Visibility.Visible;
         }
 
         private void OnLogoClick(object sender, RoutedEventArgs e)
@@ -161,8 +153,7 @@ namespace TaskFlowSystem
         {
             SetActiveNav(NavOverviewButton);
 
-            PageTitleText.Text = "Обзор";
-            PageSubtitleText.Text = "Добавьте первую задачу, чтобы начать работу";
+            DropAndCreateOneVisibility(OverviewViewPage);
         }
 
         private void OnMyTasksClick(object sender, RoutedEventArgs e)
@@ -208,87 +199,40 @@ namespace TaskFlowSystem
         {
             SetActiveNav((Button)sender);
 
-            PageTitleText.Text = "Участники";
-            PageSubtitleText.Text = "Команда пока не добавлена";
+            DropAndCreateOneVisibility(MemberViewPage);
+        }
+
+        private void OnChatClick(object sender, RoutedEventArgs e)
+        {
+            SetActiveNav((Button)sender);
+
+            DropAndCreateOneVisibility(ChatViewPage);
         }
 
         private void OnReportsClick(object sender, RoutedEventArgs e)
         {
             SetActiveNav((Button)sender);
 
-            PageTitleText.Text = "Отчёты";
-            PageSubtitleText.Text = "Статистика появится после появления задач";
+            DropAndCreateOneVisibility(ReportViewPage);
         }
 
         private void OnSettingsClick(object sender, RoutedEventArgs e)
         {
             SetActiveNav((Button)sender);
 
-            PageTitleText.Text = "Настройки";
-            PageSubtitleText.Text = "Параметры рабочего пространства";
+            DropAndCreateOneVisibility(SettingsViewPage);
         }
 
         private void OnUpgradeClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Переход на тариф Pro.", "TaskFlow Pro",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+            SetActiveNav((Button)sender);
+
+            DropAndCreateOneVisibility(UpgradeViewPage);
         }
 
         private void OnCreateTaskClick(object sender, RoutedEventArgs e)
         {
             CreateTask("К выполнению");
-        }
-
-        private void OnAddTodoTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("К выполнению");
-        }
-
-        private void OnAddInProgressTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("В работе");
-        }
-
-        private void OnAddReviewTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("На проверке");
-        }
-
-        private void OnAddDoneTaskClick(object sender, RoutedEventArgs e)
-        {
-            CreateTask("Готово");
-        }
-
-        private void OnBoardViewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveView(ViewBoardButton);
-        }
-
-        private void OnListViewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveView(ViewListButton);
-        }
-
-        private void OnCalendarViewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveView(ViewCalendarButton);
-        }
-
-        private void OnTimelineViewClick(object sender, RoutedEventArgs e)
-        {
-            SetActiveView(ViewTimelineButton);
-        }
-
-        private void OnFilterClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Открыть панель фильтров.", "Фильтр",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void OnSortClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Открыть параметры сортировки.", "Сортировка",
-                MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnNotificationsClick(object sender, RoutedEventArgs e)

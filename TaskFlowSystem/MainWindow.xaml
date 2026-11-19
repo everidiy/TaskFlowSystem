@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        xmlns:views="clr-namespace:TaskFlowSystem.UserControls"
         mc:Ignorable="d"
         Title="TaskFlowSystem"
         Width="1440"
@@ -671,19 +672,19 @@
                                 HorizontalContentAlignment="Left"
                                 Click="OnLogoClick">
                             <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
-                                <Border Width="44" Height="44"
-                                        Background="{StaticResource AccentTileGradient}"
-                                        CornerRadius="12">
-                                    <TextBlock Text="TF"
-                                               Foreground="#06251A"
-                                               FontWeight="Bold"
-                                               FontSize="18"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
+                                
+                                <Border Width="44" Height="44" 
+                                        CornerRadius="15" 
+                                        ClipToBounds="True">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="/Resources/logo.png" 
+                                                    Stretch="UniformToFill"/>
+                                    </Border.Background>
                                 </Border>
+                                
                                 <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="TaskFlow" FontSize="22" FontWeight="Bold" Foreground="#EAF6EF"/>
-                                    <TextBlock Text="SYSTEM" FontSize="10" FontWeight="Bold" Foreground="#5F7A6C"/>
+                                    <TextBlock Text="SYSTEM" FontSize="10" FontWeight="Bold" Foreground="{StaticResource AccentTileGradient}"/>
                                 </StackPanel>
                             </StackPanel>
                         </Button>
@@ -981,6 +982,20 @@
                                 </Grid>
                             </Button>
 
+                            <Button x:Name="NavChatButton"
+                                    Style="{StaticResource NavButton}"
+                                    ToolTip="Просмотреть чаты"
+                                    Click="OnChatClick">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="💬" TextAlignment="Center" FontSize="20"/>
+                                    <TextBlock Grid.Column="1" Text="Чаты" Margin="0,3,0,0"/>
+                                </Grid>
+                            </Button>
+
                             <Button x:Name="NavReportsButton"
                                     Style="{StaticResource NavButton}"
                                     ToolTip="Просмотреть отчёты"
@@ -1045,12 +1060,12 @@
                 </Border>
 
                 <!-- Контент -->
-                <Grid Grid.Column="1" Margin="34,28,34,26">
+                <Grid Grid.Column="1" Margin="34,28,34,26"
+                      x:Name="OverviewPage"
+                      Visibility="Visible">
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <Grid>
@@ -1065,9 +1080,10 @@
                                        FontSize="36"
                                        FontWeight="Bold"
                                        Foreground="{StaticResource TitleGradient}"/>
+
                             <TextBlock x:Name="PageSubtitleText"
                                        Margin="0,8,0,0"
-                                       Text="Добавьте первую задачу, чтобы начать работу"
+                                       Text="Общая информация о задачах и рабочем пространстве"
                                        FontSize="16"
                                        Foreground="#7E9186"/>
                         </StackPanel>
@@ -1078,509 +1094,44 @@
                                 ToolTip="Добавить новую задачу"
                                 Click="OnCreateTaskClick">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="+" TextAlignment="Center" Margin="0, -6, 10,0" FontSize="22"/>
+                                <TextBlock Text="+"
+                                           Margin="0,-6,10,0"
+                                           FontSize="22"/>
                                 <TextBlock Text="Новая задача"/>
                             </StackPanel>
                         </Button>
                     </Grid>
-
-                    <!-- Карточки статистики -->
-                    <Grid Grid.Row="1" Margin="0,28,0,24">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Border Grid.Column="0" Margin="0,0,12,0" Padding="20"
-                                Background="{StaticResource CardGradient}"
-                                CornerRadius="16" BorderBrush="#22302A" BorderThickness="1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="56"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Width="50" Height="50"
-                                        Background="{StaticResource AccentTileGradient}"
-                                        CornerRadius="14">
-                                    <TextBlock Text="▦" FontSize="24" Foreground="#06251A"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                                    <TextBlock Text="Всего задач" Foreground="#7E9186" FontSize="13"/>
-                                    <TextBlock x:Name="TotalTasksText" Text="0" FontSize="32" FontWeight="Bold" Foreground="#EAF6EF"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <Border Grid.Column="1" Margin="6,0,8,0" Padding="20"
-                                Background="{StaticResource CardGradient}"
-                                CornerRadius="16" BorderBrush="#22302A" BorderThickness="1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="56"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Width="50" Height="50"
-                                        Background="{StaticResource AmberTileGradient}"
-                                        CornerRadius="14">
-                                    <TextBlock Text="◔" FontSize="26" Foreground="#FFB467"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                                    <TextBlock Text="В работе" Foreground="#7E9186" FontSize="13"/>
-                                    <TextBlock x:Name="InProgressTasksText" Text="0" FontSize="32" FontWeight="Bold" Foreground="#EAF6EF"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <Border Grid.Column="2" Margin="8,0,6,0" Padding="20"
-                                Background="{StaticResource CardGradient}"
-                                CornerRadius="16" BorderBrush="#22302A" BorderThickness="1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="56"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Width="50" Height="50"
-                                        Background="{StaticResource GreenTileGradient}"
-                                        CornerRadius="14">
-                                    <TextBlock Text="✓" FontSize="25" Foreground="#54DFAB"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                                    <TextBlock Text="Выполнено" Foreground="#7E9186" FontSize="13"/>
-                                    <TextBlock x:Name="CompletedTasksText" Text="0" FontSize="32" FontWeight="Bold" Foreground="#EAF6EF"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <Border Grid.Column="3" Margin="12,0,0,0" Padding="20"
-                                Background="{StaticResource CardGradient}"
-                                CornerRadius="16" BorderBrush="#22302A" BorderThickness="1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="56"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Width="50" Height="50"
-                                        Background="{StaticResource RedTileGradient}"
-                                        CornerRadius="14">
-                                    <TextBlock Text="!" FontSize="25" FontWeight="Bold" Foreground="#FF7187"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                                    <TextBlock Text="Просрочено" Foreground="#7E9186" FontSize="13"/>
-                                    <TextBlock x:Name="OverdueTasksText" Text="0" FontSize="32" FontWeight="Bold" Foreground="#EAF6EF"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </Grid>
-
-                    <!-- Переключатель видов -->
-                    <Grid Grid.Row="2" Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="ViewBoardButton"
-                                    Margin="0, 0, 10, 0"
-                                    Style="{StaticResource NavButton}"
-                                    Width="110" Height="46"
-                                    Background="{StaticResource ActiveNavGradient}" Foreground="#6EE7B7"
-                                    HorizontalContentAlignment="Center"
-                                    Click="OnBoardViewClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🖥️" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Доска" FontWeight="SemiBold"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="ViewListButton"
-                                    Margin="0, 0, 10, 0"
-                                    Style="{StaticResource NavButton}"
-                                    Width="110" Height="46"
-                                    HorizontalContentAlignment="Center"
-                                    Click="OnListViewClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="☷" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Список"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="ViewCalendarButton"
-                                    Margin="0, 0, 10, 0"
-                                    Style="{StaticResource NavButton}"
-                                    Width="140" Height="46"
-                                    HorizontalContentAlignment="Center"
-                                    Click="OnCalendarViewClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="📅" Margin="0,0,10,0"/>
-                                    <TextBlock Text="Календарь"/>
-                                </StackPanel>
-                            </Button>
-                            <Button x:Name="ViewTimelineButton"
-                                    Margin="0, 0, 10, 0"
-                                    Style="{StaticResource NavButton}"
-                                    Width="120" Height="46"
-                                    HorizontalContentAlignment="Center"
-                                    Click="OnTimelineViewClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="📈" Margin="0,0,10,0"/>
-                                    <TextBlock Text="График"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <Button Style="{StaticResource IconButton}" 
-                                    Width="110" 
-                                    Margin="0,0,10,0" 
-                                    ToolTip="Фильтровать (убрать) задачи по.."
-                                    Click="OnFilterClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="≡" Margin="0,-2,10,0"/>
-                                    <TextBlock Text="Фильтр" FontSize="14"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Style="{StaticResource IconButton}" 
-                                    Width="128" 
-                                    ToolTip="Сортировать (выровнять) задачи по.."
-                                    Click="OnSortClick">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="↕" Margin="0,-2,10,0"/>
-                                    <TextBlock Text="Сортировка" FontSize="14"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
-
-                    <!-- Доска: колонки фиксированной ширины, компактные -->
-                    <Grid Grid.Row="3" Margin="0,4,0,4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <!-- К выполнению -->
-                            <Border Grid.Column="0"
-                                    MinHeight="300"
-                                    Margin="0,0,12,0"
-                                    Padding="18"
-                                    Style="{StaticResource TodoColumnStyle}">
-
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <!-- Заголовок -->
-                                        <RowDefinition Height="Auto"/>
-
-                                        <!-- Список задач -->
-                                        <RowDefinition Height="*"/>
-
-                                        <!-- Добавление задачи -->
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <!-- Заголовок колонки -->
-                                    <Grid Grid.Row="0" Margin="2,0,2,16">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Ellipse Width="10"
-                                                 Height="10"
-                                                 Fill="#8FA79B"
-                                                 VerticalAlignment="Center"
-                                                 Margin="0,0,10,0"/>
-
-                                        <TextBlock Grid.Column="1"
-                                                   Text="К выполнению"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="#E4EFE8"
-                                                   FontSize="15"
-                                                   VerticalAlignment="Center"/>
-
-                                        <Border Grid.Column="2"
-                                                Padding="9,3"
-                                                Background="#1C2A22"
-                                                CornerRadius="9">
-                                            <TextBlock x:Name="TodoCountText"
-                                                       Text="0"
-                                                       FontSize="16"
-                                                       FontWeight="Bold"
-                                                       Foreground="#A9BDB1"/>
-                                        </Border>
-                                    </Grid>
-
-                                    <!-- Список задач -->
-                                    <Grid Grid.Row="1" MinHeight="160">
-                                        <StackPanel x:Name="TodoTasksPanel"
-                                                    VerticalAlignment="Top">
-
-                                            <TextBlock Text="Нет задач"
-                                                       Margin="0,45,0,8"
-                                                       FontSize="15"
-                                                       Foreground="#5F7A6C"
-                                                       HorizontalAlignment="Center"/>
-
-                                            <TextBlock Text="Создайте первую задачу"
-                                                       FontSize="12"
-                                                       Foreground="#435D4F"
-                                                       HorizontalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Grid>
-
-                                    <!-- Добавление задачи -->
-                                    <Button Grid.Row="2"
-                                            Style="{StaticResource TodoGhostButton}"
-                                            Height="42"
-                                            Margin="0,12,0,0"
-                                            HorizontalContentAlignment="Center"
-                                            Content="+  Добавить задачу"
-                                            ToolTip="Создать новую задачу"
-                                            Click="OnAddTodoTaskClick"/>
-
-                                </Grid>
-                            </Border>
-
-                            <!-- В работе -->
-                            <Border Grid.Column="1"
-                                    MinHeight="300"
-                                    Margin="0,0,12,0"
-                                    Padding="18"
-                                    Style="{StaticResource DoingColumnStyle}">
-
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <!-- Заголовок -->
-                                    <Grid Grid.Row="0" Margin="2,0,2,16">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                    <Ellipse Width="10" 
-                                             Height="10"
-                                             Fill="#FFAB5C"
-                                             VerticalAlignment="Center"
-                                             Margin="0,0,10,0"/>
-
-                                    <TextBlock Grid.Column="1"
-                                                   Text="В работе"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="#E4EFE8"
-                                                   FontSize="15"
-                                                   VerticalAlignment="Center"/>
-
-                                    <Border Grid.Column="2"
-                                            Padding="9,3"
-                                            Background="#3A2C1C"
-                                            CornerRadius="9">
-                                        <TextBlock x:Name="DoingCountText"
-                                                   Text="0"
-                                                   FontSize="16"
-                                                    FontWeight="Bold"
-                                                   Foreground="#FFBE7C"/>
-                                    </Border>
-                                </Grid>
-
-                                    <!-- Задачи -->
-                                    <Grid Grid.Row="1" MinHeight="160">
-                                        <StackPanel x:Name="InProgressTasksPanel"
-                                                    VerticalAlignment="Top">
-
-                                            <TextBlock Text="Нет задач"
-                                                       Margin="0,45,0,8"
-                                                       FontSize="15"
-                                                       Foreground="#7A6C5F"
-                                                       HorizontalAlignment="Center"/>
-
-                                            <TextBlock Text="Задачи появятся здесь"
-                                                       FontSize="12"
-                                                       Foreground="#75634B"
-                                                       HorizontalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Grid>
-
-                                    <!-- Добавление -->
-                                    <Button Grid.Row="2"
-                                            Style="{StaticResource DoingGhostButton}"
-                                            Foreground="#F0A868"
-                                            Height="42"
-                                            Margin="0,12,0,0"
-                                            HorizontalContentAlignment="Center"
-                                            Content="+  Добавить задачу"
-                                            ToolTip="Добавить задачу в работу"
-                                            Click="OnAddInProgressTaskClick"/>
-                                </Grid>
-                            </Border>
-
-                            <!-- На проверке -->
-                            <Border Grid.Column="2"
-                                    MinHeight="300"
-                                    Margin="0,0,12,0"
-                                    Padding="18"
-                                    Style="{StaticResource ReviewColumnStyle}">
-
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <!-- Заголовок -->
-                                    <Grid Grid.Row="0" Margin="2,0,2,16">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                    <Ellipse Width="10" Height="10"
-                                             Fill="#60A5FA"
-                                             VerticalAlignment="Center"
-                                             Margin="0,0,10,0"/>
-
-                                    <TextBlock Grid.Column="1"
-                                                   Text="На проверке"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="#E4EFE8"
-                                                   FontSize="15"
-                                                   VerticalAlignment="Center"/>
-
-                                    <Border Grid.Column="2"
-                                            Padding="9,3"
-                                            Background="#1D3045"
-                                            CornerRadius="9">
-                                        <TextBlock x:Name="ReviewCountText"
-                                                   Text="0"
-                                                   FontSize="16"
-                                                   FontWeight="Bold"
-                                                   Foreground="#93C5FD"/>
-                                    </Border>
-                                </Grid>
-
-                                    <!-- Задачи -->
-                                    <Grid Grid.Row="1" MinHeight="160">
-                                        <StackPanel x:Name="ReviewTasksPanel"
-                                                    VerticalAlignment="Top">
-
-                                            <TextBlock Text="Нет задач"
-                                                       Margin="0,45,0,8"
-                                                       FontSize="15"
-                                                       Foreground="#5F6C7A"
-                                                       HorizontalAlignment="Center"/>
-
-                                            <TextBlock Text="Ожидание проверки"
-                                                       FontSize="12"
-                                                       Foreground="#5F6C7A"
-                                                       HorizontalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Grid>
-
-                                    <!-- Добавление -->
-                                    <Button Grid.Row="2"
-                                            Style="{StaticResource ReviewGhostButton}"
-                                            Foreground="#68A8F0"
-                                            Height="42"
-                                            Margin="0,12,0,0"
-                                            HorizontalContentAlignment="Center"
-                                            Content="+  Добавить задачу"
-                                            ToolTip="Добавить задачу на проверку"
-                                            Click="OnAddReviewTaskClick"/>
-                                </Grid>
-                            </Border>
-
-                            <!-- Готово -->
-                            <Border Grid.Column="3"
-                                    MinHeight="300"
-                                    Margin="0,0,12,0"
-                                    Padding="18"
-                                    Style="{StaticResource DoneColumnStyle}">
-
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- Заголовок -->
-                                <Grid Grid.Row="0" Margin="2,0,2,16">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Ellipse Width="10"
-                                                 Height="10"
-                                                 Fill="#37D49A"
-                                                 VerticalAlignment="Center"
-                                                 Margin="0,0,10,0"/>
-
-                                    <TextBlock Grid.Column="1"
-                                                   Text="Готово"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="#E4EFE8"
-                                                   FontSize="15"
-                                                   VerticalAlignment="Center"/>
-
-                                    <Border Grid.Column="2"
-                                                Padding="9,3"
-                                                Background="#1A3A2B"
-                                                CornerRadius="9">
-                                        <TextBlock x:Name="DoneCountText"
-                                                       Text="0"
-                                                       FontSize="16"
-                                                       FontWeight="Bold"
-                                                       Foreground="#61E0B0"/>
-                                    </Border>
-                                </Grid>
-
-                                <!-- Задачи -->
-                                <Grid Grid.Row="1" MinHeight="160">
-                                    <StackPanel x:Name="DoneTasksPanel"
-                                                    VerticalAlignment="Top">
-
-                                        <TextBlock Text="Нет задач"
-                                                       Margin="0,45,0,8"
-                                                       FontSize="15"
-                                                       Foreground="#5F7A6C"
-                                                       HorizontalAlignment="Center"/>
-
-                                        <TextBlock Text="Выполненные задачи появятся здесь"
-                                                       FontSize="12"
-                                                       Foreground="#435D4F"
-                                                       HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                </Grid>
-
-                                <!-- Добавление -->
-                                <Button Grid.Row="2"
-                                            Style="{StaticResource DoneGhostButton}"
-                                            Foreground="#56D9A4"
-                                            Height="42"
-                                            Margin="0,12,0,0"
-                                            HorizontalContentAlignment="Center"
-                                            Content="+  Добавить задачу"
-                                            ToolTip="Добавить выполненную задачу"
-                                            Click="OnAddDoneTaskClick"/>
-                            </Grid>
-                        </Border>
-                    </Grid>
                 </Grid>
+
+                <views:OverviewView x:Name="OverviewViewPage"
+                                    Grid.Column="1"
+                                    Margin="34,100,34,26"/>
+
+                <views:MemberView x:Name="MemberViewPage"
+                                  Grid.Column="1"
+                                  Margin="34,28,34,26"
+                                  Visibility="Collapsed"/>
+
+                <views:ChatView x:Name="ChatViewPage"
+                                Grid.Column="1"
+                                Margin="34,28,34,26"
+                                Visibility="Collapsed"/>
+                
+                <views:ReportView x:Name="ReportViewPage"
+                                 Grid.Column="1"
+                                 Margin="34,28,34,26"
+                                 Visibility="Collapsed"/>
+
+                <views:SettingsView x:Name="SettingsViewPage"
+                                   Grid.Column="1"
+                                   Margin="34,28,34,26"
+                                   Visibility="Collapsed"/>
+
+                <views:UpgradeView x:Name="UpgradeViewPage"
+                               Grid.Column="1"
+                               Margin="34,28,34,26"
+                               Visibility="Collapsed"/>
+
             </Grid>
         </Grid>
     </Border>

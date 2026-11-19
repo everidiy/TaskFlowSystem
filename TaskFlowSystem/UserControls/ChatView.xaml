@@ -1,0 +1,197 @@
+﻿<UserControl x:Class="TaskFlowSystem.UserControls.ChatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="650"
+             d:DesignWidth="1100"
+             Background="#0B120F">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="AccentBrush" Color="#3DDC97"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#E5F0E9"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="#82968A"/>
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A9BCAF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1C3025"/>
+                    <Setter Property="Foreground" Value="#3DDC97"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="18">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="290"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Список пользователей -->
+        <Border Grid.Column="0"
+                Background="#101A15"
+                BorderBrush="#24372C"
+                BorderThickness="1"
+                CornerRadius="12"
+                Margin="0,0,12,0">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Заголовок -->
+                <Grid Margin="16,16,16,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel>
+                        <TextBlock Text="Сообщения"
+                                   Foreground="#E5F0E9"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"/>
+
+                        <TextBlock Text="Ваши диалоги"
+                                   Foreground="#82968A"
+                                   FontSize="11"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="1"
+                            Content="+"
+                            Style="{StaticResource ActionButton}"
+                            Width="34"
+                            Height="34"/>
+                </Grid>
+
+                <!-- Поиск -->
+                <TextBox Grid.Row="1"
+                         Margin="14,0,14,12"
+                         Height="36"
+                         Background="#111D16"
+                         Foreground="#82968A"
+                         BorderBrush="#294334"
+                         BorderThickness="1"
+                         Padding="12,8"
+                         FontSize="12"
+                         Text="Поиск пользователей..."/>
+
+                <!-- Чат  -->
+                <StackPanel Grid.Row="2" Margin="8,0">
+
+                    <Button Background="Transparent"
+                            BorderThickness="0"
+                            Padding="10"
+                            Cursor="Hand"
+                            HorizontalContentAlignment="Stretch">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="42"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Width="40"
+                                    Height="40"
+                                    CornerRadius="10"
+                                    Background="#17291F"
+                                    VerticalAlignment="Center">
+
+                                <Border>
+                                    <Image Source="/Resources/bookmark.png"
+                                           Stretch="UniformToFill"
+                                           Width="25"
+                                           Height="25"/>
+                                </Border>
+                            </Border>
+
+                            <StackPanel Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Margin="15,0,0,0">
+
+                                <TextBlock Text="Избранное"
+                                           Foreground="#E5F0E9"
+                                           FontWeight="SemiBold"
+                                           FontSize="12"/>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Стартовое состояние чатов -->
+        <Border Grid.Column="1"
+                Background="#101A15"
+                BorderBrush="#24372C"
+                BorderThickness="1"
+                CornerRadius="12">
+
+            <Grid>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+
+                    <!-- Иконка -->
+                    <Border Width="76"
+                            Height="76"
+                            Background="#17291F"
+                            CornerRadius="22"
+                            HorizontalAlignment="Center"
+                            Margin="0,0,0,22">
+
+                        <TextBlock Text="✉"
+                                   FontSize="34"
+                                   Foreground="#3DDC97"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+
+                    <TextBlock Text="Ваши сообщения"
+                               Foreground="#E5F0E9"
+                               FontSize="22"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="Выберите пользователя, чтобы начать общение"
+                               Foreground="#82968A"
+                               FontSize="12"
+                               HorizontalAlignment="Center"
+                               Margin="0,9,0,0"/>
+
+                    <Border Width="45"
+                            Height="3"
+                            Background="#3DDC97"
+                            CornerRadius="2"
+                            HorizontalAlignment="Center"
+                            Margin="0,24,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

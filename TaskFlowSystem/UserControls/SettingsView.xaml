@@ -1,0 +1,259 @@
+﻿<UserControl x:Class="TaskFlowSystem.UserControls.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="1000" d:DesignWidth="1200">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="CardBrush" Color="#142019"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#263A2D"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="#829188"/>
+
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+        </Style>
+
+        <Style x:Key="SettingTitle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="Description" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#829188"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="34,28,34,30">
+
+            <TextBlock Text="Настройки"
+                       Foreground="White" FontSize="27"
+                       FontWeight="SemiBold"/>
+
+            <TextBlock Text="Управляйте своим аккаунтом и рабочим пространством"
+                       Foreground="#829188" FontSize="13"
+                       Margin="0,7,0,25"/>
+
+            <!-- Профиль -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Профиль" Style="{StaticResource SettingTitle}"/>
+                    <TextBlock Text="Основная информация вашего аккаунта"
+                               Style="{StaticResource Description}"
+                               Margin="0,5,0,20"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Width="72" Height="72"
+                                Background="#243B2D"
+                                CornerRadius="36"
+                                VerticalAlignment="Top">
+                            <TextBlock Text="BD"
+                                       Foreground="#3DDC97"
+                                       FontSize="24"
+                                       FontWeight="SemiBold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Имя пользователя"
+                                       Foreground="#829188" FontSize="12"/>
+                            <TextBox Text="Богдан Давыдов"
+                                     Height="35"
+                                     Margin="0,6,0,15"
+                                     Background="#1B2920"
+                                     Foreground="White"
+                                     BorderBrush="#304536"
+                                     Padding="10,7"/>
+
+                            <TextBlock Text="Электронная почта"
+                                       Foreground="#829188" FontSize="12"/>
+                            <TextBox Text="example@mail.com"
+                                     Height="35"
+                                     Margin="0,6,0,0"
+                                     Background="#1B2920"
+                                     Foreground="White"
+                                     BorderBrush="#304536"
+                                     Padding="10,7"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Button Content="Сохранить изменения"
+                            HorizontalAlignment="Right"
+                            Background="#3DDC97"
+                            Foreground="#0D1711"
+                            FontWeight="SemiBold"
+                            Padding="18,9"
+                            Margin="0,18,0,0"
+                            BorderThickness="0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Уведомления -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Уведомления" Style="{StaticResource SettingTitle}"/>
+                    <TextBlock Text="Выберите, какие события будут отправлять уведомления"
+                               Style="{StaticResource Description}"
+                               Margin="0,5,0,18"/>
+
+                    <DockPanel Margin="0,0,0,17">
+                        <CheckBox IsChecked="True" IsEnabled="False"
+                                  DockPanel.Dock="Right"
+                                  VerticalAlignment="Center"/>
+                        <StackPanel>
+                            <TextBlock Text="Упоминания"
+                                       Foreground="White" FontSize="13"/>
+                            <TextBlock Text="Когда участники упоминают вас в задачах или чате"
+                                       Style="{StaticResource Description}"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel Margin="0,0,0,17">
+                        <CheckBox IsChecked="True" IsEnabled="False"
+                                  DockPanel.Dock="Right"
+                                  VerticalAlignment="Center"/>
+                        <StackPanel>
+                            <TextBlock Text="Изменения задач"
+                                       Foreground="White" FontSize="13"/>
+                            <TextBlock Text="Изменение статуса, исполнителя и сроков"
+                                       Style="{StaticResource Description}"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <CheckBox IsChecked="False" IsEnabled="False"
+                                  DockPanel.Dock="Right"
+                                  VerticalAlignment="Center"/>
+                        <StackPanel>
+                            <TextBlock Text="Еженедельный отчёт"
+                                       Foreground="White" FontSize="13"/>
+                            <TextBlock Text="Сводка активности за прошедшую неделю"
+                                       Style="{StaticResource Description}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Внешний вид -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Внешний вид" Style="{StaticResource SettingTitle}"/>
+                    <TextBlock Text="Настройте интерфейс приложения"
+                               Style="{StaticResource Description}"
+                               Margin="0,5,0,18"/>
+
+                    <DockPanel Margin="0,0,0,15">
+                        <ComboBox Width="150" Height="33"
+                                  SelectedIndex="0"
+                                  DockPanel.Dock="Right"
+                                  Background="#1B2920"
+                                  Foreground="White"
+                                  BorderBrush="#304536">
+                            <ComboBoxItem Content="Тёмная"/>
+                            <ComboBoxItem Content="Светлая"/>
+                            <ComboBoxItem Content="Системная"/>
+                        </ComboBox>
+                        <StackPanel>
+                            <TextBlock Text="Тема оформления"
+                                       Foreground="White" FontSize="13"/>
+                            <TextBlock Text="Выберите цветовую тему приложения"
+                                       Style="{StaticResource Description}"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <ComboBox Width="150" Height="33"
+                                  SelectedIndex="0"
+                                  DockPanel.Dock="Right"
+                                  Background="#1B2920"
+                                  Foreground="White"
+                                  BorderBrush="#304536">
+                            <ComboBoxItem Content="Русский"/>
+                            <ComboBoxItem Content="English"/>
+                        </ComboBox>
+                        <StackPanel>
+                            <TextBlock Text="Язык интерфейса"
+                                       Foreground="White" FontSize="13"/>
+                            <TextBlock Text="Язык отображения элементов"
+                                       Style="{StaticResource Description}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Рабочее пространство -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="Рабочее пространство"
+                               Style="{StaticResource SettingTitle}"/>
+                    <TextBlock Text="Управление параметрами проекта и команды"
+                               Style="{StaticResource Description}"
+                               Margin="0,5,0,18"/>
+
+                    <DockPanel Margin="0,0,0,15">
+                        <TextBlock Text="TaskFlow Team"
+                                   Foreground="White"
+                                   FontSize="13"
+                                   DockPanel.Dock="Right"/>
+                        <TextBlock Text="Название пространства"
+                                   Foreground="#829188"
+                                   FontSize="13"/>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <TextBlock Text="3 участника"
+                                   Foreground="White"
+                                   FontSize="13"
+                                   DockPanel.Dock="Right"/>
+                        <TextBlock Text="Участники команды"
+                                   Foreground="#829188"
+                                   FontSize="13"/>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Опасная зона -->
+            <Border Background="#251817"
+                    BorderBrush="#57302B"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="20">
+                <StackPanel>
+                    <TextBlock Text="Опасная зона"
+                               Foreground="#EF7777"
+                               FontSize="15"
+                               FontWeight="SemiBold"/>
+
+                    <TextBlock Text="Удаление аккаунта приведёт к потере доступа к рабочему пространству."
+                               Foreground="#B58A86"
+                               FontSize="12"
+                               Margin="0,7,0,15"/>
+
+                    <Button Content="Удалить аккаунт"
+                            HorizontalAlignment="Left"
+                            Background="#813B36"
+                            Foreground="White"
+                            Padding="16,8"
+                            BorderThickness="0"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

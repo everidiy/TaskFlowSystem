@@ -1,0 +1,272 @@
+﻿<UserControl x:Class="TaskFlowSystem.UserControls.UpgradeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="1000" d:DesignWidth="1200">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="CardBrush" Color="#142019"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#263A2D"/>
+
+        <Style x:Key="PlanCard" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Padding" Value="24"/>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="34,28,34,30">
+
+            <!-- Заголовок -->
+            <TextBlock Text="Откройте больше возможностей"
+                       Foreground="White"
+                       FontSize="27"
+                       FontWeight="SemiBold"/>
+
+            <TextBlock Text="Выберите подходящий тариф и выведите совместную работу на новый уровень"
+                       Foreground="#829188"
+                       FontSize="13"
+                       Margin="0,7,0,25"/>
+
+            <!-- Баннер -->
+            <Border Background="#183728"
+                    BorderBrush="#2C6648"
+                    BorderThickness="1"
+                    CornerRadius="14"
+                    Padding="25"
+                    Margin="0,0,0,25">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="TASKFLOW PRO"
+                                   Foreground="#3DDC97"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Работайте эффективнее."
+                                   Foreground="White"
+                                   FontSize="23"
+                                   FontWeight="SemiBold"/>
+
+                        <TextBlock Text="Больше инструментов, аналитики и возможностей для вашей команды."
+                                   Foreground="#B2C7B8"
+                                   FontSize="13"
+                                   TextWrapping="Wrap"
+                                   Margin="0,9,0,0"/>
+                    </StackPanel>
+
+                    <Border Grid.Column="1"
+                            Width="100" Height="100"
+                            Background="#245B3D"
+                            CornerRadius="50"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="★"
+                                   Foreground="#3DDC97"
+                                   FontSize="45"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Тарифы -->
+            <TextBlock Text="Выберите свой тариф"
+                       Foreground="White"
+                       FontSize="18"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,16"/>
+
+            <Grid Margin="0,0,0,25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Free -->
+                <Border Grid.Column="0"
+                        Style="{StaticResource PlanCard}"
+                        Margin="0,0,12,0">
+                    <StackPanel>
+                        <TextBlock Text="FREE"
+                                   Foreground="#829188"
+                                   FontSize="12"
+                                   FontWeight="Bold"/>
+
+                        <TextBlock Text="Бесплатно"
+                                   Foreground="White"
+                                   FontSize="25"
+                                   FontWeight="SemiBold"
+                                   Margin="0,12,0,5"/>
+
+                        <TextBlock Text="Для небольших команд и личных проектов"
+                                   Foreground="#829188"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,22"/>
+
+                        <Button Content="Текущий тариф"
+                                IsEnabled="False"
+                                Background="#26362B"
+                                Foreground="#A9B8AD"
+                                Padding="12,10"
+                                BorderThickness="0"
+                                Margin="0,0,0,22"/>
+
+                        <TextBlock Text="Возможности"
+                                   Foreground="White"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="✓  Создание проектов"
+                                   Foreground="#C5D2C9" FontSize="13"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBlock Text="✓  Доска задач Kanban"
+                                   Foreground="#C5D2C9" FontSize="13"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBlock Text="✓  Командный чат"
+                                   Foreground="#C5D2C9" FontSize="13"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBlock Text="✓  Базовые настройки"
+                                   Foreground="#C5D2C9" FontSize="13"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Pro -->
+                <Border Grid.Column="1"
+                        Background="#183728"
+                        BorderBrush="#3DDC97"
+                        BorderThickness="1.5"
+                        CornerRadius="14"
+                        Padding="24">
+
+                    <StackPanel>
+                        <DockPanel>
+                            <TextBlock Text="PRO"
+                                       Foreground="#3DDC97"
+                                       FontSize="12"
+                                       FontWeight="Bold"/>
+
+                            <Border Background="#3DDC97"
+                                    CornerRadius="5"
+                                    Padding="8,4"
+                                    DockPanel.Dock="Right">
+                                <TextBlock Text="Рекомендуем"
+                                           Foreground="#0D1711"
+                                           FontSize="10"
+                                           FontWeight="Bold"/>
+                            </Border>
+                        </DockPanel>
+
+                        <TextBlock Text="299 ₽"
+                                   Foreground="White"
+                                   FontSize="30"
+                                   FontWeight="SemiBold"
+                                   Margin="0,12,0,5"/>
+
+                        <TextBlock Text="в месяц"
+                                   Foreground="#A5BDAE"
+                                   FontSize="12"/>
+
+                        <TextBlock Text="Для команд, которым нужно больше контроля и аналитики"
+                                   Foreground="#A5BDAE"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Margin="0,12,0,22"/>
+
+                        <Button Content="Перейти на PRO"
+                                Background="#3DDC97"
+                                Foreground="#0D1711"
+                                FontWeight="SemiBold"
+                                Padding="12,10"
+                                BorderThickness="0"
+                                Margin="0,0,0,22"/>
+
+                        <TextBlock Text="Всё из Free, а также:"
+                                   Foreground="White"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,15"/>
+
+                        <TextBlock Text="✓  Расширенная аналитика"
+                                   Foreground="#D0E5D7" FontSize="13"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBlock Text="✓  Экспорт отчётов"
+                                   Foreground="#D0E5D7" FontSize="13"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBlock Text="✓  Неограниченные проекты"
+                                   Foreground="#D0E5D7" FontSize="13"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBlock Text="✓  Дополнительные настройки команды"
+                                   Foreground="#D0E5D7" FontSize="13"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Дополнительная информация -->
+            <Border Background="#142019"
+                    BorderBrush="#263A2D"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="22">
+
+                <StackPanel>
+                    <TextBlock Text="Часто задаваемые вопросы"
+                               Foreground="White"
+                               FontSize="17"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,18"/>
+
+                    <TextBlock Text="Можно ли отменить подписку?"
+                               Foreground="White"
+                               FontSize="13"
+                               FontWeight="SemiBold"/>
+
+                    <TextBlock Text="Да, вы сможете отменить подписку в любой момент."
+                               Foreground="#829188"
+                               FontSize="12"
+                               Margin="0,6,0,17"/>
+
+                    <TextBlock Text="Что произойдёт после окончания подписки?"
+                               Foreground="White"
+                               FontSize="13"
+                               FontWeight="SemiBold"/>
+
+                    <TextBlock Text="Ваш аккаунт вернётся на бесплатный тариф. Доступ к PRO-функциям будет ограничен."
+                               Foreground="#829188"
+                               FontSize="12"
+                               TextWrapping="Wrap"
+                               Margin="0,6,0,17"/>
+
+                    <TextBlock Text="Как связаться с поддержкой?"
+                               Foreground="White"
+                               FontSize="13"
+                               FontWeight="SemiBold"/>
+
+                    <TextBlock Text="Вы сможете обратиться к команде TaskFlow через службу поддержки."
+                               Foreground="#829188"
+                               FontSize="12"
+                               TextWrapping="Wrap"
+                               Margin="0,6,0,0"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
