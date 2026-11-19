@@ -15,31 +15,31 @@
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="14"/>
-            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Padding" Value="32"/>
         </Style>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="34,28,34,30">
+        <StackPanel Margin="42,34,42,38">
 
             <!-- Заголовок -->
             <TextBlock Text="Откройте больше возможностей"
                        Foreground="White"
-                       FontSize="27"
+                       FontSize="36"
                        FontWeight="SemiBold"/>
 
             <TextBlock Text="Выберите подходящий тариф и выведите совместную работу на новый уровень"
                        Foreground="#829188"
-                       FontSize="13"
-                       Margin="0,7,0,25"/>
+                        FontSize="15"
+                        Margin="0,9,0,32"/>
 
             <!-- Баннер -->
             <Border Background="#183728"
                     BorderBrush="#2C6648"
                     BorderThickness="1"
                     CornerRadius="14"
-                    Padding="25"
-                    Margin="0,0,0,25">
+                    Padding="34"
+                    Margin="0,0,0,32">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -50,30 +50,30 @@
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="TASKFLOW PRO"
                                    Foreground="#3DDC97"
-                                   FontSize="12"
+                                    FontSize="14"
                                    FontWeight="Bold"
                                    Margin="0,0,0,10"/>
 
                         <TextBlock Text="Работайте эффективнее."
                                    Foreground="White"
-                                   FontSize="23"
+                                    FontSize="30"
                                    FontWeight="SemiBold"/>
 
                         <TextBlock Text="Больше инструментов, аналитики и возможностей для вашей команды."
                                    Foreground="#B2C7B8"
-                                   FontSize="13"
+                                    FontSize="15"
                                    TextWrapping="Wrap"
                                    Margin="0,9,0,0"/>
                     </StackPanel>
 
                     <Border Grid.Column="1"
-                            Width="100" Height="100"
+                             Width="130" Height="130"
                             Background="#245B3D"
                             CornerRadius="50"
                             VerticalAlignment="Center">
                         <TextBlock Text="★"
                                    Foreground="#3DDC97"
-                                   FontSize="45"
+                                    FontSize="58"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"/>
                     </Border>
@@ -83,7 +83,7 @@
             <!-- Тарифы -->
             <TextBlock Text="Выберите свой тариф"
                        Foreground="White"
-                       FontSize="18"
+                        FontSize="22"
                        FontWeight="SemiBold"
                        Margin="0,0,0,16"/>
 
@@ -100,18 +100,18 @@
                     <StackPanel>
                         <TextBlock Text="FREE"
                                    Foreground="#829188"
-                                   FontSize="12"
+                                    FontSize="14"
                                    FontWeight="Bold"/>
 
                         <TextBlock Text="Бесплатно"
                                    Foreground="White"
-                                   FontSize="25"
+                                    FontSize="32"
                                    FontWeight="SemiBold"
                                    Margin="0,12,0,5"/>
 
                         <TextBlock Text="Для небольших команд и личных проектов"
                                    Foreground="#829188"
-                                   FontSize="12"
+                                    FontSize="14"
                                    TextWrapping="Wrap"
                                    Margin="0,0,0,22"/>
 
@@ -119,7 +119,7 @@
                                 IsEnabled="False"
                                 Background="#26362B"
                                 Foreground="#A9B8AD"
-                                Padding="12,10"
+                                Padding="16,13"
                                 BorderThickness="0"
                                 Margin="0,0,0,22"/>
 
@@ -129,19 +129,19 @@
                                    Margin="0,0,0,15"/>
 
                         <TextBlock Text="✓  Создание проектов"
-                                   Foreground="#C5D2C9" FontSize="13"
+                                    Foreground="#C5D2C9" FontSize="15"
                                    Margin="0,0,0,12"/>
 
                         <TextBlock Text="✓  Доска задач Kanban"
-                                   Foreground="#C5D2C9" FontSize="13"
+                                    Foreground="#C5D2C9" FontSize="15"
                                    Margin="0,0,0,12"/>
 
                         <TextBlock Text="✓  Командный чат"
-                                   Foreground="#C5D2C9" FontSize="13"
+                                    Foreground="#C5D2C9" FontSize="15"
                                    Margin="0,0,0,12"/>
 
                         <TextBlock Text="✓  Базовые настройки"
-                                   Foreground="#C5D2C9" FontSize="13"/>
+                                    Foreground="#C5D2C9" FontSize="15"/>
                     </StackPanel>
                 </Border>
 
@@ -151,7 +151,7 @@
                         BorderBrush="#3DDC97"
                         BorderThickness="1.5"
                         CornerRadius="14"
-                        Padding="24">
+                         Padding="32">
 
                     <StackPanel>
                         <DockPanel>
@@ -235,7 +235,7 @@
 
                     <TextBlock Text="Можно ли отменить подписку?"
                                Foreground="White"
-                               FontSize="13"
+                                    FontSize="15"
                                FontWeight="SemiBold"/>
 
                     <TextBlock Text="Да, вы сможете отменить подписку в любой момент."
@@ -245,7 +245,7 @@
 
                     <TextBlock Text="Что произойдёт после окончания подписки?"
                                Foreground="White"
-                               FontSize="13"
+                                    FontSize="15"
                                FontWeight="SemiBold"/>
 
                     <TextBlock Text="Ваш аккаунт вернётся на бесплатный тариф. Доступ к PRO-функциям будет ограничен."
@@ -256,7 +256,7 @@
 
                     <TextBlock Text="Как связаться с поддержкой?"
                                Foreground="White"
-                               FontSize="13"
+                                    FontSize="15"
                                FontWeight="SemiBold"/>
 
                     <TextBlock Text="Вы сможете обратиться к команде TaskFlow через службу поддержки."

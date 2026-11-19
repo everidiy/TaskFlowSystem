@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              d:DesignHeight="650"
              d:DesignWidth="1100"
-             Background="#0B120F">
+             Background="Transparent">
 
     <UserControl.Resources>
 
@@ -20,8 +20,8 @@
             <Setter Property="Background" Value="#1B3024"/>
             <Setter Property="Foreground" Value="#3DDC97"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="15,8"/>
-            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Padding" Value="18,11"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -47,8 +47,8 @@
             <Setter Property="Background" Value="#3DDC97"/>
             <Setter Property="Foreground" Value="#0B120F"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="16,10"/>
-            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -76,14 +76,14 @@
             <Setter Property="CaretBrush" Value="#3DDC97"/>
             <Setter Property="BorderBrush" Value="#294334"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="12,9"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="14,11"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
     </UserControl.Resources>
 
-    <Grid Margin="22">
+    <Grid Margin="30">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -93,7 +93,7 @@
         </Grid.RowDefinitions>
 
         <!-- Заголовок -->
-        <Grid Grid.Row="0" Margin="0,0,0,24">
+        <Grid Grid.Row="0" Margin="0,0,0,30">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -102,13 +102,13 @@
             <StackPanel>
                 <TextBlock Text="Участники"
                            Foreground="#E5F0E9"
-                           FontSize="25"
+                            FontSize="32"
                            FontWeight="SemiBold"/>
 
                 <TextBlock Text="Управление участниками вашей команды"
                            Foreground="#82968A"
-                           FontSize="12"
-                           Margin="0,6,0,0"/>
+                            FontSize="14"
+                            Margin="0,8,0,0"/>
             </StackPanel>
 
             <Button Grid.Column="1"
@@ -119,7 +119,7 @@
         </Grid>
 
         <!-- Статистика -->
-        <Grid Grid.Row="1" Margin="0,0,0,22">
+        <Grid Grid.Row="1" Margin="0,0,0,28">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -131,17 +131,17 @@
                     BorderBrush="#24372C"
                     BorderThickness="1"
                     CornerRadius="10"
-                    Padding="16"
+                     Padding="22"
                     Margin="0,0,8,0">
 
                 <StackPanel>
                     <TextBlock Text="Всего участников"
                                Foreground="#82968A"
-                               FontSize="11"/>
+                                FontSize="13"/>
 
                     <TextBlock Text="0"
                                Foreground="#E5F0E9"
-                               FontSize="25"
+                                FontSize="32"
                                FontWeight="SemiBold"
                                Margin="0,7,0,0"/>
                 </StackPanel>
@@ -152,17 +152,17 @@
                     BorderBrush="#24372C"
                     BorderThickness="1"
                     CornerRadius="10"
-                    Padding="16"
+                     Padding="22"
                     Margin="4,0">
 
                 <StackPanel>
                     <TextBlock Text="В сети"
                                Foreground="#82968A"
-                               FontSize="11"/>
+                                FontSize="13"/>
 
                     <TextBlock Text="0"
                                Foreground="#3DDC97"
-                               FontSize="25"
+                                FontSize="32"
                                FontWeight="SemiBold"
                                Margin="0,7,0,0"/>
                 </StackPanel>
@@ -173,17 +173,17 @@
                     BorderBrush="#24372C"
                     BorderThickness="1"
                     CornerRadius="10"
-                    Padding="16"
+                    Padding="22"
                     Margin="8,0,0,0">
 
                 <StackPanel>
                     <TextBlock Text="Администраторы"
                                Foreground="#82968A"
-                               FontSize="11"/>
+                                FontSize="13"/>
 
                     <TextBlock Text="0"
                                Foreground="#E5F0E9"
-                               FontSize="25"
+                                FontSize="32"
                                FontWeight="SemiBold"
                                Margin="0,7,0,0"/>
                 </StackPanel>
@@ -223,7 +223,7 @@
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="48"/>
+                <RowDefinition Height="62"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -277,7 +277,7 @@
                     <StackPanel>
 
                         <!-- Участник 1 -->
-                        <Border Padding="18,15"
+                        <Border Padding="22,20"
                                 BorderBrush="#1C2B22"
                                 BorderThickness="0,0,0,1">
 
@@ -292,13 +292,13 @@
                                 <StackPanel Orientation="Horizontal"
                                             VerticalAlignment="Center">
 
-                                    <Border Width="38"
-                                            Height="38"
+                                    <Border Width="52"
+                                            Height="52"
                                             Background="#24583F"
-                                            CornerRadius="19">
+                                            CornerRadius="26">
                                         <TextBlock Text="АД"
                                                    Foreground="#3DDC97"
-                                                   FontSize="12"
+                                                    FontSize="15"
                                                    FontWeight="SemiBold"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
@@ -310,9 +310,9 @@
                                         <StackPanel Orientation="Horizontal"
                                                     VerticalAlignment="Center">
 
-                                            <TextBlock Text="everidiy"
+                                                <TextBlock Text="everidiy"
                                                        Foreground="#E5F0E9"
-                                                       FontSize="12"
+                                                        FontSize="14"
                                                        FontWeight="SemiBold"/>
 
                                             <Border Background="#1B3829"
@@ -322,7 +322,7 @@
 
                                                 <TextBlock Text="Вы"
                                                            Foreground="#3DDC97"
-                                                           FontSize="9"
+                                                            FontSize="10"
                                                            FontWeight="SemiBold"/>
                                             </Border>
 
@@ -330,8 +330,8 @@
 
                                         <TextBlock Text="everidiy@example.com"
                                                    Foreground="#82968A"
-                                                   FontSize="10"
-                                                   Margin="0,4,0,0"/>
+                                                    FontSize="11"
+                                                    Margin="0,5,0,0"/>
 
                                     </StackPanel>
                                 </StackPanel>
@@ -339,20 +339,20 @@
                                 <TextBlock Grid.Column="1"
                                            Text="Разработчик"
                                            Foreground="#B9C9BF"
-                                           FontSize="11"
+                                            FontSize="13"
                                            VerticalAlignment="Center"/>
 
                                 <StackPanel Grid.Column="2"
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                    <Ellipse Width="7"
-                                             Height="7"
+                                     <Ellipse Width="9"
+                                              Height="9"
                                              Fill="#3DDC97"
                                              VerticalAlignment="Center"/>
-                                    <TextBlock Text=" В сети"
+                                     <TextBlock Text="В сети"
                                                Foreground="#3DDC97"
-                                               FontSize="10"
-                                               Margin="5,0,0,0"/>
+                                                FontSize="12"
+                                                Margin="7,0,0,0"/>
                                 </StackPanel>
 
                                 <Button Grid.Column="3"

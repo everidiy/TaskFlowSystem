@@ -122,6 +122,7 @@ namespace TaskFlowSystem
             Reset(NavCalendarButton);
             Reset(NavProjectsButton);
             Reset(NavTeamButton);
+            Reset(NavChatButton);
             Reset(NavReportsButton);
             Reset(NavSettingsButton);
         }
@@ -134,6 +135,7 @@ namespace TaskFlowSystem
 
         private void DropAndCreateOneVisibility(UIElement pageView)
         {
+            OverviewPage.Visibility = Visibility.Collapsed;
             OverviewViewPage.Visibility = Visibility.Collapsed;
             ChatViewPage.Visibility = Visibility.Collapsed;
             MemberViewPage.Visibility = Visibility.Collapsed;
@@ -154,6 +156,7 @@ namespace TaskFlowSystem
             SetActiveNav(NavOverviewButton);
 
             DropAndCreateOneVisibility(OverviewViewPage);
+            OverviewPage.Visibility = Visibility.Visible;
         }
 
         private void OnMyTasksClick(object sender, RoutedEventArgs e)

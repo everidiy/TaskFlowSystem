@@ -17,49 +17,166 @@
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Padding" Value="26"/>
         </Style>
 
         <Style x:Key="SmallText" TargetType="TextBlock">
             <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
             <Setter Property="FontSize" Value="13"/>
         </Style>
+
+        <Style x:Key="ReportPeriodItem" TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="#EAF6EF"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="14,11"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#1E3A2D"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#214A38"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ReportPeriodComboBox" TargetType="ComboBox">
+            <Setter Property="Foreground" Value="#EAF6EF"/>
+            <Setter Property="Background" Value="#17241D"/>
+            <Setter Property="BorderBrush" Value="#3B5A48"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ReportPeriodItem}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="DropDownToggle"
+                                          IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Focusable="False"
+                                          ClickMode="Press"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="ToggleBorder"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="10"
+                                                Padding="15,0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="22"/>
+                                                </Grid.ColumnDefinitions>
+                                                <ContentPresenter VerticalAlignment="Center"
+                                                                  Content="{Binding SelectionBoxItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                                  ContentTemplate="{Binding SelectionBoxItemTemplate, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                                  TextElement.Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                                                <Path Grid.Column="1"
+                                                      Width="9"
+                                                      Height="5"
+                                                      HorizontalAlignment="Right"
+                                                      VerticalAlignment="Center"
+                                                      Fill="#8FA99A"
+                                                      Data="M 0 0 L 9 0 L 4.5 5 Z"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="ToggleBorder" Property="Background" Value="#1E3A2D"/>
+                                                <Setter TargetName="ToggleBorder" Property="BorderBrush" Value="#4C8064"/>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="ToggleBorder" Property="BorderBrush" Value="#3DDC97"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <Popup x:Name="DropDown"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   Placement="Bottom"
+                                   PlacementTarget="{Binding ElementName=DropDownToggle}"
+                                   PopupAnimation="Slide">
+                                <Border Width="{Binding ActualWidth, ElementName=DropDownToggle}"
+                                        Margin="0,5,0,0"
+                                        Background="#17241D"
+                                        BorderBrush="#3B5A48"
+                                        BorderThickness="1"
+                                        CornerRadius="10"
+                                        Padding="4">
+                                    <ScrollViewer MaxHeight="220" VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="False">
+                                <Setter TargetName="DropDown" Property="MinHeight" Value="30"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="34,28,34,30">
+        <StackPanel Margin="42,34,42,38">
 
             <!-- Заголовок -->
             <TextBlock Text="Отчёты"
                        Foreground="White"
-                       FontSize="27"
+                       FontSize="34"
                        FontWeight="SemiBold"/>
 
             <TextBlock Text="Анализируйте продуктивность и отслеживайте результаты команды"
                        Foreground="#829188"
-                       FontSize="13"
-                       Margin="0,7,0,25"/>
+                        FontSize="15"
+                        Margin="0,9,0,32"/>
 
-            <!-- Период -->
             <DockPanel Margin="0,0,0,20">
                 <TextBlock Text="Общая статистика"
                            Foreground="White"
-                           FontSize="17"
+                            FontSize="20"
                            FontWeight="SemiBold"
                            VerticalAlignment="Center"/>
 
-                <ComboBox DockPanel.Dock="Right"
-                          Width="150"
-                          Height="34"
-                          SelectedIndex="0"
-                          Background="#19251D"
-                          Foreground="White"
-                          BorderBrush="#304536">
-                    <ComboBoxItem Content="За неделю"/>
-                    <ComboBoxItem Content="За месяц"/>
-                    <ComboBoxItem Content="За год"/>
-                    <ComboBoxItem Content="За всё время"/>
-                </ComboBox>
+                <StackPanel DockPanel.Dock="Right" Width="190">
+                    <TextBlock Text="ПЕРИОД ОТЧЁТА"
+                               Foreground="#7E9186"
+                               FontSize="10"
+                               FontWeight="SemiBold"
+                               Margin="2,0,0,5"/>
+                    <ComboBox x:Name="PeriodComboBox"
+                              Style="{StaticResource ReportPeriodComboBox}"
+                              Height="42"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="За неделю"/>
+                        <ComboBoxItem Content="За месяц"/>
+                        <ComboBoxItem Content="За год"/>
+                        <ComboBoxItem Content="За всё время"/>
+                    </ComboBox>
+                </StackPanel>
+
             </DockPanel>
 
             <!-- Карточки статистики -->
@@ -68,44 +185,36 @@
                 <Border Style="{StaticResource Card}" Margin="0,0,12,0">
                     <StackPanel>
                         <TextBlock Text="Всего задач" Style="{StaticResource SmallText}"/>
-                        <TextBlock Text="128" Foreground="White"
+                        <TextBlock x:Name="TotalTasksText" Text="0" Foreground="White"
                                    FontSize="29" FontWeight="SemiBold"
                                    Margin="0,10,0,5"/>
-                        <TextBlock Text="+12 за неделю" Foreground="#3DDC97"
-                                   FontSize="12"/>
                     </StackPanel>
                 </Border>
 
                 <Border Style="{StaticResource Card}" Margin="0,0,12,0">
                     <StackPanel>
                         <TextBlock Text="Выполнено" Style="{StaticResource SmallText}"/>
-                        <TextBlock Text="86" Foreground="White"
+                        <TextBlock x:Name="CompletedTasksText" Text="0" Foreground="White"
                                    FontSize="29" FontWeight="SemiBold"
                                    Margin="0,10,0,5"/>
-                        <TextBlock Text="67% от общего числа"
-                                   Foreground="#3DDC97" FontSize="12"/>
                     </StackPanel>
                 </Border>
 
                 <Border Style="{StaticResource Card}" Margin="0,0,12,0">
                     <StackPanel>
                         <TextBlock Text="В работе" Style="{StaticResource SmallText}"/>
-                        <TextBlock Text="24" Foreground="White"
+                        <TextBlock x:Name="InProgressTasksText" Text="0" Foreground="White"
                                    FontSize="29" FontWeight="SemiBold"
                                    Margin="0,10,0,5"/>
-                        <TextBlock Text="18% от общего числа"
-                                   Foreground="#E6B85C" FontSize="12"/>
                     </StackPanel>
                 </Border>
 
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
                         <TextBlock Text="Просрочено" Style="{StaticResource SmallText}"/>
-                        <TextBlock Text="8" Foreground="White"
+                        <TextBlock x:Name="OverdueTasksText" Text="0" Foreground="White"
                                    FontSize="29" FontWeight="SemiBold"
                                    Margin="0,10,0,5"/>
-                        <TextBlock Text="Требуют внимания"
-                                   Foreground="#EF7777" FontSize="12"/>
                     </StackPanel>
                 </Border>
 
@@ -122,54 +231,53 @@
                         Margin="0,0,12,0">
                     <StackPanel>
                         <TextBlock Text="Активность команды"
-                                   Foreground="White" FontSize="16"
+                                    Foreground="White" FontSize="19"
                                    FontWeight="SemiBold"/>
 
                         <TextBlock Text="Количество выполненных задач за неделю"
                                    Style="{StaticResource SmallText}"
-                                   Margin="0,6,0,20"/>
+                                    Margin="0,8,0,26"/>
 
-                        <!-- Условный график -->
                         <UniformGrid Rows="1" Height="150"
                                      VerticalAlignment="Bottom">
                             <StackPanel VerticalAlignment="Bottom" Margin="5">
-                                <Border Height="65" Background="#3DDC97"
+                                <Border x:Name="MondayActivityBar" Height="0" Background="#3DDC97"
                                         CornerRadius="5,5,0,0"/>
                                 <TextBlock Text="Пн" Foreground="#829188"
                                            HorizontalAlignment="Center" Margin="0,8,0,0"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Bottom" Margin="5">
-                                <Border Height="95" Background="#3DDC97"
+                                <Border x:Name="TuesdayActivityBar" Height="0" Background="#3DDC97"
                                         CornerRadius="5,5,0,0"/>
                                 <TextBlock Text="Вт" Foreground="#829188"
                                            HorizontalAlignment="Center" Margin="0,8,0,0"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Bottom" Margin="5">
-                                <Border Height="75" Background="#3DDC97"
+                                <Border x:Name="WednesdayActivityBar" Height="0" Background="#3DDC97"
                                         CornerRadius="5,5,0,0"/>
                                 <TextBlock Text="Ср" Foreground="#829188"
                                            HorizontalAlignment="Center" Margin="0,8,0,0"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Bottom" Margin="5">
-                                <Border Height="120" Background="#3DDC97"
+                                <Border x:Name="ThursdayActivityBar" Height="0" Background="#3DDC97"
                                         CornerRadius="5,5,0,0"/>
                                 <TextBlock Text="Чт" Foreground="#829188"
                                            HorizontalAlignment="Center" Margin="0,8,0,0"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Bottom" Margin="5">
-                                <Border Height="90" Background="#3DDC97"
+                                <Border x:Name="FridayActivityBar" Height="0" Background="#3DDC97"
                                         CornerRadius="5,5,0,0"/>
                                 <TextBlock Text="Пт" Foreground="#829188"
                                            HorizontalAlignment="Center" Margin="0,8,0,0"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Bottom" Margin="5">
-                                <Border Height="45" Background="#3DDC97"
+                                <Border x:Name="SaturdayActivityBar" Height="0" Background="#3DDC97"
                                         CornerRadius="5,5,0,0"/>
                                 <TextBlock Text="Сб" Foreground="#829188"
                                            HorizontalAlignment="Center" Margin="0,8,0,0"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Bottom" Margin="5">
-                                <Border Height="60" Background="#3DDC97"
+                                <Border x:Name="SundayActivityBar" Height="0" Background="#3DDC97"
                                         CornerRadius="5,5,0,0"/>
                                 <TextBlock Text="Вс" Foreground="#829188"
                                            HorizontalAlignment="Center" Margin="0,8,0,0"/>
@@ -188,27 +296,27 @@
                                    Style="{StaticResource SmallText}"
                                    Margin="0,6,0,22"/>
 
-                        <TextBlock Text="К выполнению — 10"
-                                   Foreground="White" FontSize="13"/>
-                        <ProgressBar Value="8" Maximum="100" Height="7"
+                        <TextBlock Text="К выполнению"
+                                   Foreground="White" FontSize="14"/>
+                        <ProgressBar x:Name="TodoProgressBar" Value="0" Maximum="100" Height="7"
                                      Background="#29382E" Foreground="#829188"
                                      Margin="0,8,0,17"/>
 
-                        <TextBlock Text="В работе — 24"
-                                   Foreground="White" FontSize="13"/>
-                        <ProgressBar Value="19" Maximum="100" Height="7"
+                        <TextBlock Text="В работе"
+                                   Foreground="White" FontSize="14"/>
+                        <ProgressBar x:Name="InProgressProgressBar" Value="0" Maximum="100" Height="7"
                                      Background="#29382E" Foreground="#E6B85C"
                                      Margin="0,8,0,17"/>
 
-                        <TextBlock Text="Review — 8"
-                                   Foreground="White" FontSize="13"/>
-                        <ProgressBar Value="6" Maximum="100" Height="7"
+                        <TextBlock Text="Review"
+                                   Foreground="White" FontSize="14"/>
+                        <ProgressBar x:Name="ReviewProgressBar" Value="0" Maximum="100" Height="7"
                                      Background="#29382E" Foreground="#7D9CF5"
                                      Margin="0,8,0,17"/>
 
-                        <TextBlock Text="Выполнено — 86"
-                                   Foreground="White" FontSize="13"/>
-                        <ProgressBar Value="67" Maximum="100" Height="7"
+                        <TextBlock Text="Выполнено"
+                                   Foreground="White" FontSize="14"/>
+                        <ProgressBar x:Name="CompletedProgressBar" Value="0" Maximum="100" Height="7"
                                      Background="#29382E" Foreground="#3DDC97"
                                      Margin="0,8,0,0"/>
                     </StackPanel>
@@ -227,12 +335,13 @@
                                Margin="0,6,0,15"/>
 
                     <DockPanel>
-                        <TextBlock Text="67%"
+                        <TextBlock x:Name="ProjectEfficiencyText" Text="0%"
                                    Foreground="#3DDC97"
                                    FontSize="25"
                                    FontWeight="SemiBold"
+                                   Margin="10, 0, 0, 0"
                                    DockPanel.Dock="Right"/>
-                        <ProgressBar Value="67" Maximum="100"
+                        <ProgressBar x:Name="ProjectEfficiencyProgressBar" Value="0" Maximum="100"
                                      Height="10"
                                      VerticalAlignment="Center"
                                      Background="#29382E"
